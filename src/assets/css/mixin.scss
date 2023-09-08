@@ -1,0 +1,57 @@
+@mixin flexContainer($jc) {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: $jc;
+  align-items: center;
+}
+@mixin style($size, $color, $bold: normal) {
+  font-size: $size;
+  color: $color;
+  font-weight: $bold;
+}
+@mixin wh($w, $h) {
+  width: $w;
+  height: $h;
+}
+@mixin position($type, $top, $right, $bottom, $left) {
+  position: $type;
+  left: $left;
+  top: $top;
+  right: $right;
+  bottom: $bottom;
+}
+@mixin fixed($t, $l) {
+  position: fixed;
+  top: $t;
+  left: $l;
+}
+.th-editor-container{
+  @keyframes show {
+    0% {
+      opacity: 0;
+    }
+    50% {
+      opacity: 0.5;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+  @keyframes scaleAnimate {
+    50% {
+      transform: scale(1.2);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
+  @keyframes rotateAnimate {
+    0% {
+      transform: rotate(270deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+}

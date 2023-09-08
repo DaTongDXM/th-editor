@@ -1,18 +1,18 @@
 /*
  * @Author: wuxudong wuxudong@zbnsec.com
  * @Date: 2023-08-24 15:51:11
- * @LastEditors: wuxudong wuxudong@zbnsec.com
- * @LastEditTime: 2023-08-24 19:59:15
+ * @LastEditors: wuxudong 953909305@qq.com
+ * @LastEditTime: 2023-09-08 19:56:41
  * @Description:loading
  */
 import React from 'react';
 import './index.scss';
-import LoadingSVG from '@/assets/svg/loading.svg';
-interface Loading {
+// import LoadingSVG from '@/assets/svg/loading.svg';
+interface ILoading {
   loading: boolean;
   [key: string]: any;
 }
-const Loading: React.FC<Loading> = (props: any) => {
+const Loading: React.FC<ILoading> = (props: any) => {
   const { loading, children } = props;
   return (
     <div className={`th-loading ${!loading && 'hidden'}`}>

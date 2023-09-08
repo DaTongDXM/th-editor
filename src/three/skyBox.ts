@@ -1,8 +1,8 @@
 /*
  * @Author: wuxudong wuxudong@zbnsec.com
  * @Date: 2023-08-24 10:23:24
- * @LastEditors: wuxudong wuxudong@zbnsec.com
- * @LastEditTime: 2023-08-25 18:06:02
+ * @LastEditors: wuxudong 953909305@qq.com
+ * @LastEditTime: 2023-09-08 19:56:00
  * @Description:implementing SkyBox with CubeTexture
  */
 import { CubeTextureLoader } from 'three';
@@ -27,8 +27,6 @@ export default class SkyBox {
       (s) => {
         this.render.emitter.emit('skybox:loaded', s);
       },
-      (p) => {},
-      (error) => {},
     );
     this.render.scene.background = cubeTexture;
   }

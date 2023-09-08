@@ -1,23 +1,25 @@
 /*
  * @Author: wuxudong wuxudong@zbnsec.com
  * @Date: 2023-08-23 19:28:49
- * @LastEditors: wuxudong wuxudong@zbnsec.com
- * @LastEditTime: 2023-08-29 15:14:30
+ * @LastEditors: wuxudong 953909305@qq.com
+ * @LastEditTime: 2023-09-08 19:56:14
  * @Description:editor init work by three.js
  */
 import {
   Scene,
   AmbientLight,
   DirectionalLight,
-  Camera,
   PerspectiveCamera,
   WebGLRenderer,
   GridHelper,
+  Vector2,
+  Raycaster,
 } from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 import mitt, { Emitter } from 'mitt';
 import SkyBox from './skyBox';
 export default class Render {
+  /** id */
   public id: string;
   public container: HTMLElement;
   public scene!: Scene;
@@ -28,6 +30,11 @@ export default class Render {
   public skyBox!: SkyBox;
   private width: number;
   private height: number;
+  /**
+   *
+   * @param id editor id
+   * @param container canvas container
+   */
   constructor(id: string, container: HTMLElement) {
     this.id = id;
     this.width = container.offsetWidth;
@@ -99,5 +106,17 @@ export default class Render {
       this.camera.aspect = this.width / this.height;
       this.camera.updateProjectionMatrix();
     };
+    window.addEventListener('click', (e) => {
+      const mouse = new Vector2();
+      mouse.x = (e.offsetX / this.container.offsetWidth) * 2 - 1;
+      mouse.y = -(e.offsetY / this.container.offsetHeight) * 2 + 1;
+      // 创建一个投射器
+      const raycaster = new Raycaster();
+      // 通过鼠标和相机位置更新射线
+      raycaster.setFromCamera(mouse, this.camera);
+      // 计算物体和射线的焦点
+      const intersects = raycaster.intersectObjects(this.scene.children);
+      this.emitter.emit('click', { x: mouse.x, y: mouse.y, e, intersects });
+    });
   }
 }

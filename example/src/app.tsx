@@ -1,8 +1,8 @@
 /*
  * @Author: wuxudong wuxudong@zbnsec.com
  * @Date: 2022-11-15 01:13:46
- * @LastEditors: wuxudong wuxudong@zbnsec.com
- * @LastEditTime: 2023-08-25 09:35:00
+ * @LastEditors: wuxudong 953909305@qq.com
+ * @LastEditTime: 2023-09-08 20:26:19
  * @Description:
  */
 import React from 'react';
@@ -13,7 +13,12 @@ const AppCompent = () => {
   return (
     <>
       <div className='main-continer'>
-        <ThEditor editorName={123}></ThEditor>
+        <ThEditor
+          editorName={123}
+          onClick={(e: any) => {
+            console.log(e);
+          }}
+        ></ThEditor>
       </div>
     </>
   );

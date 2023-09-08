@@ -1,8 +1,10 @@
 import React from 'react';
 
 export interface EditorCoreProps {
-  //编辑器场景id
+  // 编辑器场景id
   id?: number;
+  /** 点击事件*/
+  onClick: () => {};
 }
 
 export interface ModelMnueProps {

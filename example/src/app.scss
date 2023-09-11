@@ -1,21 +1,23 @@
 html {
-    body {
-      position: relative;
-      box-sizing: border-box;
+  body {
+    position: relative;
+    box-sizing: border-box;
+    height: 100vh;
+    padding: 0;
+    margin: 0;
+    overflow: hidden;
+    font-family: 'PingFang SC', Arial, 'Microsoft YaHei', sans-serif;
+    font-size: 14px;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    /* color: var(--el-text-color-regular); */
+
+    #root {
       height: 100vh;
-      padding: 0;
-      margin: 0;
-      overflow: hidden;
-      font-family: 'PingFang SC', Arial, 'Microsoft YaHei', sans-serif;
-      font-size: 14px;
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
-      /* color: var(--el-text-color-regular); */
-  
-      #root {
-        height: 100vh;
-        overflow: auto;
-        .main-continer{
-            height: 100%;
-        }
-      }}}
+      overflow: auto;
+      .main-container {
+        height: 100%;
+      }
+    }
+  }
+}

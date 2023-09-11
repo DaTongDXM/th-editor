@@ -4,7 +4,7 @@ export interface EditorCoreProps {
   // 编辑器场景id
   id?: number;
   /** 点击事件*/
-  onClick: () => {};
+  onClick: (e: any) => any;
 }
 
 export interface ModelMnueProps {

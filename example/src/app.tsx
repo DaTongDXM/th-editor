@@ -2,7 +2,7 @@
  * @Author: wuxudong wuxudong@zbnsec.com
  * @Date: 2022-11-15 01:13:46
  * @LastEditors: wuxudong 953909305@qq.com
- * @LastEditTime: 2023-09-08 20:26:19
+ * @LastEditTime: 2023-09-11 14:40:03
  * @Description:
  */
 import React from 'react';
@@ -12,7 +12,12 @@ import './app.scss';
 const AppCompent = () => {
   return (
     <>
-      <div className='main-continer'>
+      <div
+        className='main-container'
+        onClick={() => {
+          console.log('点击contier');
+        }}
+      >
         <ThEditor
           editorName={123}
           onClick={(e: any) => {

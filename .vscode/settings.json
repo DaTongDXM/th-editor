@@ -53,7 +53,7 @@
     "*.cshtml": "html",
     "*.dwt": "html"
   },
-  "files.autoSave": "onFocusChange",
+  "files.autoSave": "off",
   "editor.formatOnPaste": true,
   "window.zoomLevel": 1
 }

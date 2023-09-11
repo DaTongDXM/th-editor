@@ -2,7 +2,7 @@
  * @Author: wuxudong wuxudong@zbnsec.com
  * @Date: 2023-08-23 19:28:49
  * @LastEditors: wuxudong 953909305@qq.com
- * @LastEditTime: 2023-09-08 19:56:14
+ * @LastEditTime: 2023-09-11 14:48:56
  * @Description:editor init work by three.js
  */
 import {
@@ -106,7 +106,8 @@ export default class Render {
       this.camera.aspect = this.width / this.height;
       this.camera.updateProjectionMatrix();
     };
-    window.addEventListener('click', (e) => {
+    this.container.addEventListener('click', (e) => {
+      e.stopPropagation();
       const mouse = new Vector2();
       mouse.x = (e.offsetX / this.container.offsetWidth) * 2 - 1;
       mouse.y = -(e.offsetY / this.container.offsetHeight) * 2 + 1;
@@ -115,7 +116,9 @@ export default class Render {
       // 通过鼠标和相机位置更新射线
       raycaster.setFromCamera(mouse, this.camera);
       // 计算物体和射线的焦点
-      const intersects = raycaster.intersectObjects(this.scene.children);
+      const intersects = raycaster.intersectObjects(this.scene.children).filter((el: any) => {
+        return el.object.type !== 'GridHelper';
+      });
       this.emitter.emit('click', { x: mouse.x, y: mouse.y, e, intersects });
     });
   }

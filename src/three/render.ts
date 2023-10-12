@@ -2,7 +2,7 @@
  * @Author: wuxudong wuxudong@zbnsec.com
  * @Date: 2023-08-23 19:28:49
  * @LastEditors: wuxudong 953909305@qq.com
- * @LastEditTime: 2023-09-11 14:48:56
+ * @LastEditTime: 2023-10-12 17:04:21
  * @Description:editor init work by three.js
  */
 import {
@@ -16,14 +16,14 @@ import {
   Raycaster,
 } from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
-import mitt, { Emitter } from 'mitt';
+import { Mitter } from '@/utils/mitt';
 import SkyBox from './skyBox';
 export default class Render {
   /** id */
   public id: string;
   public container: HTMLElement;
   public scene!: Scene;
-  public emitter!: Emitter<any>;
+  public mitter!: Mitter;
   public camera!: any;
   public controls!: OrbitControls;
   public renderer!: WebGLRenderer;
@@ -35,11 +35,12 @@ export default class Render {
    * @param id editor id
    * @param container canvas container
    */
-  constructor(id: string, container: HTMLElement) {
+  constructor(id: string, container: HTMLElement, mitter: Mitter) {
     this.id = id;
     this.width = container.offsetWidth;
     this.height = container.offsetHeight;
     this.container = container;
+    this.mitter = mitter;
     this.init();
     this.registerEvent();
   }
@@ -47,7 +48,6 @@ export default class Render {
    * create scene with skybox, grid,light,camera
    */
   private init() {
-    this.emitter = mitt();
     this.scene = new Scene();
     const gridHelper = new GridHelper(10000, 400, 0x00ffff);
     gridHelper.position.y = -8;
@@ -56,6 +56,10 @@ export default class Render {
     this.initLight();
     this.initCamera();
   }
+  /**
+   * @description: 创建灯光
+   * @return {*}
+   */
   private initLight() {
     const ambient = new AmbientLight(0x111111, 1);
     this.scene.add(ambient);
@@ -63,6 +67,10 @@ export default class Render {
     directionalLight.position.set(200, 200, 200);
     this.scene.add(directionalLight);
   }
+  /**
+   * @description: 创建相机
+   * @return {*}
+   */
   private initCamera() {
     this.camera = new PerspectiveCamera(
       45,
@@ -73,6 +81,10 @@ export default class Render {
     this.camera.position.set(200, 100, 200);
     this.camera.lookAt(0, 400, 0);
   }
+  /**
+   * @description: 创建渲染器
+   * @return {*}
+   */
   private initRenderer() {
     this.renderer = new WebGLRenderer({
       antialias: true,
@@ -82,6 +94,10 @@ export default class Render {
 
     this.container.appendChild(this.renderer.domElement);
   }
+  /**
+   * @description:
+   * @return {*}
+   */
   private initControls() {
     this.controls = new OrbitControls(this.camera, this.renderer.domElement);
 
@@ -95,7 +111,7 @@ export default class Render {
     this.skyBox.load();
   }
   private registerEvent() {
-    this.emitter.on('skybox:loaded', () => {
+    this.mitter.on(this.mitter.TH_SKYBOX_LOAD, () => {
       this.initRenderer();
       this.initControls();
     });
@@ -119,7 +135,7 @@ export default class Render {
       const intersects = raycaster.intersectObjects(this.scene.children).filter((el: any) => {
         return el.object.type !== 'GridHelper';
       });
-      this.emitter.emit('click', { x: mouse.x, y: mouse.y, e, intersects });
+      this.mitter.emit(this.mitter.TH_CLICK, { x: mouse.x, y: mouse.y, e, intersects });
     });
   }
 }

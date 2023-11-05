@@ -2,7 +2,7 @@
  * @Author: wuxudong wuxudong@zbnsec.com
  * @Date: 2023-08-29 15:40:18
  * @LastEditors: wuxudong 953909305@qq.com
- * @LastEditTime: 2023-11-05 13:25:09
+ * @LastEditTime: 2023-11-05 17:56:41
  * @Description:this is the  left menu of the editor,which contains the default model list andited by the editor
  */
 import React, { Component, useEffect, useState } from 'react';
@@ -18,12 +18,18 @@ const Model: React.FC<ModelMnueProps> = (props: ModelMnueProps) => {
     { icon: AppstoreAddOutlined, title: '模型', type: 'ModelPanel' },
     { icon: PartitionOutlined, title: '列表', type: 'ModelList' },
   ];
+  const [showPanel, setShowPanel] = useState(menuShow);
+  const bodyClassName = `model-continer ${showPanel ? 'show' : 'un-show'}`;
+  const [activeName, setActiveName] = useState('ModelPanel');
+
   const listIcons = menuList.map((item: { icon: any; title: string; type: string }) => (
     <div
       key={item.type}
       onClick={(e: any) => {
         if (item.type === activeName) {
           setShowPanel(!showPanel);
+          setActiveName('');
+          return;
         } else {
           !showPanel && setShowPanel(!showPanel);
         }
@@ -31,13 +37,14 @@ const Model: React.FC<ModelMnueProps> = (props: ModelMnueProps) => {
       }}
     >
       <Tooltip placement='right' title={item.title}>
-        <item.icon className='th-icon' style={{ color: 'white' }} />
+        <item.icon
+          className={`th-icon ${activeName === item.type ? 'active' : ''}`}
+          style={{ color: 'white' }}
+        />
       </Tooltip>
     </div>
   ));
-  const [showPanel, setShowPanel] = useState(menuShow);
-  const bodyClassName = `model-continer ${showPanel ? 'show' : 'un-show'}`;
-  const [activeName, setActiveName] = useState('ModelPanel');
+
   let Component = ModelPanel;
   useEffect(() => {
     if (activeName === 'ModelPanel') {

@@ -21,6 +21,9 @@
       height: 30px;
       font-size: 20px;
       margin-top: 4px;
+      &.active {
+        background-color: #353535;
+      }
     }
   }
   &-body {

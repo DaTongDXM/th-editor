@@ -9,6 +9,7 @@
     width: 50%;
     background-color: var(--th-color-mask-bg);
     transition: all 1s ease-in-out;
+    z-index: 9999;
     &.left {
       left: 0px;
 

@@ -1,4 +1,16 @@
 body[data-theme='dark'] {
+  --th-color-white: #ffffff;
   --th-color-black: #000000;
   --th-color-mask-bg: #000000;
+  --th-color-menu-bg: #1f1f1f;
+
+  --th-color-font-light: #ffffff;
+
+  --th-border-color: #e0e0e0;
+  --th-border-color-light: #e5e5e5;
+  --th-border-color-black: #000000;
+  // 圆角
+  --border-radius-small: 4px;
+  --border-radius-large: 8px;
+  --border-radius-round: 16px;
 }

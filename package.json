@@ -70,6 +70,7 @@
         "webpack-merge": "^4.2.2"
     },
     "dependencies": {
+        "@ant-design/icons": "^5.2.6",
         "@jiaminghi/data-view-react": "^1.2.5",
         "antd": "^5.8.4",
         "core-js": "^2.6.10",

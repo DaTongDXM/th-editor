@@ -2,7 +2,7 @@
  * @Author: wuxudong wuxudong@zbnsec.com
  * @Date: 2022-11-15 01:13:46
  * @LastEditors: wuxudong 953909305@qq.com
- * @LastEditTime: 2023-10-12 15:14:49
+ * @LastEditTime: 2023-11-05 17:20:34
  * @Description:The editor container contains the canvas , toolbar and attribute
  */
 import React, { useEffect, useState } from 'react';
@@ -11,10 +11,9 @@ import Loading from '@/components/Loading';
 import { EditorCoreProps } from '../../types';
 import Render from '@/three/render';
 import mitter from '@/utils/mitt';
+import Model from './Model';
 
-const EditorCore: React.FC<EditorCoreProps & { editorRef: any }> = ({
-  onClick,
-}: EditorCoreProps) => {
+const EditorCore: React.FC<EditorCoreProps & { editorRef: any }> = ({ onClick }) => {
   const [loading, setLoading] = useState(true);
 
   let render: Render;
@@ -38,7 +37,7 @@ const EditorCore: React.FC<EditorCoreProps & { editorRef: any }> = ({
       <div className={`mask-container-item left ${loading ? '' : 'hidden'}`}></div>
       <Loading loading={loading}>Loading...</Loading>
       <div className={`mask-container-item right ${loading ? '' : 'hidden'}`}></div>
-
+      <Model menuShow />
       <div id='render-container' className='main-container'></div>
     </>
   );

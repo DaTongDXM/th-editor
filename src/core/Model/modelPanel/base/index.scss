@@ -1,0 +1,30 @@
+.base-container {
+  display: flex;
+  flex-wrap: wrap;
+  // .base-item:nth-child(odd) {
+  //   border-right: 1px solid var(--th-border-color-black);
+  //   border-bottom: 1px solid var(--th-border-color-black);
+  // }
+  // .base-item:nth-child(even) {
+  //   border-bottom: 1px solid var(--th-border-color-black);
+  // }
+  .base-item {
+    width: 110px;
+
+    margin: 4px;
+
+    .ant-image {
+      // border: 1px solid var(--th-border-color-black);
+      cursor: move;
+      height: 110px;
+      img {
+        height: 110px;
+      }
+    }
+    label {
+      font-size: 12px;
+      display: flex;
+      justify-content: center;
+    }
+  }
+}

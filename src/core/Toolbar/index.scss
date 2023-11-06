@@ -1,0 +1,30 @@
+.toolbar-continer {
+  height: 46px;
+
+  position: absolute;
+  top: 8px;
+  left: 4px;
+  background-color: var(--th-color-menu-bg);
+  border-radius: var(--border-radius-small);
+  display: flex;
+  align-items: center;
+
+  .icon-box {
+    width: 30px;
+    height: 30px;
+    font-size: 20px;
+    margin: 0px 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    &:hover {
+      background-color: #353535;
+    }
+    .th-icon {
+      &.active {
+        background-color: #353535;
+      }
+    }
+  }
+}

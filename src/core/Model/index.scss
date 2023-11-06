@@ -2,7 +2,7 @@
   height: calc(100% - 50px);
   color: var(--th-color-font-light);
   position: absolute;
-  top: 50px;
+  top: 58px;
   left: 4px;
   display: flex;
   align-items: flex-start;
@@ -21,6 +21,9 @@
       height: 30px;
       font-size: 20px;
       margin-top: 4px;
+      &:hover {
+        background-color: #353535;
+      }
       &.active {
         background-color: #353535;
       }
@@ -30,6 +33,7 @@
     width: 240px;
     height: 100%;
     background-color: var(--th-color-menu-bg);
+    border-radius: var(--border-radius-small);
   }
   &.un-show {
     left: -240px;

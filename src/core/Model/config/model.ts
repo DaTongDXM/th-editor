@@ -12,6 +12,8 @@ import {
   OctahedronGeometry,
   PlaneGeometry,
   SphereGeometry,
+  TetrahedronGeometry,
+  TorusGeometry,
 } from 'three';
 export const BaseModelList = [
   {
@@ -25,6 +27,11 @@ export const BaseModelList = [
     model: CircleGeometry,
   },
   {
+    name: 'tetrahedron',
+    label: '四面体',
+    model: TetrahedronGeometry,
+  },
+  {
     name: 'box',
     label: '六面体',
     model: BoxGeometry,
@@ -35,15 +42,21 @@ export const BaseModelList = [
     model: OctahedronGeometry,
   },
   {
-    name: 'circle',
-    label: '球体',
-    model: ConeGeometry,
-  },
-  {
     name: 'cone',
     label: '圆锥',
     model: ConeGeometry,
   },
+  {
+    name: 'sphere',
+    label: '球体',
+    model: SphereGeometry,
+  },
+  {
+    name: 'torus',
+    label: '圆环',
+    model: TorusGeometry,
+  },
+
   {
     name: 'capsule',
     label: '胶囊',

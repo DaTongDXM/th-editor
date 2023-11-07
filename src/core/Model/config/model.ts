@@ -19,53 +19,53 @@ export const BaseModelList = [
   {
     name: 'plane',
     label: '平面',
-    model: PlaneGeometry,
+    model: 'PlaneGeometry',
   },
   {
     name: 'circle',
     label: '圆形',
-    model: CircleGeometry,
+    model: 'CircleGeometry',
   },
   {
     name: 'tetrahedron',
     label: '四面体',
-    model: TetrahedronGeometry,
+    model: 'TetrahedronGeometry',
   },
   {
     name: 'box',
     label: '六面体',
-    model: BoxGeometry,
+    model: 'BoxGeometry',
   },
   {
     name: 'octahedron',
     label: '八面体',
-    model: OctahedronGeometry,
+    model: 'OctahedronGeometry',
   },
   {
     name: 'cone',
     label: '圆锥',
-    model: ConeGeometry,
+    model: 'ConeGeometry',
   },
   {
     name: 'sphere',
     label: '球体',
-    model: SphereGeometry,
+    model: 'SphereGeometry',
   },
   {
     name: 'torus',
     label: '圆环',
-    model: TorusGeometry,
+    model: 'TorusGeometry',
   },
 
   {
     name: 'capsule',
     label: '胶囊',
-    model: CapsuleGeometry,
+    model: 'CapsuleGeometry',
   },
 
   {
     name: 'cylinder',
     label: '圆柱',
-    model: CylinderGeometry,
+    model: 'CylinderGeometry',
   },
 ];

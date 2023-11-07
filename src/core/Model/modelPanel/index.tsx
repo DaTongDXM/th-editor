@@ -2,7 +2,7 @@
  * @Author: wuxudong wuxudong@zbnsec.com
  * @Date: 2023-08-29 18:07:07
  * @LastEditors: wuxudong 953909305@qq.com
- * @LastEditTime: 2023-11-05 15:30:35
+ * @LastEditTime: 2023-11-07 14:27:10
  * @Description:
  */
 import React, { useEffect, useState } from 'react';
@@ -15,7 +15,7 @@ const components: any = {
   base: BaseModel,
   custom: CustomModel,
 };
-const ModelPanel = (props: any) => {
+const ModelPanel: React.FC<any> = () => {
   const [activePanel, setActivePanel] = useState('base');
   const Component: React.FC<any> = components[activePanel];
   const items: TabsProps['items'] = [

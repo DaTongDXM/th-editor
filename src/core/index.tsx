@@ -2,10 +2,11 @@
  * @Author: wuxudong wuxudong@zbnsec.com
  * @Date: 2022-11-15 01:13:46
  * @LastEditors: wuxudong 953909305@qq.com
- * @LastEditTime: 2023-11-06 11:42:47
+ * @LastEditTime: 2023-11-07 20:39:05
  * @Description:The editor container contains the canvas , toolbar and attribute
  */
 import React, { useEffect, useState } from 'react';
+import { message } from 'antd';
 import './index.scss';
 import Loading from '@/components/Loading';
 import { EditorCoreProps } from '../../types';
@@ -30,6 +31,16 @@ const EditorCore: React.FC<EditorCoreProps & { editorRef: any }> = ({ onClick })
   function handleRegister() {
     render.mitter.on(mitter.TH_CLICK, (e: any) => {
       onClick(e);
+    });
+    render.mitter.onThMsgWaring((msg: string) => {
+      message.warning({
+        content: msg,
+      });
+    });
+    render.mitter.onThMsgError((msg: string) => {
+      message.error({
+        content: msg,
+      });
     });
   }
 

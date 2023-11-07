@@ -2,7 +2,7 @@
  * @Author: wuxudong wuxudong@zbnsec.com
  * @Date: 2023-08-23 19:28:49
  * @LastEditors: wuxudong 953909305@qq.com
- * @LastEditTime: 2023-11-05 16:55:56
+ * @LastEditTime: 2023-11-07 20:39:36
  * @Description:editor init work by three.js
  */
 import {
@@ -14,9 +14,13 @@ import {
   GridHelper,
   Vector2,
   Raycaster,
+  PlaneGeometry,
+  MeshLambertMaterial,
+  Mesh,
 } from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 import { Mitter } from '@/utils/mitt';
+import BaseModel from './model';
 import SkyBox from './skyBox';
 export default class Render {
   /** id */
@@ -25,6 +29,7 @@ export default class Render {
   public scene!: Scene;
   public mitter!: Mitter;
   public camera!: any;
+  public grid!: any;
   public controls!: OrbitControls;
   public renderer!: WebGLRenderer;
   public skyBox!: SkyBox;
@@ -49,9 +54,18 @@ export default class Render {
    */
   private init() {
     this.scene = new Scene();
+    // 创建网格
     const gridHelper = new GridHelper(10000, 400, 0x00ffff);
     gridHelper.position.y = -8;
+
     this.scene.add(gridHelper);
+    // 创建伪网格，设置透明，目的是通过光线投射获取鼠标的三维坐标系
+    const plane = new PlaneGeometry(10000 * 400, 10000 * 400);
+    var material = new MeshLambertMaterial({ color: 0xffffff, wireframe: true });
+    var mesh = new Mesh(plane, material);
+    mesh.rotation.x = -Math.PI / 2;
+    this.grid = mesh;
+    this.scene.add(mesh);
     this.initSkybox();
     this.initLight();
     this.initCamera();
@@ -102,10 +116,16 @@ export default class Render {
     this.controls = new OrbitControls(this.camera, this.renderer.domElement);
 
     this.controls.addEventListener('change', () => {
-      this.renderer.render(this.scene, this.camera);
+      this.render();
     });
+
+    this.render();
+  }
+
+  public render() {
     this.renderer.render(this.scene, this.camera);
   }
+
   private initSkybox() {
     if (!this.skyBox) this.skyBox = new SkyBox(this);
     this.skyBox.load();
@@ -136,8 +156,33 @@ export default class Render {
       });
       this.mitter.emit(this.mitter.TH_CLICK, { x: mouse.x, y: mouse.y, e, intersects });
     });
+    this.container.addEventListener('dragover', (e) => {
+      e.preventDefault();
+    });
     this.container.addEventListener('drop', (e) => {
-      console.log('drop', e);
+      const mouse = new Vector2();
+      mouse.x = (e.offsetX / this.container.offsetWidth) * 2 - 1;
+      mouse.y = -(e.offsetY / this.container.offsetHeight) * 2 + 1;
+      var raycaster = new Raycaster();
+      raycaster.setFromCamera(mouse, this.camera);
+      var intersects = raycaster.intersectObject(this.grid);
+
+      if (intersects.length > 0) {
+        var intersectPoint = intersects[0].point;
+        console.log('Intersect point: ', intersectPoint);
+        const { model, name, label } = JSON.parse(e.dataTransfer!.getData('data'));
+        try {
+          const mesh = BaseModel.createModel(model);
+          mesh.position.copy(intersectPoint);
+          this.scene.add(mesh);
+          this.render();
+        } catch (e) {
+          console.log(e);
+          this.mitter.emitThMsgError(e + '');
+        }
+      } else {
+        this.mitter.emitThMsgWaring('请将模型拖拽至网格平面！');
+      }
     });
   }
 }

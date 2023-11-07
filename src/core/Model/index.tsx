@@ -2,16 +2,20 @@
  * @Author: wuxudong wuxudong@zbnsec.com
  * @Date: 2023-08-29 15:40:18
  * @LastEditors: wuxudong 953909305@qq.com
- * @LastEditTime: 2023-11-05 17:56:41
+ * @LastEditTime: 2023-11-07 14:30:23
  * @Description:this is the  left menu of the editor,which contains the default model list andited by the editor
  */
-import React, { Component, useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import './index.scss';
 import { Tooltip } from 'antd';
 import { AppstoreAddOutlined, PartitionOutlined } from '@ant-design/icons';
 import { ModelMnueProps } from '@type/index';
 import ModelList from './modelList';
 import ModelPanel from './modelPanel';
+const componentMap: any = {
+  ModelList,
+  ModelPanel,
+};
 const Model: React.FC<ModelMnueProps> = (props: ModelMnueProps) => {
   const { menuShow } = props;
   const menuList = [
@@ -28,7 +32,7 @@ const Model: React.FC<ModelMnueProps> = (props: ModelMnueProps) => {
       onClick={(e: any) => {
         if (item.type === activeName) {
           setShowPanel(!showPanel);
-          setActiveName('');
+
           return;
         } else {
           !showPanel && setShowPanel(!showPanel);
@@ -38,25 +42,19 @@ const Model: React.FC<ModelMnueProps> = (props: ModelMnueProps) => {
     >
       <Tooltip placement='right' title={item.title}>
         <item.icon
-          className={`th-icon ${activeName === item.type ? 'active' : ''}`}
+          className={`th-icon ${activeName === item.type && showPanel ? 'active' : ''}`}
           style={{ color: 'white' }}
         />
       </Tooltip>
     </div>
   ));
 
-  let Component = ModelPanel;
-  useEffect(() => {
-    if (activeName === 'ModelPanel') {
-      Component = ModelPanel;
-    } else {
-      Component = ModelList;
-    }
-  }, [activeName]);
+  let Component: any = componentMap[activeName];
+
   return (
     <div className={bodyClassName}>
       <div className='model-continer-body'>
-        <Component></Component>
+        <Component />
       </div>
       <div className='model-continer-menu'>{listIcons}</div>
     </div>

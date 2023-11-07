@@ -3,12 +3,13 @@
 
   position: absolute;
   top: 8px;
-  left: 4px;
+  left: 50%;
   background-color: var(--th-color-menu-bg);
   border-radius: var(--border-radius-small);
   display: flex;
   align-items: center;
-
+  transform: translate(-50%, 0);
+  z-index: 9999;
   .icon-box {
     width: 30px;
     height: 30px;

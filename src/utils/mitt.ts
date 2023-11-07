@@ -2,7 +2,7 @@
  * @Author: wuxudong 953909305@qq.com
  * @Date: 2023-10-12 14:44:06
  * @LastEditors: wuxudong 953909305@qq.com
- * @LastEditTime: 2023-10-12 17:02:00
+ * @LastEditTime: 2023-11-07 20:38:12
  * @Description: 事件处理类
  */
 import mitt, { Emitter } from 'mitt';
@@ -35,6 +35,31 @@ class Mitter {
 
   public onThClick(callback: any) {
     mitter.on(this.TH_CLICK, callback);
+  }
+
+  /**
+   * @description: 全局警告msg
+   * @return {*}
+   */
+  public readonly TH_MSG_WARNING = 'th:msg:warning';
+
+  public emitThMsgWaring(msg: string) {
+    mitter.emit(this.TH_MSG_WARNING, msg);
+  }
+  public onThMsgWaring(callback: any) {
+    mitter.on(this.TH_MSG_WARNING, callback);
+  }
+
+  /**
+   * @description: 全局错误msg
+   * @return {*}
+   */
+  public readonly TH_MSG_ERROR = 'th:msg:error';
+  public emitThMsgError(msg: string) {
+    mitter.emit(this.TH_MSG_ERROR, msg);
+  }
+  public onThMsgError(callback: any) {
+    mitter.on(this.TH_MSG_ERROR, callback);
   }
   /**
    * 触发

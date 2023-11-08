@@ -198,6 +198,8 @@ class BaseModel {
     const group = new Group();
     group.add(new LineLoop(geometry, lineMaterial));
     group.add(new Mesh(geometry, meshMaterial));
+    group.name = 'dragable';
+    console.log(group);
     return group;
   }
 }

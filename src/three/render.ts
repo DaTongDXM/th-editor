@@ -2,7 +2,7 @@
  * @Author: wuxudong wuxudong@zbnsec.com
  * @Date: 2023-08-23 19:28:49
  * @LastEditors: wuxudong 953909305@qq.com
- * @LastEditTime: 2023-11-07 20:39:36
+ * @LastEditTime: 2023-11-08 15:34:05
  * @Description:editor init work by three.js
  */
 import {
@@ -17,21 +17,27 @@ import {
   PlaneGeometry,
   MeshLambertMaterial,
   Mesh,
+  Group,
 } from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
+import { ViewHelper } from 'three/examples/jsm/helpers/ViewHelper';
+import { DragControls } from 'three/examples/jsm/controls/DragControls';
 import { Mitter } from '@/utils/mitt';
 import BaseModel from './model';
 import SkyBox from './skyBox';
+
 export default class Render {
   /** id */
   public id: string;
   public container: HTMLElement;
+  public dragControls!: DragControls;
   public scene!: Scene;
   public mitter!: Mitter;
   public camera!: any;
   public grid!: any;
   public controls!: OrbitControls;
   public renderer!: WebGLRenderer;
+  public sceneList: Array<Scene | Group | any> = [];
   public skyBox!: SkyBox;
   private width: number;
   private height: number;
@@ -109,32 +115,87 @@ export default class Render {
     this.container.appendChild(this.renderer.domElement);
   }
   /**
-   * @description:
+   * @description:初始化控制器
    * @return {*}
    */
   private initControls() {
     this.controls = new OrbitControls(this.camera, this.renderer.domElement);
-
+    this.controls.enabled = true;
     this.controls.addEventListener('change', () => {
       this.render();
     });
 
     this.render();
   }
-
+  /**
+   * @description: 渲染函数，引入视角控制器
+   * @return {*}
+   */
   public render() {
-    this.renderer.render(this.scene, this.camera);
-  }
+    const viewHelper = new ViewHelper(this.camera, this.renderer.domElement);
+    this.renderer.autoClear = false;
 
+    this.renderer.render(this.scene, this.camera);
+    viewHelper.render(this.renderer);
+  }
+  /**
+   * @description: 初始化天空盒
+   * @return {*}
+   */
   private initSkybox() {
     if (!this.skyBox) this.skyBox = new SkyBox(this);
     this.skyBox.load();
+  }
+  /**
+   * @description: 获取一个射线投射器
+   * @param {MouseEvent} e
+   * @return {*}
+   */
+  private getRaycaster(e: MouseEvent): Raycaster {
+    const mouse = new Vector2();
+    mouse.x = (e.offsetX / this.container.offsetWidth) * 2 - 1;
+    mouse.y = -(e.offsetY / this.container.offsetHeight) * 2 + 1;
+    // 创建一个投射器
+    const raycaster = new Raycaster();
+    // 通过鼠标和相机位置更新射线
+    raycaster.setFromCamera(mouse, this.camera);
+    return raycaster;
+  }
+  private onClick(e: MouseEvent) {
+    const raycaster = this.getRaycaster(e);
+    // 计算物体和射线的焦点
+    const intersections = raycaster
+      .intersectObjects(this.scene.children, true)
+      .filter((el: any) => {
+        return el.object.type !== 'GridHelper';
+      });
+    if (intersections.length > 0) {
+      const object = intersections[0].object;
+      console.log(object, intersections);
+      if (!object) return;
+      this.dragControls = new DragControls([object], this.camera, this.renderer.domElement);
+      this.dragControls.transformGroup = true;
+      this.dragControls.addEventListener('drag', () => {
+        this.controls.enabled = false;
+        this.render();
+      });
+      this.dragControls.addEventListener('dragend', () => {
+        this.render();
+        this.controls.enabled = true;
+        this.dragControls.dispose();
+      });
+
+      // @ts-ignore
+      // object.material.emissive.set(0x000000);
+      this.scene.attach(object);
+    }
   }
   private registerEvent() {
     this.mitter.on(this.mitter.TH_SKYBOX_LOAD, () => {
       this.initRenderer();
       this.initControls();
     });
+
     window.onresize = () => {
       this.width = this.container.offsetWidth;
       this.height = this.container.offsetHeight;
@@ -142,29 +203,12 @@ export default class Render {
       this.camera.aspect = this.width / this.height;
       this.camera.updateProjectionMatrix();
     };
-    this.container.addEventListener('click', (e) => {
-      const mouse = new Vector2();
-      mouse.x = (e.offsetX / this.container.offsetWidth) * 2 - 1;
-      mouse.y = -(e.offsetY / this.container.offsetHeight) * 2 + 1;
-      // 创建一个投射器
-      const raycaster = new Raycaster();
-      // 通过鼠标和相机位置更新射线
-      raycaster.setFromCamera(mouse, this.camera);
-      // 计算物体和射线的焦点
-      const intersects = raycaster.intersectObjects(this.scene.children).filter((el: any) => {
-        return el.object.type !== 'GridHelper';
-      });
-      this.mitter.emit(this.mitter.TH_CLICK, { x: mouse.x, y: mouse.y, e, intersects });
-    });
+    this.container.addEventListener('click', this.onClick.bind(this));
     this.container.addEventListener('dragover', (e) => {
       e.preventDefault();
     });
     this.container.addEventListener('drop', (e) => {
-      const mouse = new Vector2();
-      mouse.x = (e.offsetX / this.container.offsetWidth) * 2 - 1;
-      mouse.y = -(e.offsetY / this.container.offsetHeight) * 2 + 1;
-      var raycaster = new Raycaster();
-      raycaster.setFromCamera(mouse, this.camera);
+      const raycaster = this.getRaycaster(e);
       var intersects = raycaster.intersectObject(this.grid);
 
       if (intersects.length > 0) {
@@ -175,6 +219,9 @@ export default class Render {
           const mesh = BaseModel.createModel(model);
           mesh.position.copy(intersectPoint);
           this.scene.add(mesh);
+
+          // this.scene.attach(mesh);
+          // this.sceneList.push(mesh);
           this.render();
         } catch (e) {
           console.log(e);

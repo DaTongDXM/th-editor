@@ -2,7 +2,7 @@
  * @Author: wuxudong wuxudong@zbnsec.com
  * @Date: 2023-08-23 19:28:49
  * @LastEditors: wuxudong 953909305@qq.com
- * @LastEditTime: 2023-11-08 15:34:05
+ * @LastEditTime: 2023-11-09 20:11:21
  * @Description:editor init work by three.js
  */
 import {
@@ -164,16 +164,18 @@ export default class Render {
   private onClick(e: MouseEvent) {
     const raycaster = this.getRaycaster(e);
     // 计算物体和射线的焦点
-    const intersections = raycaster
-      .intersectObjects(this.scene.children, true)
-      .filter((el: any) => {
-        return el.object.type !== 'GridHelper';
-      });
+    const intersections = raycaster.intersectObjects(this.scene.children).filter((el: any) => {
+      return el.object.type !== 'GridHelper' && el.object.uuid !== this.grid.uuid;
+    });
     if (intersections.length > 0) {
       const object = intersections[0].object;
+      const objects = intersections.map((el) => el.object);
       console.log(object, intersections);
       if (!object) return;
-      this.dragControls = new DragControls([object], this.camera, this.renderer.domElement);
+      const group = this.scene.getObjectByProperty('uuid', object.name);
+      console.log('group', group);
+      if (!group) return;
+      this.dragControls = new DragControls([group], this.camera, this.renderer.domElement);
       this.dragControls.transformGroup = true;
       this.dragControls.addEventListener('drag', () => {
         this.controls.enabled = false;
@@ -219,7 +221,7 @@ export default class Render {
           const mesh = BaseModel.createModel(model);
           mesh.position.copy(intersectPoint);
           this.scene.add(mesh);
-
+          console.log(this.scene);
           // this.scene.attach(mesh);
           // this.sceneList.push(mesh);
           this.render();

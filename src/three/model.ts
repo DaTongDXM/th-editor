@@ -196,8 +196,12 @@ class BaseModel {
       flatShading: true,
     });
     const group = new Group();
-    group.add(new LineLoop(geometry, lineMaterial));
-    group.add(new Mesh(geometry, meshMaterial));
+    const lineLoop = new LineLoop(geometry, lineMaterial);
+    lineLoop.name = group.uuid;
+    group.add(lineLoop);
+    const mesh = new Mesh(geometry, meshMaterial);
+    mesh.name = group.uuid;
+    group.add(mesh);
     group.name = 'dragable';
     console.log(group);
     return group;

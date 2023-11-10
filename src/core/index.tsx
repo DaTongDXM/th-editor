@@ -10,7 +10,7 @@ import { message } from 'antd';
 import './index.scss';
 import Loading from '@/components/Loading';
 import { EditorCoreProps } from '../../types';
-import Render from '@/three/render';
+import Editor from '@/three/editor';
 import mitter from '@/utils/mitt';
 import Model from './Model';
 import Toolbar from './Toolbar';
@@ -18,11 +18,11 @@ import Toolbar from './Toolbar';
 const EditorCore: React.FC<EditorCoreProps & { editorRef: any }> = ({ onClick }) => {
   const [loading, setLoading] = useState(true);
 
-  // let render: Render;
-  let [render, setRender] = useState<Render | null>(null);
+  // let editor: Editor;
+  let [editor, setRender] = useState<Editor | null>(null);
   useEffect(() => {
-    if (!render) {
-      const newRender = new Render('123', document.getElementById('render-container')!, mitter);
+    if (!editor) {
+      const newRender = new Editor('123', document.getElementById('editor-container')!, mitter);
       setRender(newRender);
       handleRegister();
     }
@@ -31,16 +31,16 @@ const EditorCore: React.FC<EditorCoreProps & { editorRef: any }> = ({ onClick })
     setLoading(false);
   }, 1000);
   function handleRegister() {
-    if (!render) return;
-    render.mitter.on(mitter.TH_CLICK, (e: any) => {
+    if (!editor) return;
+    editor.mitter.on(mitter.TH_CLICK, (e: any) => {
       onClick(e);
     });
-    render.mitter.onThMsgWaring((msg: string) => {
+    editor.mitter.onThMsgWaring((msg: string) => {
       message.warning({
         content: msg,
       });
     });
-    render.mitter.onThMsgError((msg: string) => {
+    editor.mitter.onThMsgError((msg: string) => {
       message.error({
         content: msg,
       });
@@ -52,9 +52,9 @@ const EditorCore: React.FC<EditorCoreProps & { editorRef: any }> = ({ onClick })
       <div className={`mask-container-item left ${loading ? '' : 'hidden'}`}></div>
       <Loading loading={loading}>Loading...</Loading>
       <div className={`mask-container-item right ${loading ? '' : 'hidden'}`}></div>
-      {render && <Toolbar render={render} />}
+      {editor && <Toolbar editor={editor} />}
       <Model menuShow={false} />
-      <div id='render-container' className='main-container'></div>
+      <div id='editor-container' className='main-container'></div>
     </>
   );
 };

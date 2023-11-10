@@ -6,7 +6,7 @@
 import React, { useState } from 'react';
 import './index.scss';
 import { Tooltip } from 'antd';
-import Render from '@/three/render';
+import Editor from '@/three/editor';
 import {
   DragOutlined,
   ExpandAltOutlined,
@@ -17,7 +17,7 @@ import {
   SendOutlined,
 } from '@ant-design/icons';
 
-const ToolBar: React.FC<{ render: Render }> = ({ render }) => {
+const ToolBar: React.FC<{ editor: Editor }> = ({ editor }) => {
   const [activeName, setActiveName] = useState('DragOutlined');
   const menuList = [
     { icon: DragOutlined, title: '位置', type: 'DragOutlined' },
@@ -55,7 +55,7 @@ const ToolBar: React.FC<{ render: Render }> = ({ render }) => {
    * @return {*}
    */
   function handleDownload() {
-    let output = render.scene.toJSON();
+    let output = editor.scene.toJSON();
     try {
       output = JSON.stringify(output, null, '\t');
       output = output.replace(/[\n\t]+([\d\.e\-\[\]]+)/g, '$1');

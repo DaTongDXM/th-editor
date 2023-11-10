@@ -2,13 +2,14 @@
  * @Author: wuxudong wuxudong@zbnsec.com
  * @Date: 2023-08-29 18:07:07
  * @LastEditors: wuxudong 953909305@qq.com
- * @LastEditTime: 2023-11-07 14:27:10
+ * @LastEditTime: 2023-11-10 17:46:23
  * @Description:
  */
 import React, { useEffect, useState } from 'react';
 import { Tabs } from 'antd';
 import type { TabsProps } from 'antd';
-
+// @ts-ignore
+import { BorderBox7 } from '@jiaminghi/data-view-react';
 import BaseModel from './base';
 import CustomModel from './custom';
 const components: any = {
@@ -37,7 +38,9 @@ const ModelPanel: React.FC<any> = () => {
   return (
     <>
       <Tabs items={items} centered onTabClick={handleTabClick}></Tabs>
-      <Component />
+      <BorderBox7>
+        <Component />
+      </BorderBox7>
     </>
   );
 };

@@ -2,7 +2,7 @@
  * @Author: wuxudong wuxudong@zbnsec.com
  * @Date: 2023-08-23 19:28:49
  * @LastEditors: wuxudong 953909305@qq.com
- * @LastEditTime: 2023-11-10 15:56:33
+ * @LastEditTime: 2023-11-10 17:14:03
  * @Description:editor init work by three.js
  */
 import {
@@ -26,7 +26,7 @@ import { Mitter } from '@/utils/mitt';
 import BaseModel from './model';
 import SkyBox from './skyBox';
 
-export default class Render {
+export default class Editor {
   /** id */
   public id: string;
   public container: HTMLElement;
@@ -36,7 +36,7 @@ export default class Render {
   public camera!: any;
   public grid!: any;
   public controls!: OrbitControls;
-  public renderer!: WebGLRenderer;
+  public editor!: WebGLRenderer;
   public sceneList: Array<Scene | Group | any> = [];
   public skyBox!: SkyBox;
   private width: number;
@@ -55,7 +55,7 @@ export default class Render {
     this.init();
     this.registerEvent();
   }
-  
+
   /**
    * create scene with skybox, grid,light,camera
    */
@@ -108,20 +108,20 @@ export default class Render {
    * @return {*}
    */
   private initRenderer() {
-    this.renderer = new WebGLRenderer({
+    this.editor = new WebGLRenderer({
       antialias: true,
     });
-    this.renderer.setSize(this.container.offsetWidth, this.container.offsetHeight);
-    this.renderer.setClearColor(0x444444);
+    this.editor.setSize(this.container.offsetWidth, this.container.offsetHeight);
+    this.editor.setClearColor(0x444444);
 
-    this.container.appendChild(this.renderer.domElement);
+    this.container.appendChild(this.editor.domElement);
   }
   /**
    * @description:初始化控制器
    * @return {*}
    */
   private initControls() {
-    this.controls = new OrbitControls(this.camera, this.renderer.domElement);
+    this.controls = new OrbitControls(this.camera, this.editor.domElement);
     this.controls.enabled = true;
     this.controls.addEventListener('change', () => {
       this.render();
@@ -134,11 +134,11 @@ export default class Render {
    * @return {*}
    */
   public render() {
-    const viewHelper = new ViewHelper(this.camera, this.renderer.domElement);
-    this.renderer.autoClear = false;
+    const viewHelper = new ViewHelper(this.camera, this.editor.domElement);
+    this.editor.autoClear = false;
 
-    this.renderer.render(this.scene, this.camera);
-    viewHelper.render(this.renderer);
+    this.editor.render(this.scene, this.camera);
+    viewHelper.render(this.editor);
   }
   /**
    * @description: 初始化天空盒
@@ -182,7 +182,7 @@ export default class Render {
       this.dragControls = new DragControls(
         [object.parent ? object.parent : object],
         this.camera,
-        this.renderer.domElement,
+        this.editor.domElement,
       );
       this.dragControls.transformGroup = true;
       this.dragControls.addEventListener('drag', () => {
@@ -209,7 +209,7 @@ export default class Render {
     window.onresize = () => {
       this.width = this.container.offsetWidth;
       this.height = this.container.offsetHeight;
-      this.renderer.setSize(this.width, this.height);
+      this.editor.setSize(this.width, this.height);
       this.camera.aspect = this.width / this.height;
       this.camera.updateProjectionMatrix();
     };

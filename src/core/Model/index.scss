@@ -22,6 +22,13 @@
     height: 100%;
     background-color: var(--th-color-menu-bg);
     border-radius: var(--border-radius-small);
+
+    .ant-tabs-nav {
+      margin: 0px;
+      .ant-tabs-tab-active {
+        font-weight: 600;
+      }
+    }
   }
   &.un-show {
     left: -240px;

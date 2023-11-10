@@ -9,23 +9,4 @@
   display: flex;
   align-items: center;
   transform: translate(-50%, 0);
-
-  .icon-box {
-    width: 30px;
-    height: 30px;
-    font-size: 20px;
-    margin: 0px 8px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    &:hover {
-      background-color: #353535;
-    }
-    .th-icon {
-      &.active {
-        background-color: #353535;
-      }
-    }
-  }
 }

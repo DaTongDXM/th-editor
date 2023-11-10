@@ -2,7 +2,7 @@
  * @Author: wuxudong wuxudong@zbnsec.com
  * @Date: 2023-08-23 19:28:49
  * @LastEditors: wuxudong 953909305@qq.com
- * @LastEditTime: 2023-11-09 20:11:21
+ * @LastEditTime: 2023-11-10 15:56:33
  * @Description:editor init work by three.js
  */
 import {
@@ -55,6 +55,7 @@ export default class Render {
     this.init();
     this.registerEvent();
   }
+  
   /**
    * create scene with skybox, grid,light,camera
    */
@@ -98,6 +99,7 @@ export default class Render {
       1,
       2000,
     );
+    this.camera.updateProjectionMatrix();
     this.camera.position.set(200, 100, 200);
     this.camera.lookAt(0, 400, 0);
   }
@@ -161,7 +163,14 @@ export default class Render {
     raycaster.setFromCamera(mouse, this.camera);
     return raycaster;
   }
+  /**
+   * @description: 点击事件
+   * @param {MouseEvent} e
+   * @return {*}
+   */
   private onClick(e: MouseEvent) {
+    e.preventDefault();
+
     const raycaster = this.getRaycaster(e);
     // 计算物体和射线的焦点
     const intersections = raycaster.intersectObjects(this.scene.children).filter((el: any) => {
@@ -169,13 +178,12 @@ export default class Render {
     });
     if (intersections.length > 0) {
       const object = intersections[0].object;
-      const objects = intersections.map((el) => el.object);
-      console.log(object, intersections);
-      if (!object) return;
-      const group = this.scene.getObjectByProperty('uuid', object.name);
-      console.log('group', group);
-      if (!group) return;
-      this.dragControls = new DragControls([group], this.camera, this.renderer.domElement);
+
+      this.dragControls = new DragControls(
+        [object.parent ? object.parent : object],
+        this.camera,
+        this.renderer.domElement,
+      );
       this.dragControls.transformGroup = true;
       this.dragControls.addEventListener('drag', () => {
         this.controls.enabled = false;
@@ -186,12 +194,12 @@ export default class Render {
         this.controls.enabled = true;
         this.dragControls.dispose();
       });
-
-      // @ts-ignore
-      // object.material.emissive.set(0x000000);
-      this.scene.attach(object);
     }
   }
+  /**
+   * @description: 注册事件
+   * @return {*}
+   */
   private registerEvent() {
     this.mitter.on(this.mitter.TH_SKYBOX_LOAD, () => {
       this.initRenderer();
@@ -221,9 +229,7 @@ export default class Render {
           const mesh = BaseModel.createModel(model);
           mesh.position.copy(intersectPoint);
           this.scene.add(mesh);
-          console.log(this.scene);
-          // this.scene.attach(mesh);
-          // this.sceneList.push(mesh);
+
           this.render();
         } catch (e) {
           console.log(e);

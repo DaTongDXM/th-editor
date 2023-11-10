@@ -29,3 +29,24 @@
 .main-container {
   height: 100vh;
 }
+
+.th-menu-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  font-size: 20px;
+  margin: 0px 8px;
+
+  cursor: pointer;
+  &:hover {
+    background-color: #353535;
+    border-radius: var(--border-radius-small);
+  }
+
+  &.active {
+    background-color: #353535;
+    border-radius: var(--border-radius-small);
+  }
+}

@@ -42,7 +42,7 @@ const Model: React.FC<ModelMnueProps> = (props: ModelMnueProps) => {
     >
       <Tooltip placement='right' title={item.title}>
         <item.icon
-          className={`th-icon ${activeName === item.type && showPanel ? 'active' : ''}`}
+          className={`th-menu-icon ${activeName === item.type && showPanel ? 'active' : ''}`}
           style={{ color: 'white' }}
         />
       </Tooltip>

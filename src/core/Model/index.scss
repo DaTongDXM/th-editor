@@ -1,8 +1,8 @@
 .model-continer {
-  height: calc(100% - 50px);
+  height: calc(100% - 8px);
   color: var(--th-color-font-light);
   position: absolute;
-  top: 58px;
+  top: 8px;
   left: 4px;
   display: flex;
   align-items: flex-start;
@@ -13,20 +13,8 @@
     margin-top: 4px;
     margin-left: 4px;
     border-radius: var(--border-radius-small);
-    .th-icon {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 30px;
-      height: 30px;
-      font-size: 20px;
-      margin-top: 4px;
-      &:hover {
-        background-color: #353535;
-      }
-      &.active {
-        background-color: #353535;
-      }
+    .th-menu-icon {
+      margin: 4px 0px 0px !important;
     }
   }
   &-body {

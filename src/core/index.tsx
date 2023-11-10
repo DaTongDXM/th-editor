@@ -2,7 +2,7 @@
  * @Author: wuxudong wuxudong@zbnsec.com
  * @Date: 2022-11-15 01:13:46
  * @LastEditors: wuxudong 953909305@qq.com
- * @LastEditTime: 2023-11-07 20:39:05
+ * @LastEditTime: 2023-11-10 14:30:27
  * @Description:The editor container contains the canvas , toolbar and attribute
  */
 import React, { useEffect, useState } from 'react';
@@ -18,10 +18,12 @@ import Toolbar from './Toolbar';
 const EditorCore: React.FC<EditorCoreProps & { editorRef: any }> = ({ onClick }) => {
   const [loading, setLoading] = useState(true);
 
-  let render: Render;
+  // let render: Render;
+  let [render, setRender] = useState<Render | null>(null);
   useEffect(() => {
     if (!render) {
-      render = new Render('123', document.getElementById('render-container')!, mitter);
+      const newRender = new Render('123', document.getElementById('render-container')!, mitter);
+      setRender(newRender);
       handleRegister();
     }
   }, []); // 依赖数组为空，表示只在组件挂载时执行一次
@@ -29,6 +31,7 @@ const EditorCore: React.FC<EditorCoreProps & { editorRef: any }> = ({ onClick })
     setLoading(false);
   }, 1000);
   function handleRegister() {
+    if (!render) return;
     render.mitter.on(mitter.TH_CLICK, (e: any) => {
       onClick(e);
     });
@@ -49,7 +52,7 @@ const EditorCore: React.FC<EditorCoreProps & { editorRef: any }> = ({ onClick })
       <div className={`mask-container-item left ${loading ? '' : 'hidden'}`}></div>
       <Loading loading={loading}>Loading...</Loading>
       <div className={`mask-container-item right ${loading ? '' : 'hidden'}`}></div>
-      <Toolbar />
+      {render && <Toolbar render={render} />}
       <Model menuShow={false} />
       <div id='render-container' className='main-container'></div>
     </>

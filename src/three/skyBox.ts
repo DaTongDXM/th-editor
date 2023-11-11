@@ -6,7 +6,7 @@
  * @Description:implementing SkyBox with CubeTexture
  */
 import { CubeTextureLoader } from 'three';
-import type Editor from './editor';
+import type Editor from './Editor';
 import path from 'path';
 export default class SkyBox {
   public render: Editor;

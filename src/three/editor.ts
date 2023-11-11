@@ -2,8 +2,8 @@
  * @Author: wuxudong wuxudong@zbnsec.com
  * @Date: 2023-08-23 19:28:49
  * @LastEditors: wuxudong 953909305@qq.com
- * @LastEditTime: 2023-11-10 17:14:03
- * @Description:editor init work by three.js
+ * @LastEditTime: 2023-11-11 17:58:13
+ * @Description:renderer init work by three.js
  */
 import {
   Scene,
@@ -23,10 +23,12 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 import { ViewHelper } from 'three/examples/jsm/helpers/ViewHelper';
 import { DragControls } from 'three/examples/jsm/controls/DragControls';
 import { Mitter } from '@/utils/mitt';
-import BaseModel from './model';
+
 import SkyBox from './skyBox';
+import Events from './Events';
 
 export default class Editor {
+  public static editor: Editor;
   /** id */
   public id: string;
   public container: HTMLElement;
@@ -36,17 +38,18 @@ export default class Editor {
   public camera!: any;
   public grid!: any;
   public controls!: OrbitControls;
-  public editor!: WebGLRenderer;
+  public renderer!: WebGLRenderer;
   public sceneList: Array<Scene | Group | any> = [];
   public skyBox!: SkyBox;
-  private width: number;
-  private height: number;
+  public width: number;
+  public height: number;
   /**
    *
-   * @param id editor id
+   * @param id renderer id
    * @param container canvas container
    */
   constructor(id: string, container: HTMLElement, mitter: Mitter) {
+    Editor.editor = this;
     this.id = id;
     this.width = container.offsetWidth;
     this.height = container.offsetHeight;
@@ -54,6 +57,14 @@ export default class Editor {
     this.mitter = mitter;
     this.init();
     this.registerEvent();
+
+    const events = new Events();
+  }
+
+  public static getInstance(id?: string, container?: HTMLElement) {
+    if (container === undefined && Editor.editor !== undefined) {
+      return Editor.editor;
+    }
   }
 
   /**
@@ -108,20 +119,20 @@ export default class Editor {
    * @return {*}
    */
   private initRenderer() {
-    this.editor = new WebGLRenderer({
+    this.renderer = new WebGLRenderer({
       antialias: true,
     });
-    this.editor.setSize(this.container.offsetWidth, this.container.offsetHeight);
-    this.editor.setClearColor(0x444444);
+    this.renderer.setSize(this.container.offsetWidth, this.container.offsetHeight);
+    this.renderer.setClearColor(0x444444);
 
-    this.container.appendChild(this.editor.domElement);
+    this.container.appendChild(this.renderer.domElement);
   }
   /**
    * @description:初始化控制器
    * @return {*}
    */
   private initControls() {
-    this.controls = new OrbitControls(this.camera, this.editor.domElement);
+    this.controls = new OrbitControls(this.camera, this.renderer.domElement);
     this.controls.enabled = true;
     this.controls.addEventListener('change', () => {
       this.render();
@@ -134,11 +145,11 @@ export default class Editor {
    * @return {*}
    */
   public render() {
-    const viewHelper = new ViewHelper(this.camera, this.editor.domElement);
-    this.editor.autoClear = false;
+    const viewHelper = new ViewHelper(this.camera, this.renderer.domElement);
+    this.renderer.autoClear = false;
 
-    this.editor.render(this.scene, this.camera);
-    viewHelper.render(this.editor);
+    this.renderer.render(this.scene, this.camera);
+    viewHelper.render(this.renderer);
   }
   /**
    * @description: 初始化天空盒
@@ -182,7 +193,7 @@ export default class Editor {
       this.dragControls = new DragControls(
         [object.parent ? object.parent : object],
         this.camera,
-        this.editor.domElement,
+        this.renderer.domElement,
       );
       this.dragControls.transformGroup = true;
       this.dragControls.addEventListener('drag', () => {
@@ -206,38 +217,6 @@ export default class Editor {
       this.initControls();
     });
 
-    window.onresize = () => {
-      this.width = this.container.offsetWidth;
-      this.height = this.container.offsetHeight;
-      this.editor.setSize(this.width, this.height);
-      this.camera.aspect = this.width / this.height;
-      this.camera.updateProjectionMatrix();
-    };
     this.container.addEventListener('click', this.onClick.bind(this));
-    this.container.addEventListener('dragover', (e) => {
-      e.preventDefault();
-    });
-    this.container.addEventListener('drop', (e) => {
-      const raycaster = this.getRaycaster(e);
-      var intersects = raycaster.intersectObject(this.grid);
-
-      if (intersects.length > 0) {
-        var intersectPoint = intersects[0].point;
-        console.log('Intersect point: ', intersectPoint);
-        const { model, name, label } = JSON.parse(e.dataTransfer!.getData('data'));
-        try {
-          const mesh = BaseModel.createModel(model);
-          mesh.position.copy(intersectPoint);
-          this.scene.add(mesh);
-
-          this.render();
-        } catch (e) {
-          console.log(e);
-          this.mitter.emitThMsgError(e + '');
-        }
-      } else {
-        this.mitter.emitThMsgWaring('请将模型拖拽至网格平面！');
-      }
-    });
   }
 }

@@ -6,7 +6,7 @@
 import React, { useState } from 'react';
 import './index.scss';
 import { Tooltip } from 'antd';
-import Editor from '@/three/editor';
+import Editor from '@/three/Editor';
 import {
   DragOutlined,
   ExpandAltOutlined,

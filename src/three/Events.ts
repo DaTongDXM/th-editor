@@ -1,7 +1,7 @@
 /*
  * @Author: wuxudong 953909305@qq.com
- * @LastEditors: wuxudong 953909305@qq.com
- * @Description:
+ * @LastEditors: 武 旭东 wuxudong@zbnsec.com
+ * @Description:事件类
  */
 import { Camera, EventDispatcher, Object3D, Raycaster, Scene, Vector2 } from 'three';
 import Editor from './Editor';

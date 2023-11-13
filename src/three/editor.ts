@@ -2,7 +2,7 @@
  * @Author: wuxudong wuxudong@zbnsec.com
  * @Date: 2023-08-23 19:28:49
  * @LastEditors: wuxudong 953909305@qq.com
- * @LastEditTime: 2023-11-11 17:58:13
+ * @LastEditTime: 2023-11-13 18:19:18
  * @Description:renderer init work by three.js
  */
 import {
@@ -43,6 +43,7 @@ export default class Editor {
   public skyBox!: SkyBox;
   public width: number;
   public height: number;
+  public events: Events;
   /**
    *
    * @param id renderer id
@@ -55,10 +56,10 @@ export default class Editor {
     this.height = container.offsetHeight;
     this.container = container;
     this.mitter = mitter;
-    this.init();
-    this.registerEvent();
 
-    const events = new Events();
+    this.init();
+    this.events = new Events();
+    this.registerEvent();
   }
 
   public static getInstance(id?: string, container?: HTMLElement) {
@@ -174,49 +175,23 @@ export default class Editor {
     raycaster.setFromCamera(mouse, this.camera);
     return raycaster;
   }
-  /**
-   * @description: 点击事件
-   * @param {MouseEvent} e
-   * @return {*}
-   */
-  private onClick(e: MouseEvent) {
-    e.preventDefault();
 
-    const raycaster = this.getRaycaster(e);
-    // 计算物体和射线的焦点
-    const intersections = raycaster.intersectObjects(this.scene.children).filter((el: any) => {
-      return el.object.type !== 'GridHelper' && el.object.uuid !== this.grid.uuid;
-    });
-    if (intersections.length > 0) {
-      const object = intersections[0].object;
-
-      this.dragControls = new DragControls(
-        [object.parent ? object.parent : object],
-        this.camera,
-        this.renderer.domElement,
-      );
-      this.dragControls.transformGroup = true;
-      this.dragControls.addEventListener('drag', () => {
-        this.controls.enabled = false;
-        this.render();
-      });
-      this.dragControls.addEventListener('dragend', () => {
-        this.render();
-        this.controls.enabled = true;
-        this.dragControls.dispose();
-      });
-    }
-  }
   /**
    * @description: 注册事件
    * @return {*}
    */
   private registerEvent() {
-    this.mitter.on(this.mitter.TH_SKYBOX_LOAD, () => {
+    this.events.addEventListener('render', () => {
+      this.render();
+    });
+    this.events.addEventListener(this.events.TH_SKYBOX_LOAD, () => {
       this.initRenderer();
       this.initControls();
     });
+  }
 
-    this.container.addEventListener('click', this.onClick.bind(this));
+  public dispatchEvent(args: any) {
+    console.log(args);
+    this.events.dispatchEvent(args);
   }
 }

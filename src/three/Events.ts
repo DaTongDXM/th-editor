@@ -1,9 +1,11 @@
 /*
  * @Author: wuxudong 953909305@qq.com
- * @LastEditors: 武 旭东 wuxudong@zbnsec.com
+ * @LastEditors: wuxudong 953909305@qq.com
  * @Description:事件类
  */
 import { Camera, EventDispatcher, Object3D, Raycaster, Scene, Vector2 } from 'three';
+
+import { DragControls } from 'three/examples/jsm/controls/DragControls';
 import Editor from './Editor';
 import BaseModel from './model';
 
@@ -14,6 +16,12 @@ export default class Events extends EventDispatcher {
   private scene: Scene;
   private camera: Camera;
   private grid: Scene;
+  private dragControls: DragControls;
+  /**
+   * @description: 加载天空盒
+   * @return {*}
+   */
+  public readonly TH_SKYBOX_LOAD = 'th:skybox:loaded';
   constructor() {
     super();
     const editor = Editor.editor;
@@ -22,6 +30,7 @@ export default class Events extends EventDispatcher {
     this.camera = editor.camera;
     this.grid = editor.grid;
     const raycaster = this.raycaster;
+    this.dragControls = editor.dragControls;
 
     let cacheObject: Object3D | null = null;
 
@@ -35,6 +44,7 @@ export default class Events extends EventDispatcher {
     this.container.addEventListener('dragover', (e) => {
       e.preventDefault();
     });
+    // 画布拖拽事件
     this.container.addEventListener('drop', (e) => {
       const raycaster = this.getRaycaster(e);
       var intersects = raycaster.intersectObject(this.grid);
@@ -58,7 +68,16 @@ export default class Events extends EventDispatcher {
         editor.mitter.emitThMsgWaring('请将模型拖拽至网格平面！');
       }
     });
+
+    // 画布点击事件
+
+    this.container.addEventListener('click', this.onClick.bind(this));
   }
+
+  // public dispatchEvent(args:string|{type:string,message:any}){
+
+  // };
+
   /**
    * @description: 获取一个射线投射器
    * @param {MouseEvent} e
@@ -73,5 +92,40 @@ export default class Events extends EventDispatcher {
     // 通过鼠标和相机位置更新射线
     raycaster.setFromCamera(mouse, this.camera);
     return raycaster;
+  }
+
+  /**
+   * @description: 点击事件
+   * @param {MouseEvent} e
+   * @return {*}
+   */
+  private onClick(e: MouseEvent) {
+    e.preventDefault();
+    this.dispatchEvent({ type: 'redner' });
+    const raycaster = this.getRaycaster(e);
+    // 计算物体和射线的焦点
+    const intersections = raycaster.intersectObjects(this.scene.children).filter((el: any) => {
+      return el.object.type !== 'GridHelper' && el.object.uuid !== this.grid.uuid;
+    });
+    if (intersections.length > 0) {
+      const object = intersections[0].object;
+
+      this.dragControls = new DragControls(
+        [object.parent ? object.parent : object],
+        this.camera,
+        this.container,
+      );
+      this.dragControls.transformGroup = true;
+      this.dragControls.addEventListener('drag', () => {
+        Editor.editor.controls.enabled = false;
+        this.dispatchEvent({ type: 'render' });
+        console.log('00000');
+      });
+      this.dragControls.addEventListener('dragend', () => {
+        this.dispatchEvent({ type: 'render' });
+        Editor.editor.controls.enabled = true;
+        this.dragControls.dispose();
+      });
+    }
   }
 }

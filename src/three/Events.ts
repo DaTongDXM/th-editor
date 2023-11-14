@@ -8,6 +8,7 @@ import { Camera, EventDispatcher, Object3D, Raycaster, Scene, Vector2 } from 'th
 import { DragControls } from 'three/examples/jsm/controls/DragControls';
 import Editor from './Editor';
 import BaseModel from './model';
+import Control from './Control';
 
 export default class Events extends EventDispatcher {
   private container: HTMLElement;
@@ -17,11 +18,13 @@ export default class Events extends EventDispatcher {
   private camera: Camera;
   private grid: Scene;
   private dragControls: DragControls;
+  private control: Control;
   /**
    * @description: 加载天空盒
    * @return {*}
    */
   public readonly TH_SKYBOX_LOAD = 'th:skybox:loaded';
+  public readonly TH_CLICK = 'th:click';
   constructor() {
     super();
     const editor = Editor.editor;
@@ -31,7 +34,7 @@ export default class Events extends EventDispatcher {
     this.grid = editor.grid;
     const raycaster = this.raycaster;
     this.dragControls = editor.dragControls;
-
+    this.control = Control.getControlInstance(editor);
     let cacheObject: Object3D | null = null;
 
     window.onresize = () => {
@@ -101,6 +104,7 @@ export default class Events extends EventDispatcher {
    */
   private onClick(e: MouseEvent) {
     e.preventDefault();
+
     this.dispatchEvent({ type: 'redner' });
     const raycaster = this.getRaycaster(e);
     // 计算物体和射线的焦点
@@ -109,7 +113,7 @@ export default class Events extends EventDispatcher {
     });
     if (intersections.length > 0) {
       const object = intersections[0].object;
-
+      this.dispatchEvent({ type: this.TH_CLICK, object });
       this.dragControls = new DragControls(
         [object.parent ? object.parent : object],
         this.camera,

@@ -2,7 +2,7 @@
  * @Author: wuxudong wuxudong@zbnsec.com
  * @Date: 2023-08-23 19:28:49
  * @LastEditors: wuxudong 953909305@qq.com
- * @LastEditTime: 2023-11-13 18:19:18
+ * @LastEditTime: 2023-11-14 16:56:48
  * @Description:renderer init work by three.js
  */
 import {
@@ -18,6 +18,7 @@ import {
   MeshLambertMaterial,
   Mesh,
   Group,
+  Object3D,
 } from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 import { ViewHelper } from 'three/examples/jsm/helpers/ViewHelper';
@@ -44,6 +45,7 @@ export default class Editor {
   public width: number;
   public height: number;
   public events: Events;
+  private cacheObject: Object3D | null = null;
   /**
    *
    * @param id renderer id
@@ -188,10 +190,18 @@ export default class Editor {
       this.initRenderer();
       this.initControls();
     });
+    this.addEventListener(this.events.TH_CLICK, (model: any) => {
+      const { object } = model;
+      this.cacheObject = this.scene.getObjectByProperty('uuid', object.uuid) || null;
+      console.log('点击模型:', this.cacheObject);
+    });
   }
 
   public dispatchEvent(args: any) {
     console.log(args);
     this.events.dispatchEvent(args);
+  }
+  public addEventListener(args: any, callback: any) {
+    this.events.addEventListener(args, callback);
   }
 }

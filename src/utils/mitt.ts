@@ -2,7 +2,7 @@
  * @Author: wuxudong 953909305@qq.com
  * @Date: 2023-10-12 14:44:06
  * @LastEditors: wuxudong 953909305@qq.com
- * @LastEditTime: 2023-11-11 18:20:18
+ * @LastEditTime: 2023-11-15 19:34:01
  * @Description: 事件处理类
  */
 import mitt, { Emitter } from 'mitt';
@@ -44,6 +44,7 @@ class Mitter {
   public readonly TH_MSG_WARNING = 'th:msg:warning';
 
   public emitThMsgWaring(msg: string) {
+    console.log(msg);
     mitter.emit(this.TH_MSG_WARNING, msg);
   }
   public onThMsgWaring(callback: any) {

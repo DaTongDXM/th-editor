@@ -3,7 +3,7 @@
  * @LastEditors: wuxudong 953909305@qq.com
  * @Description:
  */
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './index.scss';
 import { Tooltip } from 'antd';
 import Editor from '@/three/Editor';
@@ -15,14 +15,18 @@ import {
   PlayCircleOutlined,
   DownloadOutlined,
   SendOutlined,
+  AimOutlined,
 } from '@ant-design/icons';
 
-const ToolBar: React.FC<{ editor: Editor }> = ({ editor }) => {
-  const [activeName, setActiveName] = useState('DragOutlined');
+const ToolBar: React.FC<{ editor: Editor; keyCode: number }> = ({ editor, keyCode = 87 }) => {
+  const [activeName, setActiveName] = useState('AimOutlined');
+
   const menuList = [
-    { icon: DragOutlined, title: '位置', type: 'DragOutlined' },
-    { icon: SyncOutlined, title: '角度', type: 'SyncOutlined' },
-    { icon: ExpandAltOutlined, title: '大小', type: 'ExpandAltOutlined' },
+    { icon: AimOutlined, title: '位置(Q)', type: 'AimOutlined', keyCode: 81 },
+
+    { icon: DragOutlined, title: '位置(W)', type: 'DragOutlined', keyCode: 87 },
+    { icon: SyncOutlined, title: '角度(E)', type: 'SyncOutlined', keyCode: 69 },
+    { icon: ExpandAltOutlined, title: '大小(R)', type: 'ExpandAltOutlined', keyCode: 82 },
     { icon: ExpandOutlined, title: '全屏', type: 'ExpandOutlined' },
     { icon: PlayCircleOutlined, title: '演示', type: 'PlayCircleOutlined' },
     { icon: DownloadOutlined, title: '下载', type: 'DownloadOutlined', onClick: handleDownload },
@@ -49,6 +53,12 @@ const ToolBar: React.FC<{ editor: Editor }> = ({ editor }) => {
       </div>
     ),
   );
+  useEffect(() => {
+    const activeItem = menuList.find((item) => item.keyCode === keyCode);
+    if (activeItem) {
+      setActiveName(activeItem.type);
+    }
+  }, [keyCode]);
 
   /**
    * @description: 导出场景
@@ -77,6 +87,7 @@ const ToolBar: React.FC<{ editor: Editor }> = ({ editor }) => {
     link.download = filename || 'data.json';
     link.dispatchEvent(new MouseEvent('click'));
   }
+
   return <div className='toolbar-continer'>{listIcons}</div>;
 };
 export default ToolBar;

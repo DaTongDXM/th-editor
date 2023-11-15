@@ -10,3 +10,8 @@
   align-items: center;
   transform: translate(-50%, 0);
 }
+.anticon-send.th-menu-icon {
+  svg {
+    transform: rotate(-45deg) !important;
+  }
+}

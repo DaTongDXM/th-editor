@@ -2,7 +2,7 @@
  * @Author: wuxudong wuxudong@zbnsec.com
  * @Date: 2022-11-15 01:13:46
  * @LastEditors: wuxudong 953909305@qq.com
- * @LastEditTime: 2023-11-13 17:25:01
+ * @LastEditTime: 2023-11-15 20:53:25
  * @Description:The editor container contains the canvas , toolbar and attribute
  */
 import React, { useEffect, useState } from 'react';
@@ -14,45 +14,64 @@ import Editor from '@/three/Editor';
 import mitter from '@/utils/mitt';
 import Model from './Model';
 import Toolbar from './Toolbar';
+import { debug } from 'webpack';
 
 const EditorCore: React.FC<EditorCoreProps & { editorRef: any }> = ({ onClick }) => {
   const [loading, setLoading] = useState(true);
 
   // let editor: Editor;
-  let [editor, setRender] = useState<Editor | null>(null);
+  let [editor, setEditor] = useState<Editor | null>(null);
+  let [keyCode, setKeyCode] = useState(87);
   useEffect(() => {
     if (!editor) {
-      const newRender = new Editor('123', document.getElementById('editor-container')!, mitter);
-      setRender(newRender);
-      handleRegister();
+      const newEditor = new Editor('123', document.getElementById('editor-container')!, mitter);
+      setEditor(newEditor);
+      handleRegister(newEditor);
     }
   }, []); // 依赖数组为空，表示只在组件挂载时执行一次
   setTimeout(() => {
     setLoading(false);
   }, 1000);
-  function handleRegister() {
-    if (!editor) return;
-    editor.mitter.on(mitter.TH_CLICK, (e: any) => {
+  function handleRegister(newEditor: Editor) {
+    if (!newEditor) return;
+    newEditor.mitter.on(mitter.TH_CLICK, (e: any) => {
       onClick(e);
     });
-    editor.mitter.onThMsgWaring((msg: string) => {
+    newEditor.mitter.onThMsgWaring((msg: string) => {
       message.warning({
         content: msg,
       });
     });
-    editor.mitter.onThMsgError((msg: string) => {
+    newEditor.mitter.onThMsgError((msg: string) => {
       message.error({
         content: msg,
       });
     });
   }
+  window.addEventListener('keydown', (event) => {
+    if (!editor) return;
+    setKeyCode(event.keyCode);
+    switch (event.keyCode) {
+      case 87: // W
+        editor.controls.transformControl.setMode('translate');
 
+        break;
+      case 69: // E
+        editor.controls.transformControl.setMode('rotate');
+        break;
+      case 82: // R
+        editor.controls.transformControl.setMode('scale');
+        break;
+      default:
+        break;
+    }
+  });
   return (
     <>
       <div className={`mask-container-item left ${loading ? '' : 'hidden'}`}></div>
       <Loading loading={loading}>Loading...</Loading>
       <div className={`mask-container-item right ${loading ? '' : 'hidden'}`}></div>
-      {editor && <Toolbar editor={editor} />}
+      {editor && <Toolbar editor={editor} keyCode={keyCode} />}
       <Model menuShow={false} />
       <div id='editor-container' className='main-container'></div>
     </>

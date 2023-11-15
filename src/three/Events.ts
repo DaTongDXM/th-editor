@@ -3,12 +3,12 @@
  * @LastEditors: wuxudong 953909305@qq.com
  * @Description:事件类
  */
-import { Camera, EventDispatcher, Object3D, Raycaster, Scene, Vector2 } from 'three';
+import { Camera, EventDispatcher, Raycaster, Scene, Vector2 } from 'three';
 
 import { DragControls } from 'three/examples/jsm/controls/DragControls';
 import Editor from './Editor';
 import BaseModel from './model';
-import Control from './Control';
+import Control from './Controls';
 
 export default class Events extends EventDispatcher {
   private container: HTMLElement;
@@ -27,15 +27,15 @@ export default class Events extends EventDispatcher {
   public readonly TH_CLICK = 'th:click';
   constructor() {
     super();
+    const scope = this;
     const editor = Editor.editor;
     this.container = editor.container;
     this.scene = editor.scene;
     this.camera = editor.camera;
     this.grid = editor.grid;
-    const raycaster = this.raycaster;
+    // const raycaster = this.raycaster;
     this.dragControls = editor.dragControls;
-    this.control = Control.getControlInstance(editor);
-    let cacheObject: Object3D | null = null;
+    this.control = Control.getControlInstance();
 
     window.onresize = () => {
       editor.width = editor.container.offsetWidth;
@@ -55,12 +55,12 @@ export default class Events extends EventDispatcher {
       if (intersects.length > 0) {
         var intersectPoint = intersects[0].point;
         console.log('Intersect point: ', intersectPoint);
-        const { model, name, label } = JSON.parse(e.dataTransfer!.getData('data'));
+        const { model } = JSON.parse(e.dataTransfer!.getData('data'));
         try {
-          const mesh = BaseModel.createModel(model);
+          const mesh = BaseModel.createModel(model, scope);
           mesh.position.copy(intersectPoint);
           this.scene.add(mesh);
-
+          this.control.attach(mesh);
           editor.render();
         } catch (e) {
           console.log(e);
@@ -75,11 +75,25 @@ export default class Events extends EventDispatcher {
     // 画布点击事件
 
     this.container.addEventListener('click', this.onClick.bind(this));
+
+    // // 按键监听
+    // window.addEventListener('keydown', (event) => {
+    //   switch (event.keyCode) {
+    //     case 87: // W
+    //       Editor.editor.controls.transformControl.setMode('translate');
+
+    //       break;
+    //     case 69: // E
+    //       Editor.editor.controls.transformControl.setMode('rotate');
+    //       break;
+    //     case 82: // R
+    //       Editor.editor.controls.transformControl.setMode('scale');
+    //       break;
+    //     default:
+    //       break;
+    //   }
+    // });
   }
-
-  // public dispatchEvent(args:string|{type:string,message:any}){
-
-  // };
 
   /**
    * @description: 获取一个射线投射器
@@ -105,31 +119,40 @@ export default class Events extends EventDispatcher {
   private onClick(e: MouseEvent) {
     e.preventDefault();
 
-    this.dispatchEvent({ type: 'redner' });
+    // this.dispatchEvent({ type: 'redner' });
     const raycaster = this.getRaycaster(e);
     // 计算物体和射线的焦点
     const intersections = raycaster.intersectObjects(this.scene.children).filter((el: any) => {
-      return el.object.type !== 'GridHelper' && el.object.uuid !== this.grid.uuid;
+      return (
+        el.object.type !== 'GridHelper' &&
+        el.object.uuid !== this.grid.uuid &&
+        el.object.type !== 'TransformControlsPlane'
+      );
     });
     if (intersections.length > 0) {
       const object = intersections[0].object;
-      this.dispatchEvent({ type: this.TH_CLICK, object });
-      this.dragControls = new DragControls(
-        [object.parent ? object.parent : object],
-        this.camera,
-        this.container,
-      );
-      this.dragControls.transformGroup = true;
-      this.dragControls.addEventListener('drag', () => {
-        Editor.editor.controls.enabled = false;
-        this.dispatchEvent({ type: 'render' });
-        console.log('00000');
-      });
-      this.dragControls.addEventListener('dragend', () => {
-        this.dispatchEvent({ type: 'render' });
-        Editor.editor.controls.enabled = true;
-        this.dragControls.dispose();
-      });
+      if (object.parent) {
+        object.parent.dispatchEvent({ type: 'click:model' });
+      }
+      // this.dispatchEvent({ type: this.TH_CLICK, object });
+      // this.dragControls = new DragControls(
+      //   [object.parent ? object.parent : object],
+      //   this.camera,
+      //   this.container,
+      // );
+      // this.dragControls.transformGroup = true;
+      // this.dragControls.addEventListener('drag', () => {
+      //   Editor.editor.controls.orbitControl.enabled = false;
+      //   this.dispatchEvent({ type: 'render' });
+      //   console.log('00000');
+      // });
+      // this.dragControls.addEventListener('dragend', () => {
+      //   this.dispatchEvent({ type: 'render' });
+      //   Editor.editor.controls.orbitControl.enabled = true;
+      //   this.dragControls.dispose();
+      // });
+    } else {
+      this.dispatchEvent({ type: this.TH_CLICK, object: null });
     }
   }
 }

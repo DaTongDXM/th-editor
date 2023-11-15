@@ -24,6 +24,7 @@ import {
   LineSegments,
   LineLoop,
 } from 'three';
+import Events from './Events';
 
 const twoPi = Math.PI * 2;
 let geometry: BufferGeometry;
@@ -182,7 +183,7 @@ class BaseModel {
    * @param {string} name 模型名称
    * @return {*} 返回一个group，包含镜面高光材质和线性材质的一个geometry对象
    */
-  static createModel(name: string): Group {
+  static createModel(name: string, event: Events): Group {
     const geometry = ModelMap[name]();
     const lineMaterial = new LineBasicMaterial({
       color: 0xffffff,
@@ -204,6 +205,10 @@ class BaseModel {
     group.add(mesh);
     group.name = 'dragable';
     console.log(group);
+    // 添加点击监听事件，只有被创建的模型才可以触发，防止场景中其他scene（grid，可拖拽的轴等）触发
+    group.addEventListener('click:model', () => {
+      event.dispatchEvent({ type: event.TH_CLICK, object: group });
+    });
     return group;
   }
 }

@@ -2,7 +2,7 @@
  * @Author: wuxudong wuxudong@zbnsec.com
  * @Date: 2023-08-23 19:28:49
  * @LastEditors: wuxudong 953909305@qq.com
- * @LastEditTime: 2023-11-14 16:56:48
+ * @LastEditTime: 2023-11-15 19:24:59
  * @Description:renderer init work by three.js
  */
 import {
@@ -18,6 +18,7 @@ import {
   MeshLambertMaterial,
   Mesh,
   Group,
+  MOUSE,
   Object3D,
 } from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
@@ -27,7 +28,7 @@ import { Mitter } from '@/utils/mitt';
 
 import SkyBox from './skyBox';
 import Events from './Events';
-
+import Controls from './Controls';
 export default class Editor {
   public static editor: Editor;
   /** id */
@@ -38,7 +39,7 @@ export default class Editor {
   public mitter!: Mitter;
   public camera!: any;
   public grid!: any;
-  public controls!: OrbitControls;
+  public controls!: Controls;
   public renderer!: WebGLRenderer;
   public sceneList: Array<Scene | Group | any> = [];
   public skyBox!: SkyBox;
@@ -135,13 +136,12 @@ export default class Editor {
    * @return {*}
    */
   private initControls() {
-    this.controls = new OrbitControls(this.camera, this.renderer.domElement);
-    this.controls.enabled = true;
-    this.controls.addEventListener('change', () => {
-      this.render();
-    });
-
-    this.render();
+    // this.controls = new OrbitControls(this.camera, this.renderer.domElement);
+    // this.controls.enabled = true;
+    // this.controls.addEventListener('change', () => {
+    //   this.render();
+    // });
+    // this.render();
   }
   /**
    * @description: 渲染函数，引入视角控制器
@@ -162,21 +162,6 @@ export default class Editor {
     if (!this.skyBox) this.skyBox = new SkyBox(this);
     this.skyBox.load();
   }
-  /**
-   * @description: 获取一个射线投射器
-   * @param {MouseEvent} e
-   * @return {*}
-   */
-  private getRaycaster(e: MouseEvent): Raycaster {
-    const mouse = new Vector2();
-    mouse.x = (e.offsetX / this.container.offsetWidth) * 2 - 1;
-    mouse.y = -(e.offsetY / this.container.offsetHeight) * 2 + 1;
-    // 创建一个投射器
-    const raycaster = new Raycaster();
-    // 通过鼠标和相机位置更新射线
-    raycaster.setFromCamera(mouse, this.camera);
-    return raycaster;
-  }
 
   /**
    * @description: 注册事件
@@ -184,17 +169,35 @@ export default class Editor {
    */
   private registerEvent() {
     this.events.addEventListener('render', () => {
-      this.render();
+      // this.render();
     });
     this.events.addEventListener(this.events.TH_SKYBOX_LOAD, () => {
       this.initRenderer();
-      this.initControls();
+      // this.initControls();
+      this.controls = new Controls();
+      this.controls.orbitControl.enabled = true;
+      this.update();
     });
     this.addEventListener(this.events.TH_CLICK, (model: any) => {
       const { object } = model;
-      this.cacheObject = this.scene.getObjectByProperty('uuid', object.uuid) || null;
-      console.log('点击模型:', this.cacheObject);
+      console.log('点击', object);
+
+      if (object) {
+        this.cacheObject = this.scene.getObjectByProperty('uuid', object.uuid) || null;
+        if (this.cacheObject) {
+          this.controls.transformControl.attach(this.cacheObject);
+          this.scene.add(this.controls.transformControl);
+        }
+        console.log('点击模型:', this.cacheObject);
+      } else {
+        // this.controls.transformControl.detach();
+      }
     });
+  }
+
+  public update() {
+    this.render();
+    // window.requestAnimationFrame(() => this.update());
   }
 
   public dispatchEvent(args: any) {

@@ -7,7 +7,7 @@ import { Camera, EventDispatcher, Raycaster, Scene, Vector2 } from 'three';
 
 import { DragControls } from 'three/examples/jsm/controls/DragControls';
 import Editor from './Editor';
-import BaseModel from './model';
+import BaseModel from './Model';
 import Control from './Controls';
 
 export default class Events extends EventDispatcher {
@@ -75,24 +75,6 @@ export default class Events extends EventDispatcher {
     // 画布点击事件
 
     this.container.addEventListener('click', this.onClick.bind(this));
-
-    // // 按键监听
-    // window.addEventListener('keydown', (event) => {
-    //   switch (event.keyCode) {
-    //     case 87: // W
-    //       Editor.editor.controls.transformControl.setMode('translate');
-
-    //       break;
-    //     case 69: // E
-    //       Editor.editor.controls.transformControl.setMode('rotate');
-    //       break;
-    //     case 82: // R
-    //       Editor.editor.controls.transformControl.setMode('scale');
-    //       break;
-    //     default:
-    //       break;
-    //   }
-    // });
   }
 
   /**
@@ -119,7 +101,6 @@ export default class Events extends EventDispatcher {
   private onClick(e: MouseEvent) {
     e.preventDefault();
 
-    // this.dispatchEvent({ type: 'redner' });
     const raycaster = this.getRaycaster(e);
     // 计算物体和射线的焦点
     const intersections = raycaster.intersectObjects(this.scene.children).filter((el: any) => {

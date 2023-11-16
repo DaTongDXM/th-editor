@@ -1,0 +1,30 @@
+{
+  "id": "4333929",
+  "name": "th-editor",
+  "font_family": "iconfont",
+  "css_prefix_text": "th-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "2076323",
+      "name": "地图定位",
+      "font_class": "ditudingwei",
+      "unicode": "e8a4",
+      "unicode_decimal": 59556
+    },
+    {
+      "icon_id": "18372381",
+      "name": "手，手势",
+      "font_class": "shoushoushi",
+      "unicode": "e6cf",
+      "unicode_decimal": 59087
+    },
+    {
+      "icon_id": "35775033",
+      "name": "键盘",
+      "font_class": "jianpan",
+      "unicode": "eaa0",
+      "unicode_decimal": 60064
+    }
+  ]
+}

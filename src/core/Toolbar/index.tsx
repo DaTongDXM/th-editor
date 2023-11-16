@@ -18,11 +18,11 @@ import {
   AimOutlined,
 } from '@ant-design/icons';
 
-const ToolBar: React.FC<{ editor: Editor; keyCode: number }> = ({ editor, keyCode = 87 }) => {
-  const [activeName, setActiveName] = useState('AimOutlined');
+const ToolBar: React.FC<{ editor: Editor; keyCode: number }> = ({ editor, keyCode = 81 }) => {
+  const [activeName, setActiveName] = useState('shoushoushi');
 
   const menuList = [
-    { icon: AimOutlined, title: '位置(Q)', type: 'AimOutlined', keyCode: 81 },
+    { icon: 'shoushoushi', title: '抓取(Q)', type: 'shoushoushi', keyCode: 81, iconFont: true },
 
     { icon: DragOutlined, title: '位置(W)', type: 'DragOutlined', keyCode: 87 },
     { icon: SyncOutlined, title: '角度(E)', type: 'SyncOutlined', keyCode: 69 },
@@ -33,22 +33,33 @@ const ToolBar: React.FC<{ editor: Editor; keyCode: number }> = ({ editor, keyCod
     { icon: SendOutlined, title: '发布', type: 'SendOutlined' },
   ];
   const listIcons = menuList.map(
-    (item: { icon: any; title: string; type: string; onClick?: () => any }) => (
+    (item: { icon: any; title: string; type: string; onClick?: () => any; iconFont?: boolean }) => (
       <div
         key={item.type}
         onClick={(e) => {
           e.stopPropagation();
-          if (['DragOutlined', 'SyncOutlined', 'ExpandAltOutlined'].includes(item.type)) {
+          if (
+            ['shoushoushi', 'DragOutlined', 'SyncOutlined', 'ExpandAltOutlined'].includes(item.type)
+          ) {
             setActiveName(item.type);
           }
           item.onClick?.apply(this);
         }}
       >
         <Tooltip placement='top' title={item.title}>
-          <item.icon
-            className={`th-menu-icon ${activeName === item.type ? 'active' : ''}`}
-            style={{ color: 'white' }}
-          />
+          {item.iconFont ? (
+            <i
+              className={`iconfont th-menu-icon th-${item.icon} ${
+                activeName === item.type ? 'active' : ''
+              }`}
+              style={{ color: 'white' }}
+            ></i>
+          ) : (
+            <item.icon
+              className={`th-menu-icon ${activeName === item.type ? 'active' : ''}`}
+              style={{ color: 'white' }}
+            />
+          )}
         </Tooltip>
       </div>
     ),

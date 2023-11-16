@@ -2,7 +2,7 @@
  * @Author: wuxudong wuxudong@zbnsec.com
  * @Date: 2022-11-15 01:13:46
  * @LastEditors: wuxudong 953909305@qq.com
- * @LastEditTime: 2023-11-15 20:53:25
+ * @LastEditTime: 2023-11-16 17:53:14
  * @Description:The editor container contains the canvas , toolbar and attribute
  */
 import React, { useEffect, useState } from 'react';
@@ -14,6 +14,7 @@ import Editor from '@/three/Editor';
 import mitter from '@/utils/mitt';
 import Model from './Model';
 import Toolbar from './Toolbar';
+import BottomBar from './Toolbar/bottom';
 import { debug } from 'webpack';
 
 const EditorCore: React.FC<EditorCoreProps & { editorRef: any }> = ({ onClick }) => {
@@ -21,7 +22,7 @@ const EditorCore: React.FC<EditorCoreProps & { editorRef: any }> = ({ onClick })
 
   // let editor: Editor;
   let [editor, setEditor] = useState<Editor | null>(null);
-  let [keyCode, setKeyCode] = useState(87);
+  let [keyCode, setKeyCode] = useState(81);
   useEffect(() => {
     if (!editor) {
       const newEditor = new Editor('123', document.getElementById('editor-container')!, mitter);
@@ -74,6 +75,7 @@ const EditorCore: React.FC<EditorCoreProps & { editorRef: any }> = ({ onClick })
       {editor && <Toolbar editor={editor} keyCode={keyCode} />}
       <Model menuShow={false} />
       <div id='editor-container' className='main-container'></div>
+      <BottomBar />
     </>
   );
 };

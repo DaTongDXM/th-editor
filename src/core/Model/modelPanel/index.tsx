@@ -1,11 +1,11 @@
 /*
  * @Author: wuxudong wuxudong@zbnsec.com
  * @Date: 2023-08-29 18:07:07
- * @LastEditors: wuxudong 953909305@qq.com
- * @LastEditTime: 2023-11-10 17:46:23
+ * @LastEditors: 武 旭东 wuxudong@zbnsec.com
+ * @LastEditTime: 2023-11-17 09:35:12
  * @Description:
  */
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Tabs } from 'antd';
 import type { TabsProps } from 'antd';
 // @ts-ignore

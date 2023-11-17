@@ -1,10 +1,10 @@
 /*
  * @Author: wuxudong 953909305@qq.com
- * @LastEditors: wuxudong 953909305@qq.com
+ * @LastEditors: 武 旭东 wuxudong@zbnsec.com
  * @Description:控制器辅助类
  */
-import { Mesh, Object3D, PerspectiveCamera, Scene } from 'three';
-import { DragControls } from 'three/examples/jsm/controls/DragControls';
+import { Object3D, PerspectiveCamera, Scene } from 'three';
+
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 import { TransformControls } from 'three/examples/jsm/controls/TransformControls';
 import Editor from './Editor';

@@ -1,11 +1,10 @@
 /*
  * @Author: wuxudong 953909305@qq.com
- * @LastEditors: wuxudong 953909305@qq.com
+ * @LastEditors: 武 旭东 wuxudong@zbnsec.com
  * @Description:模型类
  */
 import {
   Mesh,
-  MeshBasicMaterial,
   MeshPhongMaterial,
   BoxGeometry,
   CapsuleGeometry,
@@ -21,7 +20,6 @@ import {
   DoubleSide,
   Group,
   LineBasicMaterial,
-  LineSegments,
   LineLoop,
 } from 'three';
 import Events from './Events';

@@ -1,6 +1,6 @@
 /*
  * @Author: wuxudong 953909305@qq.com
- * @LastEditors: wuxudong 953909305@qq.com
+ * @LastEditors: 武 旭东 wuxudong@zbnsec.com
  * @Description:
  */
 import React, { useState, useEffect } from 'react';
@@ -15,14 +15,20 @@ import {
   PlayCircleOutlined,
   DownloadOutlined,
   SendOutlined,
-  AimOutlined,
 } from '@ant-design/icons';
 
 const ToolBar: React.FC<{ editor: Editor; keyCode: number }> = ({ editor, keyCode = 81 }) => {
   const [activeName, setActiveName] = useState('shoushoushi');
 
   const menuList = [
-    { icon: 'shoushoushi', title: '抓取(Q)', type: 'shoushoushi', keyCode: 81, iconFont: true },
+    {
+      icon: 'shoushoushi',
+      title: '抓取(Q)',
+      type: 'shoushoushi',
+      keyCode: 81,
+      iconFont: true,
+      onClick: handleSetMode,
+    },
 
     { icon: DragOutlined, title: '位置(W)', type: 'DragOutlined', keyCode: 87 },
     { icon: SyncOutlined, title: '角度(E)', type: 'SyncOutlined', keyCode: 69 },
@@ -33,7 +39,13 @@ const ToolBar: React.FC<{ editor: Editor; keyCode: number }> = ({ editor, keyCod
     { icon: SendOutlined, title: '发布', type: 'SendOutlined' },
   ];
   const listIcons = menuList.map(
-    (item: { icon: any; title: string; type: string; onClick?: () => any; iconFont?: boolean }) => (
+    (item: {
+      icon: any;
+      title: string;
+      type: string;
+      onClick?: (args?: any) => any;
+      iconFont?: boolean;
+    }) => (
       <div
         key={item.type}
         onClick={(e) => {
@@ -71,6 +83,13 @@ const ToolBar: React.FC<{ editor: Editor; keyCode: number }> = ({ editor, keyCod
     }
   }, [keyCode]);
 
+  function handleSetMode(code: number) {
+    console.log(code);
+    const event = new KeyboardEvent('keydown', {
+      keyCode: code,
+    });
+    window.dispatchEvent(event);
+  }
   /**
    * @description: 导出场景
    * @return {*}

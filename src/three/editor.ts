@@ -1,8 +1,8 @@
 /*
  * @Author: wuxudong wuxudong@zbnsec.com
  * @Date: 2023-08-23 19:28:49
- * @LastEditors: wuxudong 953909305@qq.com
- * @LastEditTime: 2023-11-15 19:24:59
+ * @LastEditors: 武 旭东 wuxudong@zbnsec.com
+ * @LastEditTime: 2023-11-17 09:33:54
  * @Description:renderer init work by three.js
  */
 import {
@@ -12,16 +12,13 @@ import {
   PerspectiveCamera,
   WebGLRenderer,
   GridHelper,
-  Vector2,
-  Raycaster,
   PlaneGeometry,
   MeshLambertMaterial,
   Mesh,
   Group,
-  MOUSE,
   Object3D,
 } from 'three';
-import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
+
 import { ViewHelper } from 'three/examples/jsm/helpers/ViewHelper';
 import { DragControls } from 'three/examples/jsm/controls/DragControls';
 import { Mitter } from '@/utils/mitt';

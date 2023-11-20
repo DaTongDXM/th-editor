@@ -6,6 +6,20 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "23237358",
+      "name": "关闭全屏",
+      "font_class": "fullscreen-exit-line",
+      "unicode": "e60a",
+      "unicode_decimal": 58890
+    },
+    {
+      "icon_id": "23237388",
+      "name": "开启全屏",
+      "font_class": "fullscreen-line",
+      "unicode": "e60b",
+      "unicode_decimal": 58891
+    },
+    {
       "icon_id": "2076323",
       "name": "地图定位",
       "font_class": "ditudingwei",

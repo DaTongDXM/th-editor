@@ -1,6 +1,6 @@
 /*
  * @Author: wuxudong 953909305@qq.com
- * @LastEditors: 武 旭东 wuxudong@zbnsec.com
+ * @LastEditors: wuxudong 953909305@qq.com
  * @Description:
  */
 import React, { useState, useEffect } from 'react';
@@ -30,10 +30,27 @@ const ToolBar: React.FC<{ editor: Editor; keyCode: number }> = ({ editor, keyCod
       onClick: handleSetMode,
     },
 
-    { icon: DragOutlined, title: '位置(W)', type: 'DragOutlined', keyCode: 87 },
-    { icon: SyncOutlined, title: '角度(E)', type: 'SyncOutlined', keyCode: 69 },
-    { icon: ExpandAltOutlined, title: '大小(R)', type: 'ExpandAltOutlined', keyCode: 82 },
-    { icon: ExpandOutlined, title: '全屏', type: 'ExpandOutlined' },
+    {
+      icon: DragOutlined,
+      title: '位置(W)',
+      type: 'DragOutlined',
+      keyCode: 87,
+      onClick: handleSetMode,
+    },
+    {
+      icon: SyncOutlined,
+      title: '角度(E)',
+      type: 'SyncOutlined',
+      keyCode: 69,
+      onClick: handleSetMode,
+    },
+    {
+      icon: ExpandAltOutlined,
+      title: '大小(R)',
+      type: 'ExpandAltOutlined',
+      keyCode: 82,
+      onClick: handleSetMode,
+    },
     { icon: PlayCircleOutlined, title: '演示', type: 'PlayCircleOutlined' },
     { icon: DownloadOutlined, title: '下载', type: 'DownloadOutlined', onClick: handleDownload },
     { icon: SendOutlined, title: '发布', type: 'SendOutlined' },
@@ -42,6 +59,7 @@ const ToolBar: React.FC<{ editor: Editor; keyCode: number }> = ({ editor, keyCod
     (item: {
       icon: any;
       title: string;
+      keyCode?: number;
       type: string;
       onClick?: (args?: any) => any;
       iconFont?: boolean;
@@ -55,7 +73,7 @@ const ToolBar: React.FC<{ editor: Editor; keyCode: number }> = ({ editor, keyCod
           ) {
             setActiveName(item.type);
           }
-          item.onClick?.apply(this);
+          item.onClick?.call(this, item.keyCode || 0);
         }}
       >
         <Tooltip placement='top' title={item.title}>

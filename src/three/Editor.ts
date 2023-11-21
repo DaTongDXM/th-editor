@@ -1,8 +1,8 @@
 /*
  * @Author: wuxudong wuxudong@zbnsec.com
  * @Date: 2023-08-23 19:28:49
- * @LastEditors: 武 旭东 wuxudong@zbnsec.com
- * @LastEditTime: 2023-11-17 09:33:54
+ * @LastEditors: wuxudong 953909305@qq.com
+ * @LastEditTime: 2023-11-21 19:40:56
  * @Description:renderer init work by three.js
  */
 import {
@@ -44,6 +44,7 @@ export default class Editor {
   public height: number;
   public events: Events;
   private cacheObject: Object3D | null = null;
+  private transformMode = '';
   /**
    *
    * @param id renderer id
@@ -123,7 +124,7 @@ export default class Editor {
     this.renderer = new WebGLRenderer({
       antialias: true,
     });
-    this.renderer.setSize(this.container.offsetWidth, this.container.offsetHeight);
+    this.renderer.setSize(this.container.offsetWidth, this.container.offsetHeight - 1);
     this.renderer.setClearColor(0x444444);
 
     this.container.appendChild(this.renderer.domElement);

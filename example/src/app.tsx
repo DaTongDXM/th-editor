@@ -2,10 +2,10 @@
  * @Author: wuxudong wuxudong@zbnsec.com
  * @Date: 2022-11-15 01:13:46
  * @LastEditors: wuxudong 953909305@qq.com
- * @LastEditTime: 2023-11-10 17:48:38
+ * @LastEditTime: 2023-11-21 18:40:31
  * @Description:
  */
-import React from 'react';
+import React, { useRef } from 'react';
 import { createRoot } from 'react-dom/client';
 import ThEditor from '../../src/index';
 import './app.scss';
@@ -24,6 +24,13 @@ const AppCompent = () => {
       algorithm: theme.darkAlgorithm,
     },
   };
+  const thEditorRef: any = useRef(null);
+
+  setTimeout(() => {
+    if (thEditorRef.current) {
+      thEditorRef.current.setAttrbute();
+    }
+  }, 3000);
   return (
     <>
       <div
@@ -35,6 +42,7 @@ const AppCompent = () => {
         <ThEditor
           configProvider={configProvider}
           editorName={123}
+          ref={thEditorRef}
           onClick={(e: any) => {
             console.log(e);
           }}

@@ -1,11 +1,16 @@
 import React from 'react';
+import { ConfigProvider } from 'antd';
 
-export interface EditorCoreProps {
+export interface ThEditorProps {
+  configProvider: typeof ConfigProvider;
   // 编辑器场景id
   id?: number;
   /** 点击事件*/
   onClick: (e: any) => any;
+  [key: string]: any;
 }
+
+export type EditorCoreProps = Omit<ThEditorProps, 'configProvider'>;
 
 export interface ModelMnueProps {
   menuShow: boolean;
@@ -256,13 +261,8 @@ export interface ModelMnueProps {
 //   option: videoOption;
 //   className?: string;
 // }
-export type ThEditorRef = videoMethod &
-  videoAttributes & {
-    video: HTMLVideoElement;
-  };
 
-interface CompoundedComponent
-  extends React.ForwardRefExoticComponent<videoparameter & React.RefAttributes<ThEditorRef>> {}
+interface CompoundedComponent extends React.ForwardRefExoticComponent<React.RefAttributes> {}
 declare const ThEditor: CompoundedComponent;
 export default ThEditor;
 export { ThEditor };

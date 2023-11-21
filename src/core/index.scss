@@ -1,5 +1,9 @@
 .th-editor {
-  height: 100%;
+  height: 100vh;
+  overflow: hidden;
+  canvas {
+    display: block;
+  }
 }
 .mask-container {
   position: absolute;

@@ -38,6 +38,7 @@ export default class Events extends EventDispatcher {
     this.control = Control.getControlInstance();
 
     window.onresize = () => {
+      console.log('resize,', editor.container.offsetWidth, editor.container.offsetHeight);
       editor.width = editor.container.offsetWidth;
       editor.height = editor.container.offsetHeight;
       editor.renderer.setSize(editor.width, editor.height);
@@ -55,8 +56,9 @@ export default class Events extends EventDispatcher {
       if (intersects.length > 0) {
         var intersectPoint = intersects[0].point;
         console.log('Intersect point: ', intersectPoint);
-        const { model } = JSON.parse(e.dataTransfer!.getData('data'));
+
         try {
+          const { model } = JSON.parse(e.dataTransfer!.getData('data'));
           const mesh = BaseModel.createModel(model, scope);
           mesh.position.copy(intersectPoint);
           this.scene.add(mesh);

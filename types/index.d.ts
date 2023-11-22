@@ -3,7 +3,7 @@ declare module 'ThEditor' {
   import { ConfigProvider } from 'antd';
 
   export interface ThEditorProps {
-    configProvider: typeof ConfigProvider;
+    configProvider: ConfigProvider;
     // 编辑器场景id
     id?: number;
     /** 点击事件*/
@@ -17,8 +17,10 @@ declare module 'ThEditor' {
     menuShow: boolean;
   }
 
-  interface CompoundedComponent extends React.ForwardRefExoticComponent<React.RefAttributes> {}
-  declare const ThEditor: CompoundedComponent;
+  // interface CompoundedComponent extends React.ForwardRefExoticComponent<React.RefAttributes> {}
+  declare const ThEditor: React.ForwardRefExoticComponent<
+    ThEditorProps & React.RefAttributes<HTMLElement>
+  >;
   export default ThEditor;
   export { ThEditor };
 }

@@ -2,7 +2,7 @@
  * @Author: wuxudong wuxudong@zbnsec.com
  * @Date: 2022-11-15 01:13:46
  * @LastEditors: wuxudong 953909305@qq.com
- * @LastEditTime: 2023-11-21 17:17:20
+ * @LastEditTime: 2023-11-22 09:49:35
  * @Description:
  */
 import React from 'react';
@@ -14,7 +14,7 @@ import '@/icons/';
 import '@/assets/css/thems/dark.scss';
 import '@/assets/iconfont/iconfont.js';
 import '@/assets/iconfont/iconfont.css';
-import { ThEditorProps } from 'types/index';
+import { ThEditorProps } from 'ThEditor';
 const ThEditor = React.forwardRef((props: ThEditorProps, ref: any) => {
   const { configProvider, ...otherProps } = props;
   return (

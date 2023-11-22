@@ -2,14 +2,14 @@
  * @Author: wuxudong wuxudong@zbnsec.com
  * @Date: 2022-11-15 01:13:46
  * @LastEditors: wuxudong 953909305@qq.com
- * @LastEditTime: 2023-11-21 18:42:21
+ * @LastEditTime: 2023-11-22 09:51:54
  * @Description:The editor container contains the canvas , toolbar and attribute
  */
 import React, { useEffect, useState, useImperativeHandle } from 'react';
 import { message } from 'antd';
 import './index.scss';
 import Loading from '@/components/Loading';
-import { EditorCoreProps } from '../../types';
+import { EditorCoreProps } from 'ThEditor';
 import Editor from '@/three/Editor';
 import mitter from '@/utils/mitt';
 import Model from './Model';

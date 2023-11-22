@@ -2,14 +2,14 @@
  * @Author: wuxudong wuxudong@zbnsec.com
  * @Date: 2023-08-29 15:40:18
  * @LastEditors: wuxudong 953909305@qq.com
- * @LastEditTime: 2023-11-07 14:30:23
+ * @LastEditTime: 2023-11-22 09:52:17
  * @Description:this is the  left menu of the editor,which contains the default model list andited by the editor
  */
 import React, { useState } from 'react';
 import './index.scss';
 import { Tooltip } from 'antd';
 import { AppstoreAddOutlined, PartitionOutlined } from '@ant-design/icons';
-import { ModelMnueProps } from '@type/index';
+import { ModelMnueProps } from 'ThEditor';
 import ModelList from './modelList';
 import ModelPanel from './modelPanel';
 const componentMap: any = {

@@ -1,0 +1,15 @@
+/*
+ * @Author: wuxudong 953909305@qq.com
+ * @LastEditors: wuxudong 953909305@qq.com
+ * @Description: 
+ */
+.custom-container {
+  .toolbar {
+    height: 30px;
+    cursor: pointer;
+    padding: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+}

@@ -2,19 +2,18 @@
  * @Author: wuxudong wuxudong@zbnsec.com
  * @Date: 2022-11-15 01:13:46
  * @LastEditors: wuxudong 953909305@qq.com
- * @LastEditTime: 2023-11-22 11:41:27
+ * @LastEditTime: 2023-11-22 14:29:02
  * @Description:
  */
 import React, { useRef } from 'react';
 import { createRoot } from 'react-dom/client';
-// import ThEditor from '../../src/index';
+import ThEditor from '../../src/index';
 
 // @ts-ignore
-import ThEditor from '../../dist/index';
+// import ThEditor from '../../dist/index';
 
 import './app.scss';
 import { theme } from 'antd';
-// const ThEditor = require('../../dist/index.js');
 const AppCompent = () => {
   const configProvider = {
     theme: {

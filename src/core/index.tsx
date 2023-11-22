@@ -2,7 +2,7 @@
  * @Author: wuxudong wuxudong@zbnsec.com
  * @Date: 2022-11-15 01:13:46
  * @LastEditors: wuxudong 953909305@qq.com
- * @LastEditTime: 2023-11-22 11:42:02
+ * @LastEditTime: 2023-11-22 15:58:31
  * @Description:The editor container contains the canvas , toolbar and attribute
  */
 import React, { useEffect, useState, useImperativeHandle } from 'react';
@@ -15,6 +15,7 @@ import mitter from '@/utils/mitt';
 import Model from './Model';
 import Toolbar from './Toolbar';
 import BottomBar from './Toolbar/bottom';
+import Attribute from './Attribute';
 
 const EditorCore = React.forwardRef(({ onClick }: EditorCoreProps, ref: any) => {
   const [loading, setLoading] = useState(true);
@@ -53,20 +54,27 @@ const EditorCore = React.forwardRef(({ onClick }: EditorCoreProps, ref: any) => 
       });
     });
   }
+
   window.addEventListener('keydown', (event) => {
     console.log(event.keyCode);
     if (!editor) return;
     setKeyCode(event.keyCode);
     switch (event.keyCode) {
+      case 81: // Q
+        editor.dragabel = true;
+        editor.controls.dispose();
+        break;
       case 87: // W
         editor.controls.transformControl.setMode('translate');
-
+        editor.dragabel = false;
         break;
       case 69: // E
         editor.controls.transformControl.setMode('rotate');
+        editor.dragabel = false;
         break;
       case 82: // R
         editor.controls.transformControl.setMode('scale');
+        editor.dragabel = false;
         break;
       default:
         break;
@@ -81,6 +89,7 @@ const EditorCore = React.forwardRef(({ onClick }: EditorCoreProps, ref: any) => 
       <Model menuShow={false} />
       <div id='editor-container' className='main-container'></div>
       <BottomBar />
+      <Attribute />
     </div>
   );
 });

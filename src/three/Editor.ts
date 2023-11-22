@@ -2,7 +2,7 @@
  * @Author: wuxudong wuxudong@zbnsec.com
  * @Date: 2023-08-23 19:28:49
  * @LastEditors: wuxudong 953909305@qq.com
- * @LastEditTime: 2023-11-21 19:40:56
+ * @LastEditTime: 2023-11-22 15:58:13
  * @Description:renderer init work by three.js
  */
 import {
@@ -43,8 +43,10 @@ export default class Editor {
   public width: number;
   public height: number;
   public events: Events;
+
   private cacheObject: Object3D | null = null;
-  private transformMode = '';
+  public dragabel = true;
+
   /**
    *
    * @param id renderer id
@@ -167,7 +169,7 @@ export default class Editor {
    */
   private registerEvent() {
     this.events.addEventListener('render', () => {
-      // this.render();
+      this.render();
     });
     this.events.addEventListener(this.events.TH_SKYBOX_LOAD, () => {
       this.initRenderer();
@@ -185,6 +187,7 @@ export default class Editor {
         if (this.cacheObject) {
           this.controls.transformControl.attach(this.cacheObject);
           this.scene.add(this.controls.transformControl);
+          this.render();
         }
         console.log('点击模型:', this.cacheObject);
       } else {

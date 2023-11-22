@@ -19,6 +19,7 @@ export default class Events extends EventDispatcher {
   private grid: Scene;
   private dragControls: DragControls;
   private control: Control;
+  private editor: Editor;
   /**
    * @description: 加载天空盒
    * @return {*}
@@ -29,6 +30,7 @@ export default class Events extends EventDispatcher {
     super();
     const scope = this;
     const editor = Editor.editor;
+    this.editor = editor;
     this.container = editor.container;
     this.scene = editor.scene;
     this.camera = editor.camera;
@@ -64,6 +66,7 @@ export default class Events extends EventDispatcher {
           this.scene.add(mesh);
           this.control.attach(mesh);
           editor.render();
+          console.log(editor);
         } catch (e) {
           console.log(e);
           editor.mitter.emitThMsgError(e + '');
@@ -115,7 +118,29 @@ export default class Events extends EventDispatcher {
     if (intersections.length > 0) {
       const object = intersections[0].object;
       if (object.parent) {
-        object.parent.dispatchEvent({ type: 'click:model' });
+        console.log(`控制器enabled:${this.editor.controls.transformControl.enabled}`);
+        console.log(`控制器object :${this.editor.controls.transformControl.object}`);
+        if (!this.editor.dragabel) {
+          object.parent.dispatchEvent({ type: 'click:model' });
+        } else {
+          // this.dispatchEvent({ type: this.TH_CLICK, object });
+          this.dragControls = new DragControls(
+            [object.parent ? object.parent : object],
+            this.camera,
+            this.container,
+          );
+          this.dragControls.transformGroup = true;
+          this.dragControls.addEventListener('drag', () => {
+            Editor.editor.controls.orbitControl.enabled = false;
+            this.dispatchEvent({ type: 'render' });
+            console.log('00000');
+          });
+          this.dragControls.addEventListener('dragend', () => {
+            this.dispatchEvent({ type: 'render' });
+            Editor.editor.controls.orbitControl.enabled = true;
+            this.dragControls.dispose();
+          });
+        }
       }
       // this.dispatchEvent({ type: this.TH_CLICK, object });
       // this.dragControls = new DragControls(

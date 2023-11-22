@@ -2,7 +2,7 @@
  * @Author: wuxudong wuxudong@zbnsec.com
  * @Date: 2023-08-23 19:28:49
  * @LastEditors: wuxudong 953909305@qq.com
- * @LastEditTime: 2023-11-22 17:07:25
+ * @LastEditTime: 2023-11-22 19:35:59
  * @Description:renderer init work by three.js
  */
 import {
@@ -153,7 +153,7 @@ export default class Editor {
     this.renderer.autoClear = false;
 
     this.renderer.render(this.scene, this.camera);
-    this.renderer.setViewport(0, 0, this.container.offsetWidth, this.container.offsetWidth);
+
     viewHelper.render(this.renderer);
     const endTime = performance.now();
     this.events.dispatchEvent({

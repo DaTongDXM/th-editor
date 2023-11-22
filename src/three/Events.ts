@@ -26,6 +26,11 @@ export default class Events extends EventDispatcher {
    */
   public readonly TH_SKYBOX_LOAD = 'th:skybox:loaded';
   public readonly TH_CLICK = 'th:click';
+  /**
+   * @description: 帧时
+   * @return {*}
+   */
+  public readonly TH_TIME = 'th:time';
   constructor() {
     super();
     const scope = this;

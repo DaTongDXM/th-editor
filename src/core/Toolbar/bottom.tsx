@@ -5,14 +5,16 @@
  */
 import React, { useState } from 'react';
 import { Tooltip } from 'antd';
-
+import Editor from '@/three/Editor';
 import './bottom.scss';
 
-const BottomBar: React.FC<any> = () => {
+const BottomBar: React.FC<{ editor: Editor }> = ({ editor }) => {
   const tootipStyle = {
     fontSize: 12,
   };
   const [fullscreen, setFullscreen] = useState(false);
+  const [ms, setMs] = useState(0);
+
   function handleFullscreen() {
     let app = document.querySelector('#th-editor');
     if (!fullscreen) {
@@ -22,11 +24,15 @@ const BottomBar: React.FC<any> = () => {
     }
     setFullscreen(!fullscreen);
   }
+  editor.addEventListener('th:time', ({ time }: any) => {
+    time && setMs(time);
+    // console.log(e);
+  });
   return (
     <div className='bottom-container'>
       <div className='bottom-container-count'>
         <div>物体：8</div>
-        <div>帧时：0.44ms</div>
+        <div>帧时：{ms}ms</div>
         <div></div>
       </div>
       <div id='bottom-container-bar' className='bottom-container-bar'>

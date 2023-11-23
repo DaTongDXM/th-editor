@@ -2,7 +2,7 @@
  * @Author: wuxudong wuxudong@zbnsec.com
  * @Date: 2022-11-15 01:13:46
  * @LastEditors: wuxudong 953909305@qq.com
- * @LastEditTime: 2023-11-22 14:29:02
+ * @LastEditTime: 2023-11-23 15:20:06
  * @Description:
  */
 import React, { useRef } from 'react';
@@ -21,9 +21,6 @@ const AppCompent = () => {
         // Seed Token，影响范围大
         colorPrimary: '#5d5d5d',
         borderRadius: 4,
-
-        // 派生变量，影响范围小
-        colorBgContainer: '#f6ffed',
       },
       algorithm: theme.darkAlgorithm,
     },

@@ -1,3 +1,8 @@
+/*
+ * @Author: wuxudong 953909305@qq.com
+ * @LastEditors: wuxudong 953909305@qq.com
+ * @Description:
+ */
 declare module 'ThEditor' {
   import React from 'react';
   import { ConfigProvider } from 'antd';
@@ -12,6 +17,10 @@ declare module 'ThEditor' {
   }
 
   export type EditorCoreProps = Omit<ThEditorProps, 'configProvider'>;
+
+  export interface CustomModelProps {
+    groupNameLength?: number;
+  }
 
   export interface ModelMnueProps {
     menuShow: boolean;

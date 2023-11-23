@@ -7,24 +7,34 @@ import React, { useState } from 'react';
 import './index.scss';
 import { Upload, Button, Modal, Form, Collapse, Input } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
-
-const CustomModel: React.FC<any> = () => {
+import { CustomModelProps } from 'ThEditor';
+const CustomModel: React.FC<CustomModelProps> = ({ groupNameLength = 50 }) => {
   const [addOpen, setAddOpen] = useState(false);
   const handleAddGroup = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    const value = (e.target as HTMLInputElement).value;
-    if (!value) {
-    } else {
-      value.length < 50 && setAddOpen(false);
-    }
+    groupForm.submit();
   };
   const handleCancel = () => {
     setAddOpen(false);
   };
+  const [groupForm] = Form.useForm();
+  const onFinish = (values: any) => {
+    console.log(values);
+    groupForm.resetFields();
+    setAddOpen(false);
+  };
   const addGroup = (
     <div className='add-group'>
-      <Input placeholder='字符1-50，按Enter确认' onPressEnter={handleAddGroup} />
+      <Form form={groupForm} onFinish={onFinish}>
+        <Form.Item name='group_name' validateTrigger='onChange' rules={[{ max: groupNameLength }]}>
+          <Input
+            placeholder={`字符1-${groupNameLength}，按Enter确认`}
+            onPressEnter={handleAddGroup}
+          />
+        </Form.Item>
+      </Form>
     </div>
   );
+
   return (
     <div className='custom-container'>
       <div className='toolbar'>

@@ -2,7 +2,7 @@
  * @Author: wuxudong wuxudong@zbnsec.com
  * @Date: 2022-11-15 01:13:46
  * @LastEditors: wuxudong 953909305@qq.com
- * @LastEditTime: 2023-11-23 15:25:03
+ * @LastEditTime: 2023-11-23 18:10:19
  * @Description:
  */
 module.exports = {
@@ -15,19 +15,7 @@ module.exports = {
       plugins: ['react'],
       rules: {
         'react/jsx-filename-extension': [1, { extensions: ['.js', '.jsx', 'tsx'] }],
-        'react/jsx-props-order': [
-          'error',
-          {
-            newlines: 'always',
-            noSortAlphabetically: true,
-            reservedFirst: true,
-            shorthandFirst: true,
-            callbacksLast: true,
-            ignoreCase: true,
-            ignoreCustomFragments: true,
-            customValidators: [],
-          },
-        ],
+
         'react-hooks/exhaustive-deps': 'off',
         'jsx-a11y/anchor-is-valid': 'off', //注销a标签的警告
         'no-debugger': 0,

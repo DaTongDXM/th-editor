@@ -5,7 +5,7 @@
  */
 import React, { useState } from 'react';
 import './index.scss';
-import { Upload, Button, Modal, Form, Collapse, Input } from 'antd';
+import { Upload, Button, Modal, Form, Collapse, Input, Tooltip } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
 import { CustomModelProps } from 'ThEditor';
 const CustomModel: React.FC<CustomModelProps> = ({ groupNameLength = 50 }) => {
@@ -25,10 +25,15 @@ const CustomModel: React.FC<CustomModelProps> = ({ groupNameLength = 50 }) => {
   const addGroup = (
     <div className='add-group'>
       <Form form={groupForm} onFinish={onFinish}>
-        <Form.Item name='group_name' validateTrigger='onChange' rules={[{ max: groupNameLength }]}>
+        <Form.Item
+          name='group_name'
+          validateTrigger='onChange'
+          rules={[{ max: groupNameLength, message: `字符1-${groupNameLength}` }]}
+        >
           <Input
             placeholder={`字符1-${groupNameLength}，按Enter确认`}
             onPressEnter={handleAddGroup}
+            allowClear
           />
         </Form.Item>
       </Form>
@@ -38,14 +43,17 @@ const CustomModel: React.FC<CustomModelProps> = ({ groupNameLength = 50 }) => {
   return (
     <div className='custom-container'>
       <div className='toolbar'>
-        <i className='iconfont th-liebiaoqiehuan'></i>
-
-        <i
-          className={`iconfont ${addOpen ? 'th-chexiao' : 'th-tianjia'}`}
-          onClick={() => {
-            setAddOpen(!addOpen);
-          }}
-        ></i>
+        <Tooltip placement='bottom' title='切换布局'>
+          <i className='iconfont th-liebiaoqiehuan'></i>
+        </Tooltip>
+        <Tooltip placement='bottom' title={addOpen ? '取消' : '添加分组'}>
+          <i
+            className={`iconfont ${addOpen ? 'th-chexiao' : 'th-tianjia'}`}
+            onClick={() => {
+              setAddOpen(!addOpen);
+            }}
+          ></i>
+        </Tooltip>
       </div>
       <div className='container'>
         {addOpen && addGroup}

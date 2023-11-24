@@ -1,8 +1,8 @@
 /*
  * @Author: wuxudong wuxudong@zbnsec.com
  * @Date: 2023-08-29 18:07:07
- * @LastEditors: 武 旭东 wuxudong@zbnsec.com
- * @LastEditTime: 2023-11-17 09:35:12
+ * @LastEditors: wuxudong 953909305@qq.com
+ * @LastEditTime: 2023-11-24 16:30:30
  * @Description:
  */
 import React, { useState } from 'react';
@@ -16,7 +16,7 @@ const components: any = {
   base: BaseModel,
   custom: CustomModel,
 };
-const ModelPanel: React.FC<any> = () => {
+const ModelPanel: React.FC<any> = ({ onAddGroup }) => {
   const [activePanel, setActivePanel] = useState('base');
   const Component: React.FC<any> = components[activePanel];
   const items: TabsProps['items'] = [
@@ -39,7 +39,15 @@ const ModelPanel: React.FC<any> = () => {
     <>
       <Tabs items={items} centered onTabClick={handleTabClick}></Tabs>
       <BorderBox7>
-        <Component />
+        {activePanel === 'base' ? (
+          <BaseModel />
+        ) : (
+          <CustomModel
+            onAddGroup={(name: string) => {
+              onAddGroup(name);
+            }}
+          />
+        )}
       </BorderBox7>
     </>
   );

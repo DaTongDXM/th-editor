@@ -2,7 +2,7 @@
  * @Author: wuxudong wuxudong@zbnsec.com
  * @Date: 2023-08-29 15:40:18
  * @LastEditors: wuxudong 953909305@qq.com
- * @LastEditTime: 2023-11-22 09:52:17
+ * @LastEditTime: 2023-11-24 16:39:28
  * @Description:this is the  left menu of the editor,which contains the default model list andited by the editor
  */
 import React, { useState } from 'react';
@@ -17,10 +17,10 @@ const componentMap: any = {
   ModelPanel,
 };
 const Model: React.FC<ModelMnueProps> = (props: ModelMnueProps) => {
-  const { menuShow } = props;
+  const { menuShow, onAddGroup } = props;
   const menuList = [
     { icon: AppstoreAddOutlined, title: '模型', type: 'ModelPanel' },
-    { icon: PartitionOutlined, title: '列表', type: 'ModelList' },
+    // { icon: PartitionOutlined, title: '列表', type: 'ModelList' },
   ];
   const [showPanel, setShowPanel] = useState(menuShow);
   const bodyClassName = `model-continer ${showPanel ? 'show' : 'un-show'}`;
@@ -54,7 +54,11 @@ const Model: React.FC<ModelMnueProps> = (props: ModelMnueProps) => {
   return (
     <div className={bodyClassName}>
       <div className='model-continer-body'>
-        <Component />
+        <ModelPanel
+          onAddGroup={(name: string) => {
+            onAddGroup(name);
+          }}
+        />
       </div>
       <div className='model-continer-menu'>{listIcons}</div>
     </div>

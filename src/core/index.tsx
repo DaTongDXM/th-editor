@@ -2,7 +2,7 @@
  * @Author: wuxudong wuxudong@zbnsec.com
  * @Date: 2022-11-15 01:13:46
  * @LastEditors: wuxudong 953909305@qq.com
- * @LastEditTime: 2023-11-24 13:48:03
+ * @LastEditTime: 2023-11-24 16:42:03
  * @Description:The editor container contains the canvas , toolbar and attribute
  */
 import React, { useEffect, useState, useImperativeHandle, useRef } from 'react';
@@ -17,81 +17,88 @@ import Toolbar from './Toolbar';
 import BottomBar from './Toolbar/bottom';
 import Attribute from './Attribute';
 
-const EditorCore = React.forwardRef(({ onClick, id = '' }: EditorCoreProps, ref: any) => {
-  const [loading, setLoading] = useState(true);
+const EditorCore = React.forwardRef(
+  ({ onClick, id = '', onAddGroup }: EditorCoreProps, ref: any) => {
+    const [loading, setLoading] = useState(true);
 
-  // let editor: Editor;
-  let [editor, setEditor] = useState<Editor | null>(null);
-  let [keyCode, setKeyCode] = useState(81);
-  let containerId = useRef(`editor-container${id}`);
-  useEffect(() => {
-    if (!editor) {
-      const newEditor = new Editor('123', document.getElementById(containerId.current)!, mitter);
-      setEditor(newEditor);
-      handleRegister(newEditor);
+    // let editor: Editor;
+    let [editor, setEditor] = useState<Editor | null>(null);
+    let [keyCode, setKeyCode] = useState(81);
+    let containerId = useRef(`editor-container${id}`);
+    useEffect(() => {
+      if (!editor) {
+        const newEditor = new Editor('123', document.getElementById(containerId.current)!, mitter);
+        setEditor(newEditor);
+        handleRegister(newEditor);
+      }
+    }, []); // 依赖数组为空，表示只在组件挂载时执行一次
+    useImperativeHandle(ref, () => ({
+      setAttrbute() {
+        console.log(123);
+      },
+    }));
+    setTimeout(() => {
+      setLoading(false);
+    }, 1000);
+    function handleRegister(newEditor: Editor) {
+      if (!newEditor) return;
+      newEditor.mitter.on(mitter.TH_CLICK, (e: any) => {
+        onClick(e);
+      });
+      newEditor.mitter.onThMsgWaring((msg: string) => {
+        message.warning({
+          content: msg,
+        });
+      });
+      newEditor.mitter.onThMsgError((msg: string) => {
+        message.error({
+          content: msg,
+        });
+      });
     }
-  }, []); // 依赖数组为空，表示只在组件挂载时执行一次
-  useImperativeHandle(ref, () => ({
-    setAttrbute() {
-      console.log(123);
-    },
-  }));
-  setTimeout(() => {
-    setLoading(false);
-  }, 1000);
-  function handleRegister(newEditor: Editor) {
-    if (!newEditor) return;
-    newEditor.mitter.on(mitter.TH_CLICK, (e: any) => {
-      onClick(e);
-    });
-    newEditor.mitter.onThMsgWaring((msg: string) => {
-      message.warning({
-        content: msg,
-      });
-    });
-    newEditor.mitter.onThMsgError((msg: string) => {
-      message.error({
-        content: msg,
-      });
-    });
-  }
 
-  window.addEventListener('keydown', (event) => {
-    console.log(event.keyCode);
-    if (!editor) return;
-    setKeyCode(event.keyCode);
-    switch (event.keyCode) {
-      case 81: // Q
-        editor.dragabel = true;
-        editor.controls.dispose();
-        break;
-      case 87: // W
-        editor.controls.transformControl.setMode('translate');
-        editor.dragabel = false;
-        break;
-      case 69: // E
-        editor.controls.transformControl.setMode('rotate');
-        editor.dragabel = false;
-        break;
-      case 82: // R
-        editor.controls.transformControl.setMode('scale');
-        editor.dragabel = false;
-        break;
-      default:
-        break;
-    }
-  });
-  return (
-    <div id='th-editor' className='th-editor'>
-      <div className={`mask-container-item left ${loading ? '' : 'hidden'}`}></div>
-      <Loading loading={loading}>Loading...</Loading>
-      <div className={`mask-container-item right ${loading ? '' : 'hidden'}`}></div>
-      {editor && <Toolbar editor={editor} keyCode={keyCode} />}
-      <Model menuShow={false} />
-      <div id={containerId.current} className='main-container'></div>
-      {editor && <BottomBar editor={editor} />}
-      <Attribute />
-    </div>
-  );
-});
+    window.addEventListener('keydown', (event) => {
+      console.log(event.keyCode);
+      if (!editor) return;
+      setKeyCode(event.keyCode);
+      switch (event.keyCode) {
+        case 81: // Q
+          editor.dragabel = true;
+          editor.controls.dispose();
+          break;
+        case 87: // W
+          editor.controls.transformControl.setMode('translate');
+          editor.dragabel = false;
+          break;
+        case 69: // E
+          editor.controls.transformControl.setMode('rotate');
+          editor.dragabel = false;
+          break;
+        case 82: // R
+          editor.controls.transformControl.setMode('scale');
+          editor.dragabel = false;
+          break;
+        default:
+          break;
+      }
+    });
+    return (
+      <div id='th-editor' className='th-editor'>
+        <div className={`mask-container-item left ${loading ? '' : 'hidden'}`}></div>
+        <Loading loading={loading}>Loading...</Loading>
+        <div className={`mask-container-item right ${loading ? '' : 'hidden'}`}></div>
+        {editor && <Toolbar editor={editor} keyCode={keyCode} />}
+        <Model
+          menuShow={false}
+          onAddGroup={(name: string) => {
+            onAddGroup(name);
+          }}
+        />
+        <div id={containerId.current} className='main-container'></div>
+        {editor && <BottomBar editor={editor} />}
+        <Attribute />
+      </div>
+    );
+  },
+);
 export default EditorCore;

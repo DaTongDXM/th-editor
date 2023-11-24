@@ -2,7 +2,7 @@
  * @Author: wuxudong wuxudong@zbnsec.com
  * @Date: 2022-11-15 01:13:46
  * @LastEditors: wuxudong 953909305@qq.com
- * @LastEditTime: 2023-11-24 13:53:32
+ * @LastEditTime: 2023-11-24 16:18:06
  * @Description:
  */
 import React, { useRef } from 'react';
@@ -25,6 +25,11 @@ const AppCompent = () => {
       algorithm: theme.darkAlgorithm,
     },
   };
+  const modelOption = {
+    allowEdit: true,
+    groupNameLength: 10,
+    layout: 'card',
+  };
   const thEditorRef: any = useRef(null);
 
   setTimeout(() => {
@@ -44,8 +49,12 @@ const AppCompent = () => {
           configProvider={configProvider}
           id={123}
           ref={thEditorRef}
+          modelOption={modelOption}
           onClick={(e: Event) => {
             console.log(e);
+          }}
+          onAddGroup={(data: any) => {
+            console.log('onAddGroup', data);
           }}
         ></ThEditor>
       </div>

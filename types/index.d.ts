@@ -13,17 +13,58 @@ declare module 'ThEditor' {
     id?: string;
     /** 点击事件*/
     onClick: (e: any) => any;
+    onAddGroup: (name: string) => void;
     [key: string]: any;
   }
 
   export type EditorCoreProps = Omit<ThEditorProps, 'configProvider'>;
 
+  export type ModelType =
+    | '3dm'
+    | '3ds'
+    | '3mf'
+    | 'amf'
+    | 'dae'
+    | 'drc'
+    | 'fbx'
+    | 'glb'
+    | 'gltf'
+    | 'json'
+    | 'ifc'
+    | 'kmz'
+    | 'ldr'
+    | 'mpd'
+    | 'md2'
+    | 'obj'
+    | 'pcd'
+    | 'zip';
+  /**
+   * @description: 自定义模型数据
+   */
+  export interface CustomModel {
+    id: string;
+    name: string;
+    modelType: ModelType;
+    modelData: any;
+  }
+  /**
+   * @description: 自定义模型分组数据
+   */
+  export interface CustomModelGroup {
+    id: string;
+    name: string;
+    data: Array<CustomModel>;
+  }
   export interface CustomModelProps {
+    allowEdit?: boolean;
     groupNameLength?: number;
+    layout?: 'card' | 'list';
+    onAddGroup: (name: string) => void;
   }
 
   export interface ModelMnueProps {
     menuShow: boolean;
+    onAddGroup: (name: string) => void;
   }
 
   // interface CompoundedComponent extends React.ForwardRefExoticComponent<React.RefAttributes> {}

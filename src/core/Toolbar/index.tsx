@@ -10,7 +10,6 @@ import Editor from '@/three/Editor';
 import {
   DragOutlined,
   ExpandAltOutlined,
-  ExpandOutlined,
   SyncOutlined,
   PlayCircleOutlined,
   DownloadOutlined,

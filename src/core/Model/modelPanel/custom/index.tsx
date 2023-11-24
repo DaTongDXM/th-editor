@@ -5,11 +5,16 @@
  */
 import React, { useState } from 'react';
 import './index.scss';
-import { Upload, Button, Modal, Form, Collapse, Input, Tooltip } from 'antd';
+import { Upload, Button, Modal, Form, Collapse, Input, Tooltip, Popover } from 'antd';
 import type { CollapseProps } from 'antd';
-import { UploadOutlined } from '@ant-design/icons';
+import { UploadOutlined, DeleteOutlined } from '@ant-design/icons';
 import { CustomModelProps } from 'ThEditor';
-const CustomModel: React.FC<CustomModelProps> = ({ groupNameLength = 50 }) => {
+const CustomModel: React.FC<CustomModelProps> = ({
+  allowEdit = false,
+  groupNameLength = 10,
+  layout = 'card',
+  onAddGroup,
+}) => {
   // #region 顶部
   const [addOpen, setAddOpen] = useState(false);
   const handleAddGroup = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -20,13 +25,14 @@ const CustomModel: React.FC<CustomModelProps> = ({ groupNameLength = 50 }) => {
   };
   const [groupForm] = Form.useForm();
   const onFinish = (values: any) => {
-    console.log(values);
+    console.log(values.group_name);
+    onAddGroup(values.group_name);
     groupForm.resetFields();
     setAddOpen(false);
   };
   const addGroup = (
     <div className='add-group'>
-      <Form form={groupForm} onFinish={onFinish}>
+      <Form autoComplete='off' form={groupForm} onFinish={onFinish}>
         <Form.Item
           name='group_name'
           validateTrigger='onChange'
@@ -44,7 +50,39 @@ const CustomModel: React.FC<CustomModelProps> = ({ groupNameLength = 50 }) => {
   // #endregion
 
   // #region 面板
+  const genExtra = () => {
+    return (
+      <Popover
+        content={
+          <>
+            <div>
+              <Button icon={<UploadOutlined />} type='text'>
+                上传
+              </Button>
+            </div>
+            <div>
+              <Button icon={<DeleteOutlined />} type='text'>
+                删除
+              </Button>
+            </div>
+          </>
+        }
+        placement='bottom'
+        trigger='hover'
+      >
+        <i className='iconfont th-gengduo-shuxiang'></i>
+      </Popover>
+    );
+  };
 
+  const items: CollapseProps['items'] = [
+    {
+      key: '1',
+      label: '分组一',
+      children: <div>分组一分组一分组一分组一分组一</div>,
+      extra: genExtra(),
+    },
+  ];
   // #endregion
   return (
     <div className='custom-container'>
@@ -63,39 +101,7 @@ const CustomModel: React.FC<CustomModelProps> = ({ groupNameLength = 50 }) => {
       </div>
       <div className='container'>
         {addOpen && addGroup}
-        <div>123</div>
-        <div>123</div>
-        <div>123</div>
-        <div>123</div>
-        <div>123</div>
-        <div>123</div>
-        <div>123</div>
-        <div>123</div>
-        <div>123</div>
-        <div>123</div>
-        <div>123</div>
-        <div>123</div>
-        <div>123</div>
-        <div>123</div>
-        <div>123</div>
-        <div>123</div>
-        <div>123</div>
-        <div>123</div>
-        <div>123</div>
-        <div>123</div>
-        <div>123</div>
-        <div>123</div>
-        <div>123</div>
-        <div>123</div>
-        <div>123</div>
-        <div>123</div>
-        <div>123</div>
-        <div>123</div>
-        <div>123</div>
-        <div>123</div>
-        <div>123</div>
-        <div>123</div>
-        <div>123</div>
+        <Collapse defaultActiveKey={['1']} expandIconPosition='start' items={items} />
       </div>
       {/* <Modal maskClosable={false} open={modalOpen} onOk={handleOk} onCancel={handleCancel}>
         123

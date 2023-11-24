@@ -1,8 +1,8 @@
 /*
  * @Author: wuxudong wuxudong@zbnsec.com
  * @Date: 2022-11-15 01:13:46
- * @LastEditors: wuxudong wuxudong@zbnsec.com
- * @LastEditTime: 2023-08-29 17:45:44
+ * @LastEditors: wuxudong 953909305@qq.com
+ * @LastEditTime: 2023-11-24 09:13:45
  * @Description:
  */
 const path = require('path');
@@ -49,6 +49,7 @@ module.exports = {
             esModel: false,
           },
         },
+        exclude: /docs/,
       },
       {
         test: /\.(eot|ttf|woff|woff2)$/,

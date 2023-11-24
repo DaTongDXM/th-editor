@@ -2,7 +2,7 @@
  * @Author: wuxudong wuxudong@zbnsec.com
  * @Date: 2022-11-15 01:13:46
  * @LastEditors: wuxudong 953909305@qq.com
- * @LastEditTime: 2023-11-23 15:20:06
+ * @LastEditTime: 2023-11-24 13:53:32
  * @Description:
  */
 import React, { useRef } from 'react';
@@ -42,9 +42,9 @@ const AppCompent = () => {
       >
         <ThEditor
           configProvider={configProvider}
-          editorName={123}
+          id={123}
           ref={thEditorRef}
-          onClick={(e: any) => {
+          onClick={(e: Event) => {
             console.log(e);
           }}
         ></ThEditor>

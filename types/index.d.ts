@@ -10,7 +10,7 @@ declare module 'ThEditor' {
   export interface ThEditorProps {
     configProvider: ConfigProvider;
     // 编辑器场景id
-    id?: number;
+    id?: string;
     /** 点击事件*/
     onClick: (e: any) => any;
     [key: string]: any;

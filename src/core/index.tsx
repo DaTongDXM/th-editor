@@ -2,10 +2,10 @@
  * @Author: wuxudong wuxudong@zbnsec.com
  * @Date: 2022-11-15 01:13:46
  * @LastEditors: wuxudong 953909305@qq.com
- * @LastEditTime: 2023-11-22 17:04:53
+ * @LastEditTime: 2023-11-24 13:48:03
  * @Description:The editor container contains the canvas , toolbar and attribute
  */
-import React, { useEffect, useState, useImperativeHandle } from 'react';
+import React, { useEffect, useState, useImperativeHandle, useRef } from 'react';
 import { message } from 'antd';
 import './index.scss';
 import Loading from '@/components/Loading';
@@ -17,15 +17,16 @@ import Toolbar from './Toolbar';
 import BottomBar from './Toolbar/bottom';
 import Attribute from './Attribute';
 
-const EditorCore = React.forwardRef(({ onClick }: EditorCoreProps, ref: any) => {
+const EditorCore = React.forwardRef(({ onClick, id = '' }: EditorCoreProps, ref: any) => {
   const [loading, setLoading] = useState(true);
 
   // let editor: Editor;
   let [editor, setEditor] = useState<Editor | null>(null);
   let [keyCode, setKeyCode] = useState(81);
+  let containerId = useRef(`editor-container${id}`);
   useEffect(() => {
     if (!editor) {
-      const newEditor = new Editor('123', document.getElementById('editor-container')!, mitter);
+      const newEditor = new Editor('123', document.getElementById(containerId.current)!, mitter);
       setEditor(newEditor);
       handleRegister(newEditor);
     }
@@ -87,7 +88,7 @@ const EditorCore = React.forwardRef(({ onClick }: EditorCoreProps, ref: any) => 
       <div className={`mask-container-item right ${loading ? '' : 'hidden'}`}></div>
       {editor && <Toolbar editor={editor} keyCode={keyCode} />}
       <Model menuShow={false} />
-      <div id='editor-container' className='main-container'></div>
+      <div id={containerId.current} className='main-container'></div>
       {editor && <BottomBar editor={editor} />}
       <Attribute />
     </div>

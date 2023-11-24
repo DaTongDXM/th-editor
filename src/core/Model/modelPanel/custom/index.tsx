@@ -6,9 +6,11 @@
 import React, { useState } from 'react';
 import './index.scss';
 import { Upload, Button, Modal, Form, Collapse, Input, Tooltip } from 'antd';
+import type { CollapseProps } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
 import { CustomModelProps } from 'ThEditor';
 const CustomModel: React.FC<CustomModelProps> = ({ groupNameLength = 50 }) => {
+  // #region 顶部
   const [addOpen, setAddOpen] = useState(false);
   const handleAddGroup = (e: React.KeyboardEvent<HTMLInputElement>) => {
     groupForm.submit();
@@ -39,7 +41,11 @@ const CustomModel: React.FC<CustomModelProps> = ({ groupNameLength = 50 }) => {
       </Form>
     </div>
   );
+  // #endregion
 
+  // #region 面板
+
+  // #endregion
   return (
     <div className='custom-container'>
       <div className='toolbar'>

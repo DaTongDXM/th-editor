@@ -2,7 +2,7 @@
  * @Author: wuxudong wuxudong@zbnsec.com
  * @Date: 2022-11-15 01:13:46
  * @LastEditors: wuxudong 953909305@qq.com
- * @LastEditTime: 2023-11-24 16:18:06
+ * @LastEditTime: 2023-11-25 16:38:58
  * @Description:
  */
 import React, { useRef } from 'react';
@@ -29,6 +29,7 @@ const AppCompent = () => {
     allowEdit: true,
     groupNameLength: 10,
     layout: 'card',
+    data: [],
   };
   const thEditorRef: any = useRef(null);
 

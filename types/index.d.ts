@@ -57,6 +57,7 @@ declare module 'ThEditor' {
   }
   export interface CustomModelProps {
     allowEdit?: boolean;
+    data?: Array<CustomModelGroup>;
     groupNameLength?: number;
     layout?: 'card' | 'list';
     onAddGroup: (name: string) => void;

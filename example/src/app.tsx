@@ -2,10 +2,11 @@
  * @Author: wuxudong wuxudong@zbnsec.com
  * @Date: 2022-11-15 01:13:46
  * @LastEditors: wuxudong 953909305@qq.com
- * @LastEditTime: 2023-11-25 16:38:58
+ * @LastEditTime: 2023-11-27 19:46:25
  * @Description:
  */
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
+import { db, db_group } from './db';
 import { createRoot } from 'react-dom/client';
 import ThEditor from '../../src/index';
 
@@ -25,12 +26,12 @@ const AppCompent = () => {
       algorithm: theme.darkAlgorithm,
     },
   };
-  const modelOption = {
+  const [modelOption, setModelOption] = useState({
     allowEdit: true,
     groupNameLength: 10,
     layout: 'card',
     data: [],
-  };
+  });
   const thEditorRef: any = useRef(null);
 
   setTimeout(() => {
@@ -38,6 +39,22 @@ const AppCompent = () => {
       thEditorRef.current.setAttrbute();
     }
   }, 3000);
+  const handleAddGroup = (name: string) => {
+    console.log(name);
+    const request = db
+      .transaction('group', 'readwrite')
+      .objectStore('group')
+      .add({ id: new Date().getTime(), name: name });
+    request.onsuccess = (e: any) => {
+      const request = db.transaction('group', 'readwrite').objectStore('group').getAll();
+      request.onsuccess = (e: any) => {
+        if (e.target.result) {
+          setModelOption({ ...modelOption, ...{ data: e.target.result } });
+          console.log('查询group：', e.target.result);
+        }
+      };
+    };
+  };
   return (
     <>
       <div
@@ -54,9 +71,7 @@ const AppCompent = () => {
           onClick={(e: Event) => {
             console.log(e);
           }}
-          onAddGroup={(data: any) => {
-            console.log('onAddGroup', data);
-          }}
+          onAddGroup={handleAddGroup}
         ></ThEditor>
       </div>
     </>

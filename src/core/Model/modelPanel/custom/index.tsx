@@ -82,6 +82,12 @@ const CustomModel: React.FC<CustomModelProps> = ({
       children: <div>分组一分组一分组一分组一分组一</div>,
       extra: genExtra(),
     },
+    {
+      key: '2',
+      label: '分组二',
+      children: <div>分组二分组二分组二分组二分组二分组二</div>,
+      extra: genExtra(),
+    },
   ];
   // #endregion
   return (
@@ -101,7 +107,7 @@ const CustomModel: React.FC<CustomModelProps> = ({
       </div>
       <div className='container'>
         {addOpen && addGroup}
-        <Collapse defaultActiveKey={['1']} expandIconPosition='start' items={items} />
+        <Collapse defaultActiveKey={['1']} expandIconPosition='start' items={items} size='small' />
       </div>
       {/* <Modal maskClosable={false} open={modalOpen} onOk={handleOk} onCancel={handleCancel}>
         123

@@ -11,6 +11,8 @@ declare module 'ThEditor' {
     configProvider: ConfigProvider;
     // 编辑器场景id
     id?: string;
+    // 自定义面板配置项
+    modelOption: CustomModelProps;
     /** 点击事件*/
     onClick: (e: any) => any;
     onAddGroup: (name: string) => void;
@@ -65,6 +67,7 @@ declare module 'ThEditor' {
 
   export interface ModelMnueProps {
     menuShow: boolean;
+    modelOption: CustomModelProps;
     onAddGroup: (name: string) => void;
   }
 

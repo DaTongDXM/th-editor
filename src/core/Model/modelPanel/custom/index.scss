@@ -34,6 +34,10 @@
         box-shadow: var(--box-shadow-little);
       }
     }
+    .ant-collapse {
+      height: 100%;
+      overflow: auto;
+    }
     .ant-collapse-item {
       font-size: 12px;
     }

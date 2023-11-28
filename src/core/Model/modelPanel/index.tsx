@@ -2,7 +2,7 @@
  * @Author: wuxudong wuxudong@zbnsec.com
  * @Date: 2023-08-29 18:07:07
  * @LastEditors: wuxudong 953909305@qq.com
- * @LastEditTime: 2023-11-24 16:30:30
+ * @LastEditTime: 2023-11-28 19:16:12
  * @Description:
  */
 import React, { useState } from 'react';
@@ -16,7 +16,7 @@ const components: any = {
   base: BaseModel,
   custom: CustomModel,
 };
-const ModelPanel: React.FC<any> = ({ onAddGroup }) => {
+const ModelPanel: React.FC<any> = ({ modelOption, onAddGroup }) => {
   const [activePanel, setActivePanel] = useState('base');
   const Component: React.FC<any> = components[activePanel];
   const items: TabsProps['items'] = [
@@ -43,6 +43,7 @@ const ModelPanel: React.FC<any> = ({ onAddGroup }) => {
           <BaseModel />
         ) : (
           <CustomModel
+            {...modelOption}
             onAddGroup={(name: string) => {
               onAddGroup(name);
             }}

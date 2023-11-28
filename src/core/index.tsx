@@ -2,7 +2,7 @@
  * @Author: wuxudong wuxudong@zbnsec.com
  * @Date: 2022-11-15 01:13:46
  * @LastEditors: wuxudong 953909305@qq.com
- * @LastEditTime: 2023-11-24 16:42:03
+ * @LastEditTime: 2023-11-28 19:12:22
  * @Description:The editor container contains the canvas , toolbar and attribute
  */
 import React, { useEffect, useState, useImperativeHandle, useRef } from 'react';
@@ -18,7 +18,7 @@ import BottomBar from './Toolbar/bottom';
 import Attribute from './Attribute';
 
 const EditorCore = React.forwardRef(
-  ({ onClick, id = '', onAddGroup }: EditorCoreProps, ref: any) => {
+  ({ onClick, id = '', modelOption, onAddGroup }: EditorCoreProps, ref: any) => {
     const [loading, setLoading] = useState(true);
 
     // let editor: Editor;
@@ -90,6 +90,7 @@ const EditorCore = React.forwardRef(
         {editor && <Toolbar editor={editor} keyCode={keyCode} />}
         <Model
           menuShow={false}
+          modelOption={modelOption}
           onAddGroup={(name: string) => {
             onAddGroup(name);
           }}

@@ -3,7 +3,7 @@
  * @LastEditors: wuxudong 953909305@qq.com
  * @Description:自定义组件
  */
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './index.scss';
 import { Upload, Button, Modal, Form, Collapse, Input, Tooltip, Popover } from 'antd';
 import type { CollapseProps } from 'antd';
@@ -13,6 +13,7 @@ const CustomModel: React.FC<CustomModelProps> = ({
   allowEdit = false,
   groupNameLength = 10,
   layout = 'card',
+  data,
   onAddGroup,
 }) => {
   // #region 顶部
@@ -75,20 +76,37 @@ const CustomModel: React.FC<CustomModelProps> = ({
     );
   };
 
-  const items: CollapseProps['items'] = [
-    {
-      key: '1',
-      label: '分组一',
-      children: <div>分组一分组一分组一分组一分组一</div>,
-      extra: genExtra(),
-    },
-    {
-      key: '2',
-      label: '分组二',
-      children: <div>分组二分组二分组二分组二分组二分组二</div>,
-      extra: genExtra(),
-    },
-  ];
+  // const items: CollapseProps['items'] = [
+  //   {
+  //     key: '1',
+  //     label: '分组一',
+  //     children: <div>分组一分组一分组一分组一分组一</div>,
+  //     extra: genExtra(),
+  //   },
+  //   {
+  //     key: '2',
+  //     label: '分组二',
+  //     children: <div>分组二分组二分组二分组二分组二分组二</div>,
+  //     extra: genExtra(),
+  //   },
+  // ];
+  const [items, setItems] = useState([]);
+  useEffect(() => {
+    if (!data) return;
+    let res: CollapseProps['items'] = [];
+    setItems([]);
+    for (let i = 0; i < data.length; i++) {
+      const el = data[i];
+      res.push({
+        key: el.id,
+        label: el.name,
+        children: <div>分组一分组一分组一分组一分组一</div>,
+        extra: genExtra(),
+      });
+    }
+    console.log(items);
+    setItems([...res]);
+  }, [data]);
   // #endregion
   return (
     <div className='custom-container'>

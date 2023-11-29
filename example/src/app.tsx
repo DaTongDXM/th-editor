@@ -2,19 +2,22 @@
  * @Author: wuxudong wuxudong@zbnsec.com
  * @Date: 2022-11-15 01:13:46
  * @LastEditors: wuxudong 953909305@qq.com
- * @LastEditTime: 2023-11-27 19:46:25
+ * @LastEditTime: 2023-11-29 20:29:12
  * @Description:
  */
-import React, { useRef, useState } from 'react';
-import { db, db_group } from './db';
+import React, { useRef, useState, useEffect } from 'react';
+
 import { createRoot } from 'react-dom/client';
 import ThEditor from '../../src/index';
-
+import { useImmer } from 'use-immer';
 // @ts-ignore
 // import ThEditor from '../../dist/index';
 
 import './app.scss';
 import { theme } from 'antd';
+const DB_NAME = 'editor';
+let db: IDBDatabase;
+let db_group: IDBObjectStore;
 const AppCompent = () => {
   const configProvider = {
     theme: {
@@ -26,7 +29,7 @@ const AppCompent = () => {
       algorithm: theme.darkAlgorithm,
     },
   };
-  const [modelOption, setModelOption] = useState({
+  const [modelOption, updateModelOption] = useImmer({
     allowEdit: true,
     groupNameLength: 10,
     layout: 'card',
@@ -39,6 +42,34 @@ const AppCompent = () => {
       thEditorRef.current.setAttrbute();
     }
   }, 3000);
+
+  useEffect(() => {
+    let request = window.indexedDB.open(DB_NAME, 1);
+    request.onsuccess = (res: any) => {
+      console.log('IndexedDB打开成功', res);
+      db = res.target.result;
+      const request = db.transaction('group', 'readwrite').objectStore('group').getAll();
+      request.onsuccess = (e: any) => {
+        if (e.target.result) {
+          updateModelOption((draft: any) => {
+            draft.data = e.target.result;
+          });
+          console.log('查询group：', e.target.result);
+        }
+      };
+    };
+
+    request.onerror = function (error) {
+      console.log('IndexedDB 打开失败', error);
+    };
+
+    request.onupgradeneeded = (res: any) => {
+      console.log('IndexedDB升级成功', res);
+      db = res.target.result;
+      db_group = db.createObjectStore('group', { keyPath: 'id' });
+      db_group.createIndex('indexName', 'name', { unique: true });
+    };
+  }, []);
   const handleAddGroup = (name: string) => {
     console.log(name);
     const request = db
@@ -46,13 +77,9 @@ const AppCompent = () => {
       .objectStore('group')
       .add({ id: new Date().getTime(), name: name });
     request.onsuccess = (e: any) => {
-      const request = db.transaction('group', 'readwrite').objectStore('group').getAll();
-      request.onsuccess = (e: any) => {
-        if (e.target.result) {
-          setModelOption({ ...modelOption, ...{ data: e.target.result } });
-          console.log('查询group：', e.target.result);
-        }
-      };
+      updateModelOption((draft: any) => {
+        draft.data.push({ id: new Date().getTime(), name: name });
+      });
     };
   };
   return (

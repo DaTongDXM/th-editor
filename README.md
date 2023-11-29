@@ -28,6 +28,7 @@
 |allowEdit|是否允许编辑|boolean|false
 |groupNameLength|分组名称最大长度|number|10
 |layout| 布局方式|'card' \| 'list'|'card'
+|data| 分组数据|` [{id:string,name:string,children:[]}] `|-
 ### events 事件
 
 |name 名称| describe 说明| type 类型

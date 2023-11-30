@@ -51,7 +51,9 @@ export default class Events extends EventDispatcher {
       editor.renderer.setSize(editor.width, editor.height);
       editor.camera.aspect = editor.width / editor.height;
       editor.camera.updateProjectionMatrix();
+      editor.render();
     };
+
     this.container.addEventListener('dragover', (e) => {
       e.preventDefault();
     });

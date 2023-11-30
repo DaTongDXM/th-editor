@@ -2,7 +2,7 @@
  * @Author: wuxudong wuxudong@zbnsec.com
  * @Date: 2023-08-23 19:28:49
  * @LastEditors: wuxudong 953909305@qq.com
- * @LastEditTime: 2023-11-22 19:35:59
+ * @LastEditTime: 2023-11-30 14:30:11
  * @Description:renderer init work by three.js
  */
 import {
@@ -77,7 +77,7 @@ export default class Editor {
   private init() {
     this.scene = new Scene();
     // 创建网格
-    const gridHelper = new GridHelper(10000, 400, 0x00ffff);
+    const gridHelper = new GridHelper(1000, 100, 0x00ffff);
     gridHelper.position.y = -8;
 
     this.scene.add(gridHelper);

@@ -58,12 +58,24 @@ const CustomModel: React.FC<CustomModelProps> = ({
         content={
           <>
             <div>
-              <Button icon={<UploadOutlined />} type='text'>
+              <Button
+                icon={<UploadOutlined />}
+                type='text'
+                onClick={(e) => {
+                  e.stopPropagation();
+                }}
+              >
                 上传
               </Button>
             </div>
             <div>
-              <Button icon={<DeleteOutlined />} type='text'>
+              <Button
+                icon={<DeleteOutlined />}
+                type='text'
+                onClick={(e) => {
+                  e.stopPropagation();
+                }}
+              >
                 删除
               </Button>
             </div>
@@ -72,7 +84,12 @@ const CustomModel: React.FC<CustomModelProps> = ({
         placement='bottom'
         trigger='hover'
       >
-        <i className='iconfont th-gengduo-shuxiang'></i>
+        <i
+          className='iconfont th-gengduo-shuxiang'
+          onClick={(e) => {
+            e.stopPropagation();
+          }}
+        ></i>
       </Popover>
     );
   };

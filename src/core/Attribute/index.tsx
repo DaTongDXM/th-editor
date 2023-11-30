@@ -1,18 +1,64 @@
 /*
- * @Author: wuxudong 953909305@qq.com
+ * @Author: wuxudong wuxudong@zbnsec.com
+ * @Date: 2023-08-29 15:40:18
  * @LastEditors: wuxudong 953909305@qq.com
- * @Description:右侧属性区域
+ * @LastEditTime: 2023-11-30 17:13:51
+ * @Description:右侧属性
  */
 import React, { useState } from 'react';
-import { Tooltip } from 'antd';
+import './index.scss';
+import { Tooltip, Tabs } from 'antd';
+import type { TabsProps } from 'antd';
+// @ts-ignore
+import { BorderBox7 } from '@jiaminghi/data-view-react';
 
-const Attribute: React.FC<any> = () => {
-  const [show, setShow] = useState(false);
-  const bodyClassName = `attribute-continer ${show ? 'show' : 'un-show'}`;
+import Project from './project';
+import Scene from './scene';
+const components: any = {
+  project: Project,
+  scene: Scene,
+};
+const Attribute: React.FC<any> = (props: any) => {
+  const { menuShow } = props;
+  const [showPanel, setShowPanel] = useState(menuShow);
+  const bodyClassName = `attribute-continer ${showPanel ? 'show' : 'un-show'}`;
+  let iconClassName = `iconfont ${!showPanel ? 'th-cebianlanshouqi' : 'th-cebianlanzhankai'}`;
+  const [activePanel, setActivePanel] = useState('base');
+  const Component: React.FC<any> = components[activePanel];
+  const items: TabsProps['items'] = [
+    {
+      key: 'scene',
+      label: '场景',
+      children: '',
+    },
+    {
+      key: 'project',
+      label: '项目',
+      children: '',
+    },
+  ];
+  const handleTabClick = (key: string) => {
+    setActivePanel(key);
+  };
   return (
     <div className={bodyClassName}>
-      <div></div>
+      <div className='attribute-continer-menu'>
+        <div
+          onClick={(e: any) => {
+            setShowPanel(!showPanel);
+
+            return;
+          }}
+        >
+          <i className={iconClassName}></i>
+        </div>
+      </div>
+      <div className='attribute-continer-body'>
+        <Tabs items={items} centered onTabClick={handleTabClick}></Tabs>
+        {activePanel === 'scene' ? <Scene /> : <Project />}
+      </div>
     </div>
   );
 };
+
 export default Attribute;

@@ -2,7 +2,7 @@
  * @Author: wuxudong wuxudong@zbnsec.com
  * @Date: 2022-11-15 01:13:46
  * @LastEditors: wuxudong 953909305@qq.com
- * @LastEditTime: 2023-11-28 19:12:22
+ * @LastEditTime: 2023-11-30 17:10:08
  * @Description:The editor container contains the canvas , toolbar and attribute
  */
 import React, { useEffect, useState, useImperativeHandle, useRef } from 'react';
@@ -97,7 +97,7 @@ const EditorCore = React.forwardRef(
         />
         <div id={containerId.current} className='main-container'></div>
         {editor && <BottomBar editor={editor} />}
-        <Attribute />
+        <Attribute menuShow={true} />
       </div>
     );
   },

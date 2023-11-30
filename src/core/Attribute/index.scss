@@ -1,22 +1,22 @@
-.model-continer {
+.attribute-continer {
   height: calc(100% - 8px);
   color: var(--th-color-font-light);
   position: absolute;
   top: 8px;
-  left: 4px;
+  right: 4px;
   display: flex;
   align-items: flex-start;
   &-menu {
     height: auto;
     padding-top: 3px;
-    padding-left: 2px;
+    padding-right: 2px;
     background-color: var(--th-color-menu-bg);
     margin-top: 100%;
     margin-left: 4px;
     border-radius: var(--border-radius-small);
   }
   &-body {
-    width: 240px;
+    width: 300px;
     height: 100%;
     background-color: var(--th-color-menu-bg);
     border-radius: var(--border-radius-small);
@@ -29,7 +29,7 @@
     }
   }
   &.un-show {
-    left: -242px;
+    right: -302px;
     transition: all 0.5s ease-in-out;
   }
   &.show {

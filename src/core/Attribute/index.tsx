@@ -2,7 +2,7 @@
  * @Author: wuxudong wuxudong@zbnsec.com
  * @Date: 2023-08-29 15:40:18
  * @LastEditors: wuxudong 953909305@qq.com
- * @LastEditTime: 2023-11-30 17:13:51
+ * @LastEditTime: 2023-12-01 16:31:30
  * @Description:右侧属性
  */
 import React, { useState } from 'react';
@@ -54,7 +54,7 @@ const Attribute: React.FC<any> = (props: any) => {
         </div>
       </div>
       <div className='attribute-continer-body'>
-        <Tabs items={items} centered onTabClick={handleTabClick}></Tabs>
+        <Tabs items={items} onTabClick={handleTabClick}></Tabs>
         {activePanel === 'scene' ? <Scene /> : <Project />}
       </div>
     </div>

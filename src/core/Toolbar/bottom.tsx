@@ -4,7 +4,7 @@
  * @Description:底部工具条
  */
 import React, { useState } from 'react';
-import { Tooltip } from 'antd';
+import { Tooltip, Tag, Space } from 'antd';
 import Editor from '@/three/Editor';
 import './bottom.scss';
 
@@ -28,6 +28,68 @@ const BottomBar: React.FC<{ editor: Editor }> = ({ editor }) => {
     time && setMs(time);
     // console.log(e);
   });
+
+  // #region 快捷键
+  const [shortKey, setShortKey] = useState(false);
+  const keyList = [
+    {
+      label: '空间拖拽',
+      key0: 'Q',
+    },
+    {
+      label: '位移控制器',
+      key0: 'W',
+    },
+    {
+      label: '旋转控制器',
+      key0: 'E',
+    },
+    {
+      label: '缩放控制器',
+      key0: 'R',
+    },
+    {
+      label: '复制',
+      key0: 'Ctrl',
+      key1: 'C',
+    },
+    {
+      label: '粘贴',
+      key0: 'Ctrl',
+      key1: 'V',
+    },
+  ];
+  let shortKeyDom = (
+    <div className='short-key'>
+      <i
+        className='iconfont th-guanbi'
+        onClick={() => {
+          setShortKey(false);
+        }}
+      ></i>
+      <div className='container'>
+        {keyList.map((item: any) => {
+          return (
+            <div className='key-item'>
+              <div className='label'>{item.label}</div>
+              <div>
+                <Tag>{item.key0}</Tag>
+                {item.key1 ? (
+                  <>
+                    <span>+</span>
+                    <Tag>{item.key1}</Tag>
+                  </>
+                ) : (
+                  <></>
+                )}
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
+  // #endregion
   return (
     <div className='bottom-container'>
       <div className='bottom-container-count'>
@@ -55,9 +117,15 @@ const BottomBar: React.FC<{ editor: Editor }> = ({ editor }) => {
           ></i>
         </Tooltip>
         <Tooltip overlayStyle={tootipStyle} placement='top' title='快捷键说明'>
-          <i className='iconfont th-jianpan'></i>
+          <i
+            className='iconfont th-jianpan'
+            onClick={() => {
+              setShortKey(true);
+            }}
+          ></i>
         </Tooltip>
       </div>
+      {shortKey && shortKeyDom}
     </div>
   );
 };

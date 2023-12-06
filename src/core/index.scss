@@ -4,6 +4,9 @@
   canvas {
     display: block;
   }
+  // & > [class*='-container'] {
+  //   padding: 16px;
+  // }
 }
 .mask-container {
   position: absolute;

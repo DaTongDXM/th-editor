@@ -4,7 +4,7 @@
  * @Description:底部工具条
  */
 import React, { useState } from 'react';
-import { Tooltip, Tag, Space } from 'antd';
+import { Tooltip, Tag } from 'antd';
 import Editor from '@/three/Editor';
 import './bottom.scss';
 
@@ -70,7 +70,7 @@ const BottomBar: React.FC<{ editor: Editor }> = ({ editor }) => {
       <div className='container'>
         {keyList.map((item: any) => {
           return (
-            <div className='key-item'>
+            <div className='key-item' key={item.label}>
               <div className='label'>{item.label}</div>
               <div>
                 <Tag>{item.key0}</Tag>

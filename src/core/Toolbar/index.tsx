@@ -115,6 +115,7 @@ const ToolBar: React.FC<{ editor: Editor; keyCode: number }> = ({ editor, keyCod
     let output = editor.scene.toJSON();
     try {
       output = JSON.stringify(output, null, '\t');
+
       output = output.replace(/[\n\t]+([\d\.e\-\[\]]+)/g, '$1');
     } catch (e) {
       output = JSON.stringify(output);

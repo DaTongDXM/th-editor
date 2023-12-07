@@ -22,5 +22,6 @@
     "noEmit": true,
     "jsx": "react"
   },
-  "include": ["src", "example", "types"]
+  "include": ["src", "example", "types"],
+  "exclude": ["src/assets"]
 }

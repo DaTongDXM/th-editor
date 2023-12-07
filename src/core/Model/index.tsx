@@ -2,20 +2,16 @@
  * @Author: wuxudong wuxudong@zbnsec.com
  * @Date: 2023-08-29 15:40:18
  * @LastEditors: wuxudong 953909305@qq.com
- * @LastEditTime: 2023-11-30 16:39:00
+ * @LastEditTime: 2023-12-07 14:11:46
  * @Description:this is the  left menu of the editor,which contains the default model list andited by the editor
  */
 import React, { useState } from 'react';
 import './index.scss';
-import { Tooltip } from 'antd';
-import { AppstoreAddOutlined, PartitionOutlined } from '@ant-design/icons';
+
 import { ModelMnueProps } from 'ThEditor';
-import ModelList from './modelList';
+
 import ModelPanel from './modelPanel';
-const componentMap: any = {
-  ModelList,
-  ModelPanel,
-};
+
 const Model: React.FC<ModelMnueProps> = (props: ModelMnueProps) => {
   const { menuShow, modelOption, onAddGroup } = props;
   const [showPanel, setShowPanel] = useState(menuShow);

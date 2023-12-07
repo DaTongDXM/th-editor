@@ -45,7 +45,6 @@ export default class Events extends EventDispatcher {
     this.control = Control.getControlInstance();
 
     window.onresize = () => {
-      console.log('resize,', editor.container.offsetWidth, editor.container.offsetHeight);
       editor.width = editor.container.offsetWidth;
       editor.height = editor.container.offsetHeight;
       editor.renderer.setSize(editor.width, editor.height);
@@ -64,22 +63,22 @@ export default class Events extends EventDispatcher {
 
       if (intersects.length > 0) {
         var intersectPoint = intersects[0].point;
-        console.log('Intersect point: ', intersectPoint);
 
         try {
-          const { model } = JSON.parse(e.dataTransfer!.getData('data'));
-          const mesh = BaseModel.createModel(model, scope);
-          mesh.position.copy(intersectPoint);
-          this.scene.add(mesh);
-          this.control.attach(mesh);
+          const { name, label, model } = JSON.parse(e.dataTransfer!.getData('data'));
+          const obj = BaseModel.createModel(model, scope);
+          obj.position.copy(intersectPoint);
+          obj.name = label;
+          this.scene.add(obj);
+          this.control.attach(obj);
+          editor.mitter.emitThModelAdd(obj);
+
           editor.render();
-          console.log(editor);
         } catch (e) {
           console.log(e);
           editor.mitter.emitThMsgError(e + '');
         }
       } else {
-        console.log(intersects);
         editor.mitter.emitThMsgWaring('请将模型拖拽至网格平面！');
       }
     });
@@ -125,8 +124,6 @@ export default class Events extends EventDispatcher {
     if (intersections.length > 0) {
       const object = intersections[0].object;
       if (object.parent) {
-        console.log(`控制器enabled:${this.editor.controls.transformControl.enabled}`);
-        console.log(`控制器object :${this.editor.controls.transformControl.object}`);
         if (!this.editor.dragabel) {
           object.parent.dispatchEvent({ type: 'click:model' });
         } else {
@@ -140,7 +137,6 @@ export default class Events extends EventDispatcher {
           this.dragControls.addEventListener('drag', () => {
             Editor.editor.controls.orbitControl.enabled = false;
             this.dispatchEvent({ type: 'render' });
-            console.log('00000');
           });
           this.dragControls.addEventListener('dragend', () => {
             this.dispatchEvent({ type: 'render' });

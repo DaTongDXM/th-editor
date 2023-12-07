@@ -2,7 +2,7 @@
  * @Author: wuxudong wuxudong@zbnsec.com
  * @Date: 2023-08-29 18:07:07
  * @LastEditors: wuxudong 953909305@qq.com
- * @LastEditTime: 2023-11-28 19:16:12
+ * @LastEditTime: 2023-12-07 14:10:45
  * @Description:
  */
 import React, { useState } from 'react';
@@ -12,13 +12,8 @@ import type { TabsProps } from 'antd';
 import { BorderBox7 } from '@jiaminghi/data-view-react';
 import BaseModel from './base';
 import CustomModel from './custom';
-const components: any = {
-  base: BaseModel,
-  custom: CustomModel,
-};
 const ModelPanel: React.FC<any> = ({ modelOption, onAddGroup }) => {
   const [activePanel, setActivePanel] = useState('base');
-  const Component: React.FC<any> = components[activePanel];
   const items: TabsProps['items'] = [
     {
       key: 'base',

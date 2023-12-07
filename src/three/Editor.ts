@@ -2,7 +2,7 @@
  * @Author: wuxudong wuxudong@zbnsec.com
  * @Date: 2023-08-23 19:28:49
  * @LastEditors: wuxudong 953909305@qq.com
- * @LastEditTime: 2023-11-30 14:30:11
+ * @LastEditTime: 2023-12-07 09:48:32
  * @Description:renderer init work by three.js
  */
 import {
@@ -78,6 +78,7 @@ export default class Editor {
     this.scene = new Scene();
     // 创建网格
     const gridHelper = new GridHelper(1000, 100, 0x00ffff);
+    gridHelper.name = '网格';
     gridHelper.position.y = -8;
 
     this.scene.add(gridHelper);
@@ -98,9 +99,11 @@ export default class Editor {
    */
   private initLight() {
     const ambient = new AmbientLight(0x111111, 1);
+    ambient.name = '环境光';
     this.scene.add(ambient);
     const directionalLight = new DirectionalLight(0xffffff, 0.125);
     directionalLight.position.set(200, 200, 200);
+    directionalLight.name = '平行光';
     this.scene.add(directionalLight);
   }
   /**

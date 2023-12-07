@@ -1,6 +1,6 @@
 /*
  * @Author: wuxudong 953909305@qq.com
- * @LastEditors: 武 旭东 wuxudong@zbnsec.com
+ * @LastEditors: wuxudong 953909305@qq.com
  * @Description:模型类
  */
 import {
@@ -201,7 +201,7 @@ class BaseModel {
     const mesh = new Mesh(geometry, meshMaterial);
     mesh.name = group.uuid;
     group.add(mesh);
-    group.name = 'dragable';
+    group.name = '组';
     console.log(group);
     // 添加点击监听事件，只有被创建的模型才可以触发，防止场景中其他scene（grid，可拖拽的轴等）触发
     group.addEventListener('click:model', () => {

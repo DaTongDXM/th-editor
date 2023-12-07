@@ -4,9 +4,8 @@
  * @Description:自定义组件
  */
 import React, { useState, useEffect } from 'react';
-import { useImmer } from 'use-immer';
 import './index.scss';
-import { Upload, Button, Modal, Form, Collapse, Input, Tooltip, Popover } from 'antd';
+import { Button, Form, Collapse, Input, Tooltip, Popover } from 'antd';
 import type { CollapseProps } from 'antd';
 import { UploadOutlined, DeleteOutlined } from '@ant-design/icons';
 import { CustomModelProps } from 'ThEditor';
@@ -22,9 +21,7 @@ const CustomModel: React.FC<CustomModelProps> = ({
   const handleAddGroup = (e: React.KeyboardEvent<HTMLInputElement>) => {
     groupForm.submit();
   };
-  const handleCancel = () => {
-    setAddOpen(false);
-  };
+
   const [groupForm] = Form.useForm();
   const onFinish = (values: any) => {
     console.log(values.group_name);
@@ -132,9 +129,6 @@ const CustomModel: React.FC<CustomModelProps> = ({
         {addOpen && addGroup}
         <Collapse defaultActiveKey={['1']} expandIconPosition='start' items={items} size='small' />
       </div>
-      {/* <Modal maskClosable={false} open={modalOpen} onOk={handleOk} onCancel={handleCancel}>
-        123
-      </Modal> */}
     </div>
   );
 };

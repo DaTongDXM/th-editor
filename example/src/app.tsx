@@ -2,10 +2,10 @@
  * @Author: wuxudong wuxudong@zbnsec.com
  * @Date: 2022-11-15 01:13:46
  * @LastEditors: wuxudong 953909305@qq.com
- * @LastEditTime: 2023-11-29 20:29:12
+ * @LastEditTime: 2023-12-07 14:42:05
  * @Description:
  */
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useRef, useEffect } from 'react';
 
 import { createRoot } from 'react-dom/client';
 import ThEditor from '../../src/index';
@@ -25,8 +25,7 @@ const AppCompent = () => {
         // Seed Token，影响范围大
         colorPrimary: '#5d5d5d',
         borderRadius: 4,
-      },
-      algorithm: theme.darkAlgorithm,
+      }
     },
   };
   const [modelOption, updateModelOption] = useImmer({

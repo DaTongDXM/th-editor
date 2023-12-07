@@ -2,11 +2,11 @@
  * @Author: wuxudong 953909305@qq.com
  * @Date: 2023-10-12 14:44:06
  * @LastEditors: wuxudong 953909305@qq.com
- * @LastEditTime: 2023-11-15 19:34:01
+ * @LastEditTime: 2023-12-07 17:03:53
  * @Description: 事件处理类
  */
 import mitt, { Emitter } from 'mitt';
-
+import { Object3D } from 'three';
 const mitter: Emitter<any> = mitt<any>();
 
 class Mitter {
@@ -35,6 +35,20 @@ class Mitter {
 
   public onThClick(callback: any) {
     mitter.on(this.TH_CLICK, callback);
+  }
+
+  /**
+   * @description: 模型添加事件
+   * @return {*}
+   */
+  public readonly TH_MODEL_ADD = 'th:model:add';
+
+  public emitThModelAdd(obj: Object3D) {
+    console.log(111);
+    mitter.emit(this.TH_MODEL_ADD, obj);
+  }
+  public onThModelAdd(callback: (obj: Object3D) => void) {
+    mitter.on(this.TH_MODEL_ADD, callback);
   }
 
   /**

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Editor from '@/three/Editor';
-import { useImmer } from 'use-immer';
+
 import './index.scss';
 import { Input, Tree } from 'antd';
 import { Object3D } from 'three';
@@ -8,20 +8,24 @@ import type { DataNode } from 'antd/es/tree';
 const Scene: React.FC<{ editor: Editor }> = ({ editor }) => {
   const { Search } = Input;
   const getTreeData = (objList: Array<Object3D>): Array<DataNode> => {
-    const res = [...objList].map((item: Object3D) => {
+    const res: any = [];
+    for (let i = 0; i < objList.length; i++) {
+      const item = objList[i];
+      if (!item.name) continue;
       if (item.children.length > 0) {
-        return {
+        res.push({
           title: item.name,
           key: item.id,
           children: getTreeData(item.children),
-        };
+        });
       } else {
-        return {
+        res.push({
           title: item.name,
           key: item.id,
-        };
+        });
       }
-    });
+    }
+
     return res;
   };
   const [treeData, setTreeData] = useState(getTreeData(editor.scene.children));

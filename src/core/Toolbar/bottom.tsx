@@ -93,7 +93,7 @@ const BottomBar: React.FC<{ editor: Editor }> = ({ editor }) => {
   return (
     <div className='bottom-container'>
       <div className='bottom-container-count'>
-        <div>物体：8</div>
+        <div>物体：{editor.scene.children.length - 4}</div>
         <div>帧时：{ms}ms</div>
         <div></div>
       </div>

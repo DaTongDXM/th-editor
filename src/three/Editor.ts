@@ -1,8 +1,8 @@
 /*
  * @Author: wuxudong wuxudong@zbnsec.com
  * @Date: 2023-08-23 19:28:49
- * @LastEditors: wuxudong 953909305@qq.com
- * @LastEditTime: 2023-12-07 09:48:32
+ * @LastEditors: 武 旭东 wuxudong@zbnsec.com
+ * @LastEditTime: 2023-12-09 20:00:52
  * @Description:renderer init work by three.js
  */
 import {
@@ -83,10 +83,11 @@ export default class Editor {
 
     this.scene.add(gridHelper);
     // 创建伪网格，设置透明，目的是通过光线投射获取鼠标的三维坐标系
-    const plane = new PlaneGeometry(10000 * 400, 10000 * 400);
+    const plane = new PlaneGeometry(1000 * 50, 1000 * 50);
     var material = new MeshLambertMaterial({ color: 0xffffff, wireframe: true });
     var mesh = new Mesh(plane, material);
     mesh.rotation.x = -Math.PI / 2;
+    mesh.position.y = -8;
     this.grid = mesh;
     this.scene.add(mesh);
     this.initSkybox();

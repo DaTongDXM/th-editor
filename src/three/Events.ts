@@ -1,6 +1,6 @@
 /*
  * @Author: wuxudong 953909305@qq.com
- * @LastEditors: 武 旭东 wuxudong@zbnsec.com
+ * @LastEditors: wuxudong 953909305@qq.com
  * @Description:事件类
  */
 import { Camera, EventDispatcher, Raycaster, Scene, Vector2 } from 'three';

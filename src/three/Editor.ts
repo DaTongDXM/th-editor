@@ -1,8 +1,8 @@
 /*
  * @Author: wuxudong wuxudong@zbnsec.com
  * @Date: 2023-08-23 19:28:49
- * @LastEditors: 武 旭东 wuxudong@zbnsec.com
- * @LastEditTime: 2023-12-09 20:00:52
+ * @LastEditors: wuxudong 953909305@qq.com
+ * @LastEditTime: 2023-12-11 09:57:55
  * @Description:renderer init work by three.js
  */
 import {
@@ -83,7 +83,7 @@ export default class Editor {
 
     this.scene.add(gridHelper);
     // 创建伪网格，设置透明，目的是通过光线投射获取鼠标的三维坐标系
-    const plane = new PlaneGeometry(1000 * 50, 1000 * 50);
+    const plane = new PlaneGeometry(1000, 1000);
     var material = new MeshLambertMaterial({ color: 0xffffff, wireframe: true });
     var mesh = new Mesh(plane, material);
     mesh.rotation.x = -Math.PI / 2;

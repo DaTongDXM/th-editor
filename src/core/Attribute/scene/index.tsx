@@ -2,7 +2,8 @@ import React, { useEffect, useState } from 'react';
 import Editor from '@/three/Editor';
 
 import './index.scss';
-import { Input, Tree } from 'antd';
+import { Input, Tree, Tabs } from 'antd';
+import type { TabsProps } from 'antd';
 import { Object3D } from 'three';
 import type { DataNode } from 'antd/es/tree';
 const Scene: React.FC<{ editor: Editor }> = ({ editor }) => {
@@ -60,6 +61,27 @@ const Scene: React.FC<{ editor: Editor }> = ({ editor }) => {
     }
     return objList.concat(childrenList);
   };
+  const [activePanel, setActivePanel] = useState('attribute');
+  const items: TabsProps['items'] = [
+    {
+      key: 'attribute',
+      label: '属性',
+      children: '',
+    },
+    {
+      key: 'geometry',
+      label: '几何组件',
+      children: '',
+    },
+    {
+      key: 'material',
+      label: '材质组件',
+      children: '',
+    },
+  ];
+  const handleTabClick = (key: string) => {
+    setActivePanel(key);
+  };
   return (
     <>
       <div className='scene-continer'>
@@ -67,6 +89,7 @@ const Scene: React.FC<{ editor: Editor }> = ({ editor }) => {
           <Search />
           <Tree blockNode showLine defaultExpandAll treeData={treeData}></Tree>
         </div>
+        <Tabs className='model-attr' items={items} onTabClick={handleTabClick}></Tabs>
       </div>
     </>
   );

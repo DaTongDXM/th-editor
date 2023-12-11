@@ -1,6 +1,6 @@
 /*
  * @Author: wuxudong 953909305@qq.com
- * @LastEditors: 武 旭东 wuxudong@zbnsec.com
+ * @LastEditors: wuxudong 953909305@qq.com
  * @Description:事件类
  */
 import { Camera, EventDispatcher, Raycaster, Scene, Vector2 } from 'three';
@@ -69,6 +69,8 @@ export default class Events extends EventDispatcher {
           const obj = BaseModel.createModel(model, scope);
           obj.position.copy(intersectPoint);
           obj.name = label;
+          obj.position.y = 0;
+          console.log(obj);
           this.scene.add(obj);
           this.control.attach(obj);
           editor.mitter.emitThModelAdd(obj);

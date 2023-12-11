@@ -21,8 +21,13 @@ import {
   Group,
   LineBasicMaterial,
   LineLoop,
+  MeshBasicMaterial,
 } from 'three';
+import { TextGeometry } from 'three/examples/jsm/geometries/TextGeometry';
+import { FontLoader } from 'three/examples/jsm/loaders/FontLoader';
+import helvetiker from 'three/examples/fonts/helvetiker_regular.typeface.json';
 import Events from './Events';
+import path from 'path';
 
 const twoPi = Math.PI * 2;
 let geometry: BufferGeometry;
@@ -176,13 +181,14 @@ const ModelMap: any = {
   },
 };
 class BaseModel {
+  constructor() {}
   /**
    * @description: 生成基础模型
    * @param {string} name 模型名称
    * @return {*} 返回一个group，包含镜面高光材质和线性材质的一个geometry对象
    */
-  static createModel(name: string, event: Events): Group {
-    const geometry = ModelMap[name]();
+  static createModel(label: string, model: string, event: Events): Group {
+    const geometry = ModelMap[model]();
     const lineMaterial = new LineBasicMaterial({
       color: 0xffffff,
       transparent: true,
@@ -202,12 +208,34 @@ class BaseModel {
     mesh.name = group.uuid;
     group.add(mesh);
     group.name = '组';
+    this.setName(label, group);
     console.log(group);
+
     // 添加点击监听事件，只有被创建的模型才可以触发，防止场景中其他scene（grid，可拖拽的轴等）触发
     group.addEventListener('click:model', () => {
       event.dispatchEvent({ type: event.TH_CLICK, object: group });
     });
     return group;
+  }
+
+  static setName(name: string, group: Group): void {
+    const loader = new FontLoader();
+    loader.load(path.resolve('three/examples/fonts/helvetiker_regular.typeface.json'), (font) => {
+      let textGeometry = new TextGeometry(name, {
+        font: font,
+        size: 20,
+        height: 5,
+        curveSegments: 12,
+        bevelEnabled: true,
+        bevelThickness: 2,
+        bevelSize: 1,
+        bevelSegments: 5,
+      });
+      const textMaterial = new MeshBasicMaterial({ color: 0x0000ff });
+      const text = new Mesh(textGeometry, textMaterial);
+      text.position.y = -8;
+      group.add(text);
+    });
   }
 }
 

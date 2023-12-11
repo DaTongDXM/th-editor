@@ -66,7 +66,7 @@ export default class Events extends EventDispatcher {
 
         try {
           const { name, label, model } = JSON.parse(e.dataTransfer!.getData('data'));
-          const obj = BaseModel.createModel(model, scope);
+          const obj = BaseModel.createModel(label, model, scope);
           obj.position.copy(intersectPoint);
           obj.name = label;
           obj.position.y = 0;

@@ -119,7 +119,7 @@ export default class Editor {
       2000,
     );
     this.camera.updateProjectionMatrix();
-    this.camera.position.set(200, 100, 200);
+    this.camera.position.set(0, 100, 200);
     this.camera.lookAt(0, 400, 0);
   }
   /**

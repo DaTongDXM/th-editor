@@ -22,12 +22,14 @@ import {
   LineBasicMaterial,
   LineLoop,
   MeshBasicMaterial,
+  LoadingManager,
 } from 'three';
 import { TextGeometry } from 'three/examples/jsm/geometries/TextGeometry';
 import { FontLoader } from 'three/examples/jsm/loaders/FontLoader';
 import helvetiker from 'three/examples/fonts/helvetiker_regular.typeface.json';
 import Events from './Events';
 import path from 'path';
+import fs from 'fs';
 
 const twoPi = Math.PI * 2;
 let geometry: BufferGeometry;
@@ -187,7 +189,7 @@ class BaseModel {
    * @param {string} name 模型名称
    * @return {*} 返回一个group，包含镜面高光材质和线性材质的一个geometry对象
    */
-  static createModel(label: string, model: string, event: Events): Group {
+  static createModel(label: string, model: string, event: Events) {
     const geometry = ModelMap[model]();
     const lineMaterial = new LineBasicMaterial({
       color: 0xffffff,
@@ -218,24 +220,57 @@ class BaseModel {
     return group;
   }
 
-  static setName(name: string, group: Group): void {
-    const loader = new FontLoader();
-    loader.load(path.resolve('three/examples/fonts/helvetiker_regular.typeface.json'), (font) => {
-      let textGeometry = new TextGeometry(name, {
-        font: font,
-        size: 20,
-        height: 5,
-        curveSegments: 12,
-        bevelEnabled: true,
-        bevelThickness: 2,
-        bevelSize: 1,
-        bevelSegments: 5,
+  static setName(name: string, group: Group): Promise<any> {
+    return new Promise(() => {
+      const manager = new LoadingManager();
+      const reader = new FileReader();
+      reader.onload = (event: any) => {
+        console.log(event.target.result);
+      };
+
+      const file = require(`../assets/thfont/microsoft_yaHei_regular.json`);
+
+      reader.readAsArrayBuffer(new Blob([file]));
+      manager.setURLModifier((url) => {
+        url = URL.createObjectURL(new Blob([JSON.stringify(file)], { type: 'application/json' }));
+        console.log(url);
+        return url;
       });
-      const textMaterial = new MeshBasicMaterial({ color: 0x0000ff });
-      const text = new Mesh(textGeometry, textMaterial);
-      text.position.y = -8;
-      group.add(text);
+      const loader = new FontLoader(manager);
+      loader.load('microsoft_yaHei_regular.json', (font) => {
+        console.log(name);
+        let textGeometry = new TextGeometry(name, {
+          font: font,
+          size: 5,
+          height: 1,
+          curveSegments: 12,
+          bevelEnabled: false,
+          bevelThickness: 2,
+          bevelSize: 1.5,
+          bevelSegments: 5,
+        });
+        const textMaterial = [
+          new MeshPhongMaterial({ color: 0x049ef4, flatShading: true }), // front
+          new MeshPhongMaterial({ color: 0xffffff }), // side
+        ];
+        const text = new Mesh(textGeometry, textMaterial);
+        text.position.y = -18;
+        group.add(text);
+        console.log(text);
+      });
     });
+  }
+
+  static getFile2Blob(url: string) {
+    let xhr = new XMLHttpRequest();
+    xhr.open('GET', url, true);
+    xhr.onload = function (e) {
+      if (this.status == 200) {
+        let blob = new Blob([this.response]);
+        console.log(blob);
+      }
+    };
+    xhr.send();
   }
 }
 

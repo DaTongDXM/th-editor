@@ -69,7 +69,7 @@ export default class Events extends EventDispatcher {
           const obj = BaseModel.createModel(label, model, scope);
           obj.position.copy(intersectPoint);
           obj.name = label;
-          obj.position.y = 0;
+          obj.position.y = 18;
           console.log(obj);
           this.scene.add(obj);
           this.control.attach(obj);

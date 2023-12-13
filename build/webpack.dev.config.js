@@ -2,7 +2,7 @@
  * @Author: wuxudong wuxudong@zbnsec.com
  * @Date: 2022-11-15 01:13:46
  * @LastEditors: wuxudong 953909305@qq.com
- * @LastEditTime: 2023-11-22 10:56:36
+ * @LastEditTime: 2023-12-13 15:06:43
  * @Description:
  */
 const path = require('path');
@@ -53,6 +53,7 @@ module.exports = merge(common, {
       template: 'example/src/index.html',
       inject: 'body',
       hash: false,
+      favicon: 'example/src/favicon.svg',
     }),
     new webpack.HotModuleReplacementPlugin(),
   ],

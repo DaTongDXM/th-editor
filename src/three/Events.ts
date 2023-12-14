@@ -65,12 +65,9 @@ export default class Events extends EventDispatcher {
         var intersectPoint = intersects[0].point;
 
         try {
-          const { name, label, model } = JSON.parse(e.dataTransfer!.getData('data'));
-          const obj = BaseModel.createModel(label, model, scope);
-          obj.position.copy(intersectPoint);
-          obj.name = label;
-          obj.position.y = 18;
-          console.log(obj);
+          const { label, model } = JSON.parse(e.dataTransfer!.getData('data'));
+          const obj = BaseModel.createModel(label, model, intersectPoint, scope);
+
           this.scene.add(obj);
           this.control.attach(obj);
           editor.mitter.emitThModelAdd(obj);

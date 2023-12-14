@@ -16,7 +16,7 @@ import {
   SendOutlined,
 } from '@ant-design/icons';
 
-const ToolBar: React.FC<{ editor: Editor; keyCode: number }> = ({ editor, keyCode = 81 }) => {
+const ToolBar: React.FC<{ editor: Editor; keyCode: string }> = ({ editor, keyCode = 81 }) => {
   const [activeName, setActiveName] = useState('shoushoushi');
 
   const menuList = [
@@ -24,7 +24,7 @@ const ToolBar: React.FC<{ editor: Editor; keyCode: number }> = ({ editor, keyCod
       icon: 'shoushoushi',
       title: '抓取(Q)',
       type: 'shoushoushi',
-      keyCode: 81,
+      keyCode: 'q',
       iconFont: true,
       onClick: handleSetMode,
     },
@@ -33,21 +33,21 @@ const ToolBar: React.FC<{ editor: Editor; keyCode: number }> = ({ editor, keyCod
       icon: DragOutlined,
       title: '位置(W)',
       type: 'DragOutlined',
-      keyCode: 87,
+      keyCode: 'w',
       onClick: handleSetMode,
     },
     {
       icon: SyncOutlined,
       title: '角度(E)',
       type: 'SyncOutlined',
-      keyCode: 69,
+      keyCode: 'e',
       onClick: handleSetMode,
     },
     {
       icon: ExpandAltOutlined,
       title: '大小(R)',
       type: 'ExpandAltOutlined',
-      keyCode: 82,
+      keyCode: 'r',
       onClick: handleSetMode,
     },
     { icon: PlayCircleOutlined, title: '演示', type: 'PlayCircleOutlined' },
@@ -58,7 +58,7 @@ const ToolBar: React.FC<{ editor: Editor; keyCode: number }> = ({ editor, keyCod
     (item: {
       icon: any;
       title: string;
-      keyCode?: number;
+      keyCode?: string;
       type: string;
       onClick?: (args?: any) => any;
       iconFont?: boolean;
@@ -100,10 +100,10 @@ const ToolBar: React.FC<{ editor: Editor; keyCode: number }> = ({ editor, keyCod
     }
   }, [keyCode]);
 
-  function handleSetMode(code: number) {
+  function handleSetMode(code: string) {
     console.log(code);
     const event = new KeyboardEvent('keydown', {
-      keyCode: code,
+      key: code,
     });
     window.dispatchEvent(event);
   }

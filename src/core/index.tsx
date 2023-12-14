@@ -2,7 +2,7 @@
  * @Author: wuxudong wuxudong@zbnsec.com
  * @Date: 2022-11-15 01:13:46
  * @LastEditors: wuxudong 953909305@qq.com
- * @LastEditTime: 2023-12-06 15:00:48
+ * @LastEditTime: 2023-12-14 20:09:03
  * @Description:The editor container contains the canvas , toolbar and attribute
  */
 import React, { useEffect, useState, useImperativeHandle, useRef } from 'react';
@@ -23,7 +23,7 @@ const EditorCore = React.forwardRef(
 
     // let editor: Editor;
     let [editor, setEditor] = useState<Editor | null>(null);
-    let [keyCode, setKeyCode] = useState(81);
+    let [keyCode, setKeyCode] = useState('q');
     let containerId = useRef(`editor-container${id}`);
     useEffect(() => {
       if (!editor) {
@@ -58,26 +58,29 @@ const EditorCore = React.forwardRef(
     }
 
     window.addEventListener('keydown', (event) => {
-      console.log(event.keyCode);
+      console.log(event.key.toLowerCase());
       if (!editor) return;
-      setKeyCode(event.keyCode);
-      switch (event.keyCode) {
-        case 81: // Q
+      setKeyCode(event.key.toLowerCase());
+      switch (event.key.toLowerCase()) {
+        case 'q': // Q
           editor.dragabel = true;
           editor.controls.dispose();
           break;
-        case 87: // W
+        case 'w': // W
           editor.controls.transformControl.setMode('translate');
           editor.dragabel = false;
           break;
-        case 69: // E
+        case 'e': // E
           editor.controls.transformControl.setMode('rotate');
           editor.dragabel = false;
           break;
-        case 82: // R
+        case 'r': // R
           editor.controls.transformControl.setMode('scale');
           editor.dragabel = false;
           break;
+        case 'backspace':
+        case 'delete':
+          editor.remove();
         default:
           break;
       }

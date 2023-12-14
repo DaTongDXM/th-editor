@@ -2,7 +2,7 @@
  * @Author: wuxudong wuxudong@zbnsec.com
  * @Date: 2023-08-23 19:28:49
  * @LastEditors: wuxudong 953909305@qq.com
- * @LastEditTime: 2023-12-11 09:57:55
+ * @LastEditTime: 2023-12-14 20:24:52
  * @Description:renderer init work by three.js
  */
 import {
@@ -189,7 +189,7 @@ export default class Editor {
       this.controls.orbitControl.enabled = true;
       this.update();
     });
-    this.addEventListener(this.events.TH_CLICK, (model: any) => {
+    this.events.addEventListener(this.events.TH_CLICK, (model: any) => {
       const { object } = model;
       console.log('点击', object);
 
@@ -211,7 +211,11 @@ export default class Editor {
     this.render();
     // window.requestAnimationFrame(() => this.update());
   }
-
+  public remove() {
+    this.cacheObject && this.scene.remove(this.cacheObject);
+    this.controls.dispose();
+    this.render();
+  }
   public dispatchEvent(args: any) {
     console.log(args);
     this.events.dispatchEvent(args);

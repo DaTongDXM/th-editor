@@ -66,7 +66,10 @@ export default class Control {
       this.editor.render();
     });
   }
-
+  /**
+   * @description: 销毁transformControl
+   * @return {*}
+   */
   public dispose() {
     this.editor.controls.transformControl.detach();
     this.editor.render();

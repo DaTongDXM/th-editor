@@ -126,7 +126,6 @@ export default class Events extends EventDispatcher {
         if (!this.editor.dragabel) {
           object.parent.dispatchEvent({ type: 'click:model' });
         } else {
-          // this.dispatchEvent({ type: this.TH_CLICK, object });
           this.dragControls = new DragControls(
             [object.parent ? object.parent : object],
             this.camera,
@@ -144,23 +143,6 @@ export default class Events extends EventDispatcher {
           });
         }
       }
-      // this.dispatchEvent({ type: this.TH_CLICK, object });
-      // this.dragControls = new DragControls(
-      //   [object.parent ? object.parent : object],
-      //   this.camera,
-      //   this.container,
-      // );
-      // this.dragControls.transformGroup = true;
-      // this.dragControls.addEventListener('drag', () => {
-      //   Editor.editor.controls.orbitControl.enabled = false;
-      //   this.dispatchEvent({ type: 'render' });
-      //   console.log('00000');
-      // });
-      // this.dragControls.addEventListener('dragend', () => {
-      //   this.dispatchEvent({ type: 'render' });
-      //   Editor.editor.controls.orbitControl.enabled = true;
-      //   this.dragControls.dispose();
-      // });
     } else {
       this.dispatchEvent({ type: this.TH_CLICK, object: null });
     }

@@ -36,6 +36,7 @@ const Scene: React.FC<{ editor: Editor }> = ({ editor }) => {
     console.log('属性面板模型新增事件：', obj);
     const res = getNewTree(treeData, obj.parent!.id, getTreeData([obj]));
     console.log(res, getTreeData([obj]));
+
     setTreeData(getTreeData(editor.scene.children));
   });
 

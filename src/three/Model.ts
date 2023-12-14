@@ -21,21 +21,18 @@ import {
   Group,
   LineBasicMaterial,
   LineLoop,
-  MeshBasicMaterial,
   LoadingManager,
   CanvasTexture,
   SpriteMaterial,
   Sprite,
-  Texture,
   Vector3,
   Box3,
 } from 'three';
 import { TextGeometry } from 'three/examples/jsm/geometries/TextGeometry';
 import { FontLoader } from 'three/examples/jsm/loaders/FontLoader';
-import helvetiker from 'three/examples/fonts/helvetiker_regular.typeface.json';
+
 import Events from './Events';
-import path from 'path';
-import fs from 'fs';
+
 import Editor from './Editor';
 
 const twoPi = Math.PI * 2;
@@ -190,7 +187,6 @@ const ModelMap: any = {
   },
 };
 class BaseModel {
-  constructor() {}
   /**
    * @description: 生成基础模型
    * @param {string} label 模型名称
@@ -226,9 +222,7 @@ class BaseModel {
     const sprite = this.makeTextSprite(
       label,
       {
-        fontsize: 50,
-        borderColor: 'rgba(255, 255, 255, 0)' /* 边框黑色 */,
-        backgroundColor: 'rgba(255, 255, 255, 0)' /* 背景颜色 */,
+        fontsize: 40,
       },
       group,
     );
@@ -316,10 +310,6 @@ class BaseModel {
     /* 字体加粗 */
     context.font = +fontsize + 'px ' + fontface;
 
-    /* 获取文字的大小数据，高度取决于文字的大小 */
-    var metrics = context.measureText(label);
-    var textWidth = metrics.width;
-
     context.lineWidth = borderThickness;
 
     /* 字体颜色 */
@@ -342,7 +332,7 @@ class BaseModel {
 
     /* 缩放比例 */
     sprite.scale.set(40, 40, 1);
-
+    sprite.name = label;
     return sprite;
   }
 }

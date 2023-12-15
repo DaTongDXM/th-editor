@@ -2,7 +2,7 @@
  * @Author: wuxudong wuxudong@zbnsec.com
  * @Date: 2022-11-15 01:13:46
  * @LastEditors: wuxudong 953909305@qq.com
- * @LastEditTime: 2023-12-11 19:07:24
+ * @LastEditTime: 2023-12-15 18:33:49
  * @Description:
  */
 const path = require('path');
@@ -85,9 +85,9 @@ module.exports = {
       },
     }),
     // 使用Three内置字体，把字体文件拷贝至项目中
-    new CopyFilesPlugin({
-      from: path.resolve(__dirname, '../node_modules/three/examples/fonts'),
-      to: path.resolve(__dirname, '../dist/thfont'),
-    }),
+    // new CopyFilesPlugin({
+    //   from: path.resolve(__dirname, '../node_modules/three/examples/fonts'),
+    //   to: path.resolve(__dirname, '../dist/thfont'),
+    // }),
   ],
 };

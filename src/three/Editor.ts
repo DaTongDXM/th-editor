@@ -2,7 +2,7 @@
  * @Author: wuxudong wuxudong@zbnsec.com
  * @Date: 2023-08-23 19:28:49
  * @LastEditors: wuxudong 953909305@qq.com
- * @LastEditTime: 2023-12-14 20:24:52
+ * @LastEditTime: 2023-12-15 18:14:02
  * @Description:renderer init work by three.js
  */
 import {
@@ -44,7 +44,7 @@ export default class Editor {
   public height: number;
   public events: Events;
 
-  private cacheObject: Object3D | null = null;
+  public cacheObject: Object3D | null = null;
   public dragabel = true;
 
   /**
@@ -190,11 +190,11 @@ export default class Editor {
       this.update();
     });
     this.events.addEventListener(this.events.TH_CLICK, (model: any) => {
-      const { object } = model;
+      const { object = this.cacheObject } = model;
       console.log('点击', object);
 
       if (object) {
-        this.cacheObject = this.scene.getObjectByProperty('uuid', object.uuid) || null;
+        this.cacheObject = object;
         if (this.cacheObject) {
           this.controls.transformControl.attach(this.cacheObject);
           this.scene.add(this.controls.transformControl);

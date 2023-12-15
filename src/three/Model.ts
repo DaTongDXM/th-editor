@@ -233,7 +233,6 @@ class BaseModel {
     group.addEventListener('click:model', () => {
       event.dispatchEvent({ type: event.TH_CLICK, object: group });
     });
-
     return group;
   }
   /**

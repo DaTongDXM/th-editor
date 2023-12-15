@@ -122,8 +122,13 @@ export default class Events extends EventDispatcher {
     });
     if (intersections.length > 0) {
       const object = intersections[0].object;
+
       if (object.parent) {
+        // 设置点击对象为缓存对象
+        this.editor.cacheObject = object.parent ? object.parent : object;
+
         if (!this.editor.dragabel) {
+          console.log('点击', object);
           object.parent.dispatchEvent({ type: 'click:model' });
         } else {
           this.dragControls = new DragControls(

@@ -2,7 +2,7 @@
  * @Author: wuxudong wuxudong@zbnsec.com
  * @Date: 2022-11-15 01:13:46
  * @LastEditors: wuxudong 953909305@qq.com
- * @LastEditTime: 2023-12-07 14:42:05
+ * @LastEditTime: 2023-12-15 19:29:57
  * @Description:
  */
 import React, { useRef, useEffect } from 'react';
@@ -14,7 +14,6 @@ import { useImmer } from 'use-immer';
 // import ThEditor from '../../dist/index';
 
 import './app.scss';
-import { theme } from 'antd';
 const DB_NAME = 'editor';
 let db: IDBDatabase;
 let db_group: IDBObjectStore;
@@ -25,7 +24,7 @@ const AppCompent = () => {
         // Seed Token，影响范围大
         colorPrimary: '#5d5d5d',
         borderRadius: 4,
-      }
+      },
     },
   };
   const [modelOption, updateModelOption] = useImmer({

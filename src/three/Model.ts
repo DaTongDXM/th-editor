@@ -330,7 +330,7 @@ class BaseModel {
     sprite.position.copy(center);
 
     /* 缩放比例 */
-    sprite.scale.set(40, 40, 1);
+    sprite.scale.set(40, 40, 40);
     sprite.name = label;
     return sprite;
   }

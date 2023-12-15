@@ -2,7 +2,7 @@
  * @Author: wuxudong wuxudong@zbnsec.com
  * @Date: 2022-11-15 01:13:46
  * @LastEditors: wuxudong 953909305@qq.com
- * @LastEditTime: 2023-12-15 18:57:45
+ * @LastEditTime: 2023-12-15 19:29:26
  * @Description:The editor container contains the canvas , toolbar and attribute
  */
 import React, { useEffect, useState, useImperativeHandle, useRef } from 'react';
@@ -16,7 +16,7 @@ import Model from './Model';
 import Toolbar from './Toolbar';
 import BottomBar from './Toolbar/bottom';
 import Attribute from './Attribute';
-import _ from 'lodash';
+// import _ from 'lodash';
 const EditorCore = React.forwardRef(
   ({ onClick, id = '', modelOption, onAddGroup }: EditorCoreProps, ref: any) => {
     const [loading, setLoading] = useState(true);
@@ -80,17 +80,12 @@ const EditorCore = React.forwardRef(
         case 'backspace':
         case 'delete':
           editor.remove();
+          break;
         default:
           break;
       }
     };
-    window.addEventListener(
-      'keydown',
-      _.debounce(handleKeyDown, 1000, {
-        leading: true,
-        trailing: false,
-      }),
-    );
+    window.addEventListener('keydown', handleKeyDown);
     return (
       <div id='th-editor' className='th-editor'>
         <div className={`mask-container-item left ${loading ? '' : 'hidden'}`}></div>

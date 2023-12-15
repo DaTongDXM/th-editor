@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import Editor from '@/three/Editor';
 
 import './index.scss';
@@ -90,7 +90,12 @@ const Scene: React.FC<{ editor: Editor }> = ({ editor }) => {
           <Search />
           <Tree blockNode showLine defaultExpandAll treeData={treeData}></Tree>
         </div>
-        <Tabs className='model-attr' items={items} onTabClick={handleTabClick}></Tabs>
+        <Tabs
+          className='model-attr'
+          activeKey={activePanel}
+          items={items}
+          onTabClick={handleTabClick}
+        ></Tabs>
       </div>
     </>
   );

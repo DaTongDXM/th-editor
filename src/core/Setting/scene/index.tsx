@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Editor from '@/three/Editor';
 
 import { Input, Tree, Tabs } from 'antd';
@@ -69,7 +69,7 @@ const Scene: React.FC<{ editor: Editor }> = ({ editor }) => {
     {
       key: 'attribute',
       label: '属性',
-      children: <Attribute editor={editor} />,
+      children: editor.cacheObject && <Attribute editor={editor} />,
     },
     {
       key: 'geometry',
@@ -85,6 +85,12 @@ const Scene: React.FC<{ editor: Editor }> = ({ editor }) => {
   const handleTabClick = (key: string) => {
     setActivePanel(key);
   };
+  useEffect(() => {
+    console.log(
+      'editor.cacheObjecteditor.cacheObjecteditor.cacheObjecteditor.cacheObject',
+      editor.cacheObject,
+    );
+  }, [editor.cacheObject]);
   return (
     <>
       <div className='scene-continer'>

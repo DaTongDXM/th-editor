@@ -28,11 +28,26 @@ const Geometry: React.FC<{ editor: Editor }> = ({ editor }) => {
         旋转:
         <div className='value'>
           X:
-          <InputNumber size='small' controls={false} />
+          <InputNumber
+            size='small'
+            controls={false}
+            formatter={(value) => `${value}°`}
+            parser={(value) => value!.replace('°', '')}
+          />
           Y:
-          <InputNumber size='small' controls={false} />
+          <InputNumber
+            size='small'
+            controls={false}
+            formatter={(value) => `${value}°`}
+            parser={(value) => value!.replace('°', '')}
+          />
           Z:
-          <InputNumber size='small' controls={false} />
+          <InputNumber
+            size='small'
+            controls={false}
+            formatter={(value) => `${value}°`}
+            parser={(value) => value!.replace('°', '')}
+          />
         </div>
       </div>
       <div className='row'>

@@ -2,7 +2,7 @@
  * @Author: wuxudong wuxudong@zbnsec.com
  * @Date: 2022-11-15 01:13:46
  * @LastEditors: wuxudong 953909305@qq.com
- * @LastEditTime: 2023-12-17 13:41:05
+ * @LastEditTime: 2023-12-17 15:26:51
  * @Description:The editor container contains the canvas , toolbar and attribute
  */
 import React, { useEffect, useState, useImperativeHandle, useRef } from 'react';
@@ -50,6 +50,7 @@ const EditorCore = React.forwardRef(
       if (!newEditor) return;
       newEditor.mitter.on(mitter.TH_CLICK, (e: any) => {
         onClick(e);
+        newEditor.cacheObject = e;
       });
       newEditor.mitter.onThMsgWaring((msg: string) => {
         message.warning({

@@ -67,7 +67,7 @@ export default class Events extends EventDispatcher {
         try {
           const { label, model } = JSON.parse(e.dataTransfer!.getData('data'));
           const obj = BaseModel.createModel(label, model, intersectPoint, scope);
-
+          this.editor.cacheObject = obj;
           this.scene.add(obj);
           this.control.attach(obj);
           editor.mitter.emitThModelAdd(obj);
@@ -109,7 +109,7 @@ export default class Events extends EventDispatcher {
    * @return {*}
    */
   private onClick(e: MouseEvent) {
-    e.preventDefault();
+    e.stopPropagation();
 
     const raycaster = this.getRaycaster(e);
     // 计算物体和射线的焦点
@@ -146,6 +146,7 @@ export default class Events extends EventDispatcher {
             Editor.editor.controls.orbitControl.enabled = true;
             this.dragControls.dispose();
           });
+          Editor.editor.render();
         }
       }
     } else {

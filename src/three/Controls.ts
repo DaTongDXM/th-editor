@@ -37,7 +37,11 @@ export default class Control {
     return this.control;
   }
   public attach(mesh: Object3D) {
-    // this.transform.attach(mesh);
+    // this.transformControl.attach(mesh);
+    if (!this.editor.dragabel) {
+      console.log(this.transformControl.getMode());
+      this.setTransFormMode(this.transformControl.getMode());
+    }
   }
 
   private createOrbitControl() {
@@ -52,6 +56,7 @@ export default class Control {
 
   public setTransFormMode(type: 'translate' | 'rotate' | 'scale') {
     if (!this.editor.cacheObject) return;
+
     this.transformControl.attach(this.editor.cacheObject);
     this.scene.add(this.transformControl);
 

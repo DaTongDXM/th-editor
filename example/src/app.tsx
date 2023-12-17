@@ -2,7 +2,7 @@
  * @Author: wuxudong wuxudong@zbnsec.com
  * @Date: 2022-11-15 01:13:46
  * @LastEditors: wuxudong 953909305@qq.com
- * @LastEditTime: 2023-12-17 12:33:22
+ * @LastEditTime: 2023-12-17 14:43:41
  * @Description:
  */
 import React, { useRef, useEffect } from 'react';
@@ -97,7 +97,9 @@ const AppCompent = () => {
             console.log(e);
           }}
           onGroupAdd={handleAddGroup}
-          onDelete={(e: any) => {}}
+          onDelete={(e: any) => {
+            console.log(e);
+          }}
           onAdd={(e: any) => {}}
         ></ThEditor>
       </div>

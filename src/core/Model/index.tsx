@@ -13,7 +13,7 @@ import { ModelMnueProps } from 'ThEditor';
 import ModelPanel from './modelPanel';
 
 const Model: React.FC<ModelMnueProps> = (props: ModelMnueProps) => {
-  const { menuShow, modelOption, onAddGroup } = props;
+  const { menuShow, modelOption, onGroupAdd } = props;
   const [showPanel, setShowPanel] = useState(menuShow);
   const bodyClassName = `model-continer ${showPanel ? 'show' : 'un-show'}`;
   let iconClassName = `iconfont ${showPanel ? 'th-cebianlanshouqi' : 'th-cebianlanzhankai'}`;
@@ -22,8 +22,8 @@ const Model: React.FC<ModelMnueProps> = (props: ModelMnueProps) => {
       <div className='model-continer-body'>
         <ModelPanel
           modelOption={modelOption}
-          onAddGroup={(name: string) => {
-            onAddGroup(name);
+          onGroupAdd={(name: string) => {
+            onGroupAdd(name);
           }}
         />
       </div>

@@ -4,6 +4,7 @@
  * @Description:
  */
 declare module 'ThEditor' {
+  import { Object3D } from 'three';
   import React from 'react';
   import { ConfigProvider } from 'antd';
 
@@ -13,9 +14,14 @@ declare module 'ThEditor' {
     id?: string;
     // 自定义面板配置项
     modelOption: CustomModelProps;
+
+    onGroupAdd: (name: string) => void;
     /** 点击事件*/
     onClick: (e: any) => any;
-    onAddGroup: (name: string) => void;
+    // 删除事件
+    onDelete: (obj: Object3D | null) => void;
+    // 添加事件
+    onAdd: (obj: Object3D) => void;
     [key: string]: any;
   }
 
@@ -62,13 +68,13 @@ declare module 'ThEditor' {
     data?: Array<CustomModelGroup>;
     groupNameLength?: number;
     layout?: 'card' | 'list';
-    onAddGroup: (name: string) => void;
+    onGroupAdd: (name: string) => void;
   }
 
   export interface ModelMnueProps {
     menuShow: boolean;
     modelOption: CustomModelProps;
-    onAddGroup: (name: string) => void;
+    onGroupAdd: (name: string) => void;
   }
 
   // interface CompoundedComponent extends React.ForwardRefExoticComponent<React.RefAttributes> {}

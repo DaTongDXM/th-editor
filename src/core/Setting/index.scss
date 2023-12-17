@@ -1,4 +1,4 @@
-.attribute-continer {
+.setting-continer {
   height: calc(100% - 8px);
   color: var(--th-color-font-light);
   position: absolute;
@@ -20,6 +20,42 @@
     height: 100%;
     background-color: var(--th-color-menu-bg);
     border-radius: var(--border-radius-small);
+    .scene-continer {
+      padding: 8px;
+      .model-list {
+        padding: 8px;
+
+        height: 300px;
+        background-color: var(--th-color-light-bg);
+        border-radius: var(--border-radius-small);
+        .ant-tree {
+          margin-top: 16px;
+          height: calc(100% - 46px);
+          overflow-y: scroll;
+        }
+      }
+      .model-attr {
+        .ant-tabs-tab-btn {
+          font-size: 12px;
+        }
+        .attribute-continer {
+          padding: 8px;
+          display: flex;
+          flex-direction: column;
+
+          .row {
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            .value {
+              width: 70%;
+              padding-left: 32px;
+              display: flex;
+            }
+          }
+        }
+      }
+    }
 
     .ant-tabs-nav {
       margin: 0px;

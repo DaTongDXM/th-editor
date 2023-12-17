@@ -2,7 +2,7 @@
  * @Author: wuxudong wuxudong@zbnsec.com
  * @Date: 2022-11-15 01:13:46
  * @LastEditors: wuxudong 953909305@qq.com
- * @LastEditTime: 2023-12-15 19:29:26
+ * @LastEditTime: 2023-12-17 13:41:05
  * @Description:The editor container contains the canvas , toolbar and attribute
  */
 import React, { useEffect, useState, useImperativeHandle, useRef } from 'react';
@@ -10,15 +10,16 @@ import { message } from 'antd';
 import './index.scss';
 import Loading from '@/components/Loading';
 import { EditorCoreProps } from 'ThEditor';
+import { Object3D } from 'three';
 import Editor from '@/three/Editor';
 import mitter from '@/utils/mitt';
 import Model from './Model';
 import Toolbar from './Toolbar';
 import BottomBar from './Toolbar/bottom';
-import Attribute from './Attribute';
-// import _ from 'lodash';
+import Setting from './Setting';
+import _ from 'lodash';
 const EditorCore = React.forwardRef(
-  ({ onClick, id = '', modelOption, onAddGroup }: EditorCoreProps, ref: any) => {
+  ({ onClick, onDelete, onAdd, id = '', modelOption, onGroupAdd }: EditorCoreProps, ref: any) => {
     const [loading, setLoading] = useState(true);
 
     // let editor: Editor;
@@ -40,6 +41,11 @@ const EditorCore = React.forwardRef(
     setTimeout(() => {
       setLoading(false);
     }, 1000);
+    /**
+     * @description: 初始化监听
+     * @param {Editor} newEditor 编辑器
+     * @return {*}
+     */
     function handleRegister(newEditor: Editor) {
       if (!newEditor) return;
       newEditor.mitter.on(mitter.TH_CLICK, (e: any) => {
@@ -55,9 +61,11 @@ const EditorCore = React.forwardRef(
           content: msg,
         });
       });
+      newEditor.mitter.onThModelAdd((obj: Object3D) => {
+        onAdd(obj);
+      });
     }
     const handleKeyDown = (event: any) => {
-      console.log(event.key.toLowerCase());
       if (!editor) return;
       setKeyCode(event.key.toLowerCase());
       switch (event.key.toLowerCase()) {
@@ -66,26 +74,28 @@ const EditorCore = React.forwardRef(
           editor.controls.dispose();
           break;
         case 'w': // W
-          editor.controls.transformControl.setMode('translate');
-          editor.dragabel = false;
+          editor.controls.setTransFormMode('translate');
+
           break;
         case 'e': // E
-          editor.controls.transformControl.setMode('rotate');
-          editor.dragabel = false;
+          editor.controls.setTransFormMode('rotate');
+
           break;
         case 'r': // R
-          editor.controls.transformControl.setMode('scale');
-          editor.dragabel = false;
+          editor.controls.setTransFormMode('scale');
+
           break;
         case 'backspace':
         case 'delete':
-          editor.remove();
+          const obj = editor.remove();
+          onDelete(obj);
           break;
         default:
           break;
       }
     };
-    window.addEventListener('keydown', handleKeyDown);
+    // window.addEventListener('keydown', handleKeyDown);
+    window.addEventListener('keydown', _.debounce(handleKeyDown, 600, {}));
     return (
       <div id='th-editor' className='th-editor'>
         <div className={`mask-container-item left ${loading ? '' : 'hidden'}`}></div>
@@ -95,13 +105,13 @@ const EditorCore = React.forwardRef(
         <Model
           menuShow={false}
           modelOption={modelOption}
-          onAddGroup={(name: string) => {
-            onAddGroup(name);
+          onGroupAdd={(name: string) => {
+            onGroupAdd(name);
           }}
         />
         <div id={containerId.current} className='main-container'></div>
         {editor && <BottomBar editor={editor} />}
-        {editor && <Attribute editor={editor} menuShow={false} />}
+        {editor && <Setting editor={editor} menuShow={true} />}
       </div>
     );
   },

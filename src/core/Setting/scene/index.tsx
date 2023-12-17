@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import Editor from '@/three/Editor';
 
-import './index.scss';
 import { Input, Tree, Tabs } from 'antd';
 import type { TabsProps } from 'antd';
 import { Object3D } from 'three';
 import type { DataNode } from 'antd/es/tree';
+import Attribute from './components/attribute';
+import Geometry from './components/geometry';
+import Material from './components/material';
 const Scene: React.FC<{ editor: Editor }> = ({ editor }) => {
   const { Search } = Input;
   const getTreeData = (objList: Array<Object3D>): Array<DataNode> => {
@@ -67,17 +69,17 @@ const Scene: React.FC<{ editor: Editor }> = ({ editor }) => {
     {
       key: 'attribute',
       label: '属性',
-      children: '',
+      children: <Attribute editor={editor} />,
     },
     {
       key: 'geometry',
       label: '几何组件',
-      children: '',
+      children: <Geometry />,
     },
     {
       key: 'material',
       label: '材质组件',
-      children: '',
+      children: <Material />,
     },
   ];
   const handleTabClick = (key: string) => {

@@ -48,6 +48,17 @@ export default class Control {
   public update() {
     this.orbitControl.update();
   }
+  //#region transformControl
+
+  public setTransFormMode(type: 'translate' | 'rotate' | 'scale') {
+    if (!this.editor.cacheObject) return;
+    this.transformControl.attach(this.editor.cacheObject);
+    this.scene.add(this.transformControl);
+
+    this.transformControl.setMode(type);
+    this.editor.dragabel = false;
+    this.editor.render();
+  }
 
   private createTransformControl() {
     const transformControls = new TransformControls(this.camera, this.container);
@@ -74,4 +85,5 @@ export default class Control {
     this.editor.controls.transformControl.detach();
     this.editor.render();
   }
+  //#endregion
 }

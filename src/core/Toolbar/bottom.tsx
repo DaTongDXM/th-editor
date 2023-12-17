@@ -58,6 +58,11 @@ const BottomBar: React.FC<{ editor: Editor }> = ({ editor }) => {
       key0: 'Ctrl',
       key1: 'V',
     },
+    {
+      label: '删除',
+      key0: 'Del',
+      key2: 'BackSpace',
+    },
   ];
   let shortKeyDom = (
     <div className='short-key'>
@@ -78,6 +83,14 @@ const BottomBar: React.FC<{ editor: Editor }> = ({ editor }) => {
                   <>
                     <span>+</span>
                     <Tag>{item.key1}</Tag>
+                  </>
+                ) : (
+                  <></>
+                )}
+                {item.key2 ? (
+                  <>
+                    <span>|</span>
+                    <Tag>{item.key2}</Tag>
                   </>
                 ) : (
                   <></>

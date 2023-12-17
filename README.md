@@ -34,6 +34,7 @@
 |name 名称| describe 说明| type 类型
 |--|--|--
 |onClick|编辑器画布点击事件|Function(e:Event){}|
-|onAddGroup|模型面板新增分组名称|Function(name:string){}|
+|onDelete|模型删除事件|Function(obj:[Object3d](https://threejs.org/docs/index.html?q=Object#api/zh/core/Object3D)\|null){}|
+|onGroupAdd|模型面板新增分组名称|Function(name:string){}|
 
 

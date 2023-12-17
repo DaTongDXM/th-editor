@@ -12,7 +12,7 @@ import type { TabsProps } from 'antd';
 import { BorderBox7 } from '@jiaminghi/data-view-react';
 import BaseModel from './base';
 import CustomModel from './custom';
-const ModelPanel: React.FC<any> = ({ modelOption, onAddGroup }) => {
+const ModelPanel: React.FC<any> = ({ modelOption, onGroupAdd }) => {
   const [activePanel, setActivePanel] = useState('base');
   const items: TabsProps['items'] = [
     {
@@ -39,8 +39,8 @@ const ModelPanel: React.FC<any> = ({ modelOption, onAddGroup }) => {
         ) : (
           <CustomModel
             {...modelOption}
-            onAddGroup={(name: string) => {
-              onAddGroup(name);
+            onGroupAdd={(name: string) => {
+              onGroupAdd(name);
             }}
           />
         )}

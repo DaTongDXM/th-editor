@@ -2,7 +2,7 @@
  * @Author: wuxudong wuxudong@zbnsec.com
  * @Date: 2023-08-23 19:28:49
  * @LastEditors: wuxudong 953909305@qq.com
- * @LastEditTime: 2023-12-15 18:14:02
+ * @LastEditTime: 2023-12-17 10:51:18
  * @Description:renderer init work by three.js
  */
 import {
@@ -211,10 +211,11 @@ export default class Editor {
     this.render();
     // window.requestAnimationFrame(() => this.update());
   }
-  public remove() {
+  public remove(): Object3D | null {
     this.cacheObject && this.scene.remove(this.cacheObject);
     this.controls.dispose();
     this.render();
+    return this.cacheObject;
   }
   public dispatchEvent(args: any) {
     console.log(args);

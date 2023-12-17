@@ -2,7 +2,7 @@
  * @Author: wuxudong wuxudong@zbnsec.com
  * @Date: 2023-08-29 15:40:18
  * @LastEditors: wuxudong 953909305@qq.com
- * @LastEditTime: 2023-12-07 14:14:19
+ * @LastEditTime: 2023-12-17 13:35:04
  * @Description:右侧属性
  */
 import React, { useState } from 'react';
@@ -15,9 +15,9 @@ import Project from './project';
 import Scene from './scene';
 import Editor from '@/three/Editor';
 
-const Attribute: React.FC<{ menuShow: boolean; editor: Editor }> = ({ menuShow, editor }) => {
+const Setting: React.FC<{ menuShow: boolean; editor: Editor }> = ({ menuShow, editor }) => {
   const [showPanel, setShowPanel] = useState(menuShow);
-  const bodyClassName = `attribute-continer ${showPanel ? 'show' : 'un-show'}`;
+  const bodyClassName = `setting-continer ${showPanel ? 'show' : 'un-show'}`;
   let iconClassName = `iconfont ${!showPanel ? 'th-cebianlanshouqi' : 'th-cebianlanzhankai'}`;
   const [activePanel, setActivePanel] = useState('scene');
 
@@ -38,7 +38,7 @@ const Attribute: React.FC<{ menuShow: boolean; editor: Editor }> = ({ menuShow, 
   };
   return (
     <div className={bodyClassName}>
-      <div className='attribute-continer-menu'>
+      <div className='setting-continer-menu'>
         <div
           onClick={(e: any) => {
             setShowPanel(!showPanel);
@@ -49,7 +49,7 @@ const Attribute: React.FC<{ menuShow: boolean; editor: Editor }> = ({ menuShow, 
           <i className={iconClassName}></i>
         </div>
       </div>
-      <div className='attribute-continer-body'>
+      <div className='setting-continer-body'>
         <Tabs items={items} onTabClick={handleTabClick}></Tabs>
         {activePanel === 'scene' ? <Scene editor={editor} /> : <Project />}
       </div>
@@ -57,4 +57,4 @@ const Attribute: React.FC<{ menuShow: boolean; editor: Editor }> = ({ menuShow, 
   );
 };
 
-export default Attribute;
+export default Setting;

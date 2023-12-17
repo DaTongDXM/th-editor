@@ -14,7 +14,7 @@ const CustomModel: React.FC<CustomModelProps> = ({
   groupNameLength = 10,
   layout = 'card',
   data,
-  onAddGroup,
+  onGroupAdd,
 }) => {
   // #region 顶部
   const [addOpen, setAddOpen] = useState(false);
@@ -25,7 +25,7 @@ const CustomModel: React.FC<CustomModelProps> = ({
   const [groupForm] = Form.useForm();
   const onFinish = (values: any) => {
     console.log(values.group_name);
-    onAddGroup(values.group_name);
+    onGroupAdd(values.group_name);
     groupForm.resetFields();
     setAddOpen(false);
   };

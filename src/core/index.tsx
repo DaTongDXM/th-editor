@@ -2,7 +2,7 @@
  * @Author: wuxudong wuxudong@zbnsec.com
  * @Date: 2022-11-15 01:13:46
  * @LastEditors: wuxudong 953909305@qq.com
- * @LastEditTime: 2023-12-17 15:26:51
+ * @LastEditTime: 2023-12-18 17:48:51
  * @Description:The editor container contains the canvas , toolbar and attribute
  */
 import React, { useEffect, useState, useImperativeHandle, useRef } from 'react';
@@ -104,7 +104,6 @@ const EditorCore = React.forwardRef(
         <div className={`mask-container-item right ${loading ? '' : 'hidden'}`}></div>
         {editor && <Toolbar editor={editor} keyCode={keyCode} />}
         <Model
-          menuShow={false}
           modelOption={modelOption}
           onGroupAdd={(name: string) => {
             onGroupAdd(name);
@@ -112,7 +111,7 @@ const EditorCore = React.forwardRef(
         />
         <div id={containerId.current} className='main-container'></div>
         {editor && <BottomBar editor={editor} />}
-        {editor && <Setting editor={editor} menuShow={true} />}
+        {editor && <Setting editor={editor} show />}
       </div>
     );
   },

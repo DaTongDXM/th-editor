@@ -2,7 +2,7 @@
  * @Author: wuxudong wuxudong@zbnsec.com
  * @Date: 2023-08-29 15:40:18
  * @LastEditors: wuxudong 953909305@qq.com
- * @LastEditTime: 2023-12-17 13:35:04
+ * @LastEditTime: 2023-12-18 17:50:44
  * @Description:右侧属性
  */
 import React, { useState } from 'react';
@@ -15,8 +15,8 @@ import Project from './project';
 import Scene from './scene';
 import Editor from '@/three/Editor';
 
-const Setting: React.FC<{ menuShow: boolean; editor: Editor }> = ({ menuShow, editor }) => {
-  const [showPanel, setShowPanel] = useState(menuShow);
+const Setting: React.FC<{ show?: boolean; editor: Editor }> = ({ show, editor }) => {
+  const [showPanel, setShowPanel] = useState(show);
   const bodyClassName = `setting-continer ${showPanel ? 'show' : 'un-show'}`;
   let iconClassName = `iconfont ${!showPanel ? 'th-cebianlanshouqi' : 'th-cebianlanzhankai'}`;
   const [activePanel, setActivePanel] = useState('scene');

@@ -219,15 +219,15 @@ class BaseModel {
     group.position.copy(groupPosition);
     group.name = label;
     // this.setName(label, group);
-    const sprite = this.makeTextSprite(
-      label,
-      {
-        fontsize: 40,
-      },
-      group,
-    );
-    sprite && group.add(sprite);
-    console.log(group);
+    // const sprite = this.makeTextSprite(
+    //   label,
+    //   {
+    //     fontsize: 40,
+    //   },
+    //   group,
+    // );
+    // sprite && group.add(sprite);
+    // console.log(group);
 
     // 添加点击监听事件，只有被创建的模型才可以触发，防止场景中其他scene（grid，可拖拽的轴等）触发
     group.addEventListener('click:model', () => {

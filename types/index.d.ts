@@ -72,7 +72,7 @@ declare module 'ThEditor' {
   }
 
   export interface ModelMnueProps {
-    menuShow: boolean;
+    show?: boolean;
     modelOption: CustomModelProps;
     onGroupAdd: (name: string) => void;
   }

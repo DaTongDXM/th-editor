@@ -38,14 +38,14 @@ const ToolBar: React.FC<{ editor: Editor; keyCode: string }> = ({ editor, keyCod
     },
     {
       icon: SyncOutlined,
-      title: '角度(E)',
+      title: '旋转(E)',
       type: 'SyncOutlined',
       keyCode: 'e',
       onClick: handleSetMode,
     },
     {
       icon: ExpandAltOutlined,
-      title: '大小(R)',
+      title: '缩放(R)',
       type: 'ExpandAltOutlined',
       keyCode: 'r',
       onClick: handleSetMode,

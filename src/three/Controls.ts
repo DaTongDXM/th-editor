@@ -37,8 +37,8 @@ export default class Control {
     return this.control;
   }
   public attach(mesh: Object3D) {
-    // this.transformControl.attach(mesh);
     if (!this.editor.dragabel) {
+      // this.editor.controls.dispose();
       console.log(this.transformControl.getMode());
       this.setTransFormMode(this.transformControl.getMode());
     }
@@ -55,13 +55,14 @@ export default class Control {
   //#region transformControl
 
   public setTransFormMode(type: 'translate' | 'rotate' | 'scale') {
+    this.editor.dragabel = false;
     if (!this.editor.cacheObject) return;
 
     this.transformControl.attach(this.editor.cacheObject);
     this.scene.add(this.transformControl);
 
     this.transformControl.setMode(type);
-    this.editor.dragabel = false;
+
     this.editor.render();
   }
 

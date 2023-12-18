@@ -67,8 +67,10 @@ export default class Events extends EventDispatcher {
         try {
           const { label, model } = JSON.parse(e.dataTransfer!.getData('data'));
           const obj = BaseModel.createModel(label, model, intersectPoint, scope);
+
           this.editor.cacheObject = obj;
           this.scene.add(obj);
+
           this.control.attach(obj);
           editor.mitter.emitThModelAdd(obj);
 

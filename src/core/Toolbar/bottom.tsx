@@ -37,7 +37,7 @@ const BottomBar: React.FC<{ editor: Editor }> = ({ editor }) => {
       key0: 'Q',
     },
     {
-      label: '位移控制器',
+      label: '位置控制器',
       key0: 'W',
     },
     {

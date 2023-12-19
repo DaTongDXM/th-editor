@@ -284,7 +284,7 @@ class BaseModel {
 
   /**
    * @description: 创建字体精灵
-   * @param {any} label
+   * @param {any} label 文本内容
    * @param {any} parameters
    * @param {Group} group
    * @return {*}

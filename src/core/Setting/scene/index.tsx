@@ -69,7 +69,7 @@ const Scene: React.FC<{ editor: Editor }> = ({ editor }) => {
     {
       key: 'attribute',
       label: '属性',
-      children: editor.cacheObject && <Attribute editor={editor} />,
+      children: editor.cacheObject && <Attribute />,
     },
     {
       key: 'geometry',

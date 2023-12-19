@@ -2,10 +2,10 @@
  * @Author: wuxudong wuxudong@zbnsec.com
  * @Date: 2022-11-15 01:13:46
  * @LastEditors: wuxudong 953909305@qq.com
- * @LastEditTime: 2023-12-18 17:48:51
+ * @LastEditTime: 2023-12-19 17:56:17
  * @Description:The editor container contains the canvas , toolbar and attribute
  */
-import React, { useEffect, useState, useImperativeHandle, useRef } from 'react';
+import React, { useEffect, useState, useImperativeHandle, useRef, useContext } from 'react';
 import { message } from 'antd';
 import './index.scss';
 import Loading from '@/components/Loading';
@@ -18,6 +18,7 @@ import Toolbar from './Toolbar';
 import BottomBar from './Toolbar/bottom';
 import Setting from './Setting';
 import _ from 'lodash';
+import { EditorContext } from '@/context/editorContext';
 const EditorCore = React.forwardRef(
   ({ onClick, onDelete, onAdd, id = '', modelOption, onGroupAdd }: EditorCoreProps, ref: any) => {
     const [loading, setLoading] = useState(true);
@@ -26,6 +27,7 @@ const EditorCore = React.forwardRef(
     let [editor, setEditor] = useState<Editor | null>(null);
     let [keyCode, setKeyCode] = useState('q');
     let containerId = useRef(`editor-container${id}`);
+
     useEffect(() => {
       if (!editor) {
         const newEditor = new Editor('123', document.getElementById(containerId.current)!, mitter);
@@ -102,16 +104,21 @@ const EditorCore = React.forwardRef(
         <div className={`mask-container-item left ${loading ? '' : 'hidden'}`}></div>
         <Loading loading={loading}>Loading...</Loading>
         <div className={`mask-container-item right ${loading ? '' : 'hidden'}`}></div>
-        {editor && <Toolbar editor={editor} keyCode={keyCode} />}
-        <Model
-          modelOption={modelOption}
-          onGroupAdd={(name: string) => {
-            onGroupAdd(name);
-          }}
-        />
         <div id={containerId.current} className='main-container'></div>
-        {editor && <BottomBar editor={editor} />}
-        {editor && <Setting editor={editor} show />}
+        {editor && (
+          <EditorContext.Provider value={editor}>
+            {editor && <Toolbar editor={editor} keyCode={keyCode} />}
+            <Model
+              modelOption={modelOption}
+              onGroupAdd={(name: string) => {
+                onGroupAdd(name);
+              }}
+            />
+
+            {editor && <BottomBar editor={editor} />}
+            {editor && <Setting editor={editor} show />}
+          </EditorContext.Provider>
+        )}
       </div>
     );
   },

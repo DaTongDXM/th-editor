@@ -9,6 +9,7 @@ import { DragControls } from 'three/examples/jsm/controls/DragControls';
 import Editor from './Editor';
 import BaseModel from './Model';
 import Control from './Controls';
+import { BaseAttr } from './Config';
 
 export default class Events extends EventDispatcher {
   private container: HTMLElement;
@@ -20,6 +21,7 @@ export default class Events extends EventDispatcher {
   private dragControls: DragControls;
   private control: Control;
   private editor: Editor;
+
   /**
    * @description: 加载天空盒
    * @return {*}
@@ -40,7 +42,7 @@ export default class Events extends EventDispatcher {
     this.scene = editor.scene;
     this.camera = editor.camera;
     this.grid = editor.grid;
-    // const raycaster = this.raycaster;
+
     this.dragControls = editor.dragControls;
     this.control = Control.getControlInstance();
 
@@ -87,6 +89,67 @@ export default class Events extends EventDispatcher {
     // 画布点击事件
 
     this.container.addEventListener('click', this.onClick.bind(this));
+    this.register();
+  }
+
+  private register() {
+    this.addEventListener('th:model:change', (obj: any) => {
+      const { action, value } = obj;
+      console.log(obj, action, value);
+      if (!action || !value) return;
+
+      switch (action) {
+        case this.editor.baseAttr.PX:
+          {
+            this.editor.cacheObject?.position.setX(value);
+          }
+          break;
+        case this.editor.baseAttr.PY:
+          {
+            this.editor.cacheObject?.position.setY(value);
+          }
+          break;
+        case this.editor.baseAttr.PZ:
+          {
+            this.editor.cacheObject?.position.setZ(value);
+          }
+          break;
+        case this.editor.baseAttr.RX:
+          {
+            this.editor.cacheObject?.rotateX(value * (Math.PI / 180));
+          }
+          break;
+        case this.editor.baseAttr.RY:
+          {
+            this.editor.cacheObject?.rotateY(value * (Math.PI / 180));
+          }
+          break;
+        case this.editor.baseAttr.RZ:
+          {
+            this.editor.cacheObject?.rotateZ(value * (Math.PI / 180));
+          }
+          break;
+        case this.editor.baseAttr.SX:
+          {
+            this.editor.cacheObject?.scale.setX(value);
+          }
+          break;
+        case this.editor.baseAttr.SY:
+          {
+            this.editor.cacheObject?.scale.setY(value);
+          }
+          break;
+        case this.editor.baseAttr.SZ:
+          {
+            this.editor.cacheObject?.scale.setZ(value);
+          }
+          break;
+
+        default:
+          break;
+      }
+      this.editor.render();
+    });
   }
 
   /**

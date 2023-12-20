@@ -2,7 +2,7 @@
  * @Author: wuxudong wuxudong@zbnsec.com
  * @Date: 2023-08-23 19:28:49
  * @LastEditors: wuxudong 953909305@qq.com
- * @LastEditTime: 2023-12-19 20:23:06
+ * @LastEditTime: 2023-12-20 19:19:28
  * @Description:renderer init work by three.js
  */
 import {
@@ -35,7 +35,7 @@ enum BaseAttr {
   PZ = 'pz',
 
   // 旋转x
-  RX = 'ry',
+  RX = 'rx',
   // 旋转y
   RY = 'ry',
   // 旋转z
@@ -47,6 +47,7 @@ enum BaseAttr {
   SY = 'sy',
   // 缩放z
   SZ = 'sz',
+  VISIABLE = 'visiable',
 }
 export default class Editor {
   public static editor: Editor;

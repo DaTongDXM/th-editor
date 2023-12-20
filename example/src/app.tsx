@@ -2,7 +2,7 @@
  * @Author: wuxudong wuxudong@zbnsec.com
  * @Date: 2022-11-15 01:13:46
  * @LastEditors: wuxudong 953909305@qq.com
- * @LastEditTime: 2023-12-17 14:43:41
+ * @LastEditTime: 2023-12-20 09:51:03
  * @Description:
  */
 import React, { useRef, useEffect } from 'react';
@@ -52,7 +52,6 @@ const AppCompent = () => {
           updateModelOption((draft: any) => {
             draft.data = e.target.result;
           });
-          console.log('查询group：', e.target.result);
         }
       };
     };
@@ -69,7 +68,6 @@ const AppCompent = () => {
     };
   }, []);
   const handleAddGroup = (name: string) => {
-    console.log(name);
     const request = db
       .transaction('group', 'readwrite')
       .objectStore('group')

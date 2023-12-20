@@ -2,7 +2,7 @@
  * @Author: wuxudong wuxudong@zbnsec.com
  * @Date: 2022-11-15 01:13:46
  * @LastEditors: wuxudong 953909305@qq.com
- * @LastEditTime: 2023-12-17 14:08:11
+ * @LastEditTime: 2023-12-20 09:50:35
  * @Description:
  */
 import React from 'react';
@@ -38,9 +38,6 @@ const ThEditor = React.forwardRef((props: ThEditorProps, ref: any) => {
       algorithm: theme.darkAlgorithm,
     },
   };
-  console.log('=====================', configObj);
-  console.log('=====================', configProvider);
-  console.log('=====================', _.merge(configObj, configProvider));
   return (
     <ConfigProvider {..._.merge(configObj, configProvider)} locale={zhCN}>
       <EditorCore {...otherProps} ref={ref} />

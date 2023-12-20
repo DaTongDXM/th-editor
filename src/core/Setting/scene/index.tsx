@@ -33,11 +33,8 @@ const Scene: React.FC<{ editor: Editor }> = ({ editor }) => {
   };
   const [treeData, setTreeData] = useState(getTreeData(editor.scene.children));
 
-  console.log(treeData);
   editor.mitter.onThModelAdd((obj: Object3D) => {
-    console.log('属性面板模型新增事件：', obj);
     const res = getNewTree(treeData, obj.parent!.id, getTreeData([obj]));
-    console.log(res, getTreeData([obj]));
 
     setTreeData(getTreeData(editor.scene.children));
   });

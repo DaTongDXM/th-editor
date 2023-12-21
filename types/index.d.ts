@@ -7,7 +7,7 @@ declare module 'ThEditor' {
   import { Object3D } from 'three';
   import React from 'react';
   import { ConfigProvider } from 'antd';
-
+  import { BaseAttr } from '@/three/Editor';
   export interface ThEditorProps {
     configProvider: ConfigProvider;
     // 编辑器场景id
@@ -46,6 +46,8 @@ declare module 'ThEditor' {
     | 'obj'
     | 'pcd'
     | 'zip';
+
+  export type BaseAttr = typeof BaseAttr;
   /**
    * @description: 自定义模型数据
    */

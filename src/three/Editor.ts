@@ -2,7 +2,7 @@
  * @Author: wuxudong wuxudong@zbnsec.com
  * @Date: 2023-08-23 19:28:49
  * @LastEditors: wuxudong 953909305@qq.com
- * @LastEditTime: 2023-12-20 19:19:28
+ * @LastEditTime: 2023-12-21 15:04:50
  * @Description:renderer init work by three.js
  */
 import {
@@ -26,7 +26,7 @@ import { Mitter } from '@/utils/mitt';
 import SkyBox from './skyBox';
 import Events from './Events';
 import Controls from './Controls';
-enum BaseAttr {
+export enum BaseAttr {
   // 位置x
   PX = 'px',
   // 位置y

@@ -3,6 +3,7 @@ import Editor from '@/three/Editor';
 import { Input, InputNumber, Switch } from 'antd';
 import { EditorContext } from '@/context/editorContext';
 import { Object3D } from 'three';
+import _ from 'lodash';
 const Geometry: React.FC<any> = () => {
   const editor = useContext(EditorContext);
   const [cacheObject, setCacheObject] = useState(editor.cacheObject);
@@ -19,14 +20,15 @@ const Geometry: React.FC<any> = () => {
       value,
     });
   };
-  editor.events.addEventListener('render', () => {
-    console.log('渲染', editor.cacheObject?.position.x);
+
+  const handleResetData = () => {
     setCacheObject({ ...editor.cacheObject } as Object3D);
-  });
-  useEffect(() => {
-    console.log('变');
-    setCacheObject(editor.cacheObject);
-  }, [editor.cacheObject]);
+  };
+  editor.events.addEventListener('render', _.debounce(handleResetData, 100));
+  // useEffect(() => {
+  //   console.log('变');
+  //   setCacheObject(editor.cacheObject);
+  // }, [editor.cacheObject]);
   return (
     <div className='attribute-continer'>
       <div className='row'>

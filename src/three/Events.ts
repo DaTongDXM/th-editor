@@ -144,7 +144,9 @@ export default class Events extends EventDispatcher {
             this.editor.cacheObject?.scale.setZ(value);
           }
           break;
-
+        case this.editor.baseAttr.VISIABLE:
+          this.editor.cacheObject!.visible = value;
+          break;
         default:
           break;
       }

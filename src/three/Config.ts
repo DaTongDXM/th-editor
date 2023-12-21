@@ -1,22 +1,23 @@
 export enum BaseAttr {
   // 位置x
-  PX,
+  PX = 'px',
   // 位置y
-  PY,
+  PY = 'py',
   // 位置z
-  PZ,
+  PZ = 'pz',
 
   // 旋转x
-  RX,
+  RX = 'rx',
   // 旋转y
-  RY,
+  RY = 'ry',
   // 旋转z
-  RZ,
+  RZ = 'rz',
 
   // 缩放x
-  SX,
+  SX = 'sx',
   // 缩放y
-  SY,
+  SY = 'sy',
   // 缩放z
-  SZ,
+  SZ = 'sz',
+  VISIABLE = 'visiable',
 }

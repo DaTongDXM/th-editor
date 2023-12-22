@@ -2,7 +2,7 @@
  * @Author: wuxudong wuxudong@zbnsec.com
  * @Date: 2023-08-23 19:28:49
  * @LastEditors: wuxudong 953909305@qq.com
- * @LastEditTime: 2023-12-21 15:04:50
+ * @LastEditTime: 2023-12-21 20:59:07
  * @Description:renderer init work by three.js
  */
 import {
@@ -48,6 +48,7 @@ export enum BaseAttr {
   // 缩放z
   SZ = 'sz',
   VISIABLE = 'visiable',
+  INIT = 'init',
 }
 export default class Editor {
   public static editor: Editor;

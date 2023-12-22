@@ -1,19 +1,28 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useReducer, useState } from 'react';
+import { useImmerReducer } from 'use-immer';
 import Editor from '@/three/Editor';
 import { Input, InputNumber, Switch } from 'antd';
 import { EditorContext } from '@/context/editorContext';
 import { Object3D } from 'three';
 import _ from 'lodash';
+import attributeReducer from '../reducer/attributeReducer';
 const Geometry: React.FC<any> = () => {
   const editor = useContext(EditorContext);
-  const [cacheObject, setCacheObject] = useState(editor.cacheObject);
+  // const [cacheObject, setCacheObject] = useState(editor.cacheObject);
+  const obj = Object.assign({ ...editor.cacheObject!, immerable: true });
+  const [cacheObject, dispatch] = useImmerReducer(attributeReducer, obj);
+
   // 转换角度
   const parseRota = (value: string | undefined) => {
     value = value!.replace('°', '');
     return Number(value);
   };
-  const handleChange = (value: number | null | string, action: string) => {
+  const handleChange = (value: number | null | string | boolean, action: string) => {
     if (value === null) return;
+    dispatch({
+      type: action,
+      value: value,
+    });
     editor.events.dispatchEvent({
       type: 'th:model:change',
       action,
@@ -22,7 +31,11 @@ const Geometry: React.FC<any> = () => {
   };
 
   const handleResetData = () => {
-    setCacheObject({ ...editor.cacheObject } as Object3D);
+    // setCacheObject({ ...editor.cacheObject } as Object3D);
+    dispatch({
+      type: 'init',
+      value: 0,
+    });
   };
   editor.events.addEventListener('render', _.debounce(handleResetData, 100));
   // useEffect(() => {
@@ -49,14 +62,6 @@ const Geometry: React.FC<any> = () => {
             controls={false}
             value={cacheObject?.position.x}
             onChange={(value: any) => {
-              setCacheObject({
-                ...cacheObject,
-                ...{
-                  position: {
-                    x: value,
-                  },
-                },
-              } as Object3D);
               handleChange(value, editor.baseAttr.PX);
             }}
           />
@@ -64,7 +69,7 @@ const Geometry: React.FC<any> = () => {
           <InputNumber
             size='small'
             controls={false}
-            defaultValue={cacheObject?.position.y}
+            value={cacheObject?.position.y}
             onChange={(value) => {
               handleChange(value, editor.baseAttr.PY);
             }}
@@ -73,7 +78,7 @@ const Geometry: React.FC<any> = () => {
           <InputNumber
             size='small'
             controls={false}
-            defaultValue={editor.cacheObject?.position.z}
+            value={cacheObject?.position.z}
             onChange={(value) => {
               handleChange(value, editor.baseAttr.PZ);
             }}

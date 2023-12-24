@@ -71,12 +71,12 @@ const Scene: React.FC<{ editor: Editor }> = ({ editor }) => {
     {
       key: 'geometry',
       label: '几何组件',
-      children: <Geometry />,
+      children: editor.cacheObject && <Geometry />,
     },
     {
       key: 'material',
       label: '材质组件',
-      children: <Material />,
+      children: editor.cacheObject && <Material />,
     },
   ];
   const handleTabClick = (key: string) => {

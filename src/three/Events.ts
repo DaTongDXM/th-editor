@@ -96,7 +96,7 @@ export default class Events extends EventDispatcher {
     this.addEventListener('th:model:change', (obj: any) => {
       const { action, value } = obj;
       console.log(obj, action, value);
-      if (!action || !value) return;
+      if (!action) return;
 
       switch (action) {
         case this.editor.baseAttr.PX:
@@ -144,7 +144,7 @@ export default class Events extends EventDispatcher {
             this.editor.cacheObject?.scale.setZ(value);
           }
           break;
-        case this.editor.baseAttr.VISIABLE:
+        case this.editor.baseAttr.VISIBLE:
           this.editor.cacheObject!.visible = value;
           break;
         default:
@@ -193,7 +193,7 @@ export default class Events extends EventDispatcher {
       if (object.parent) {
         // 设置点击对象为缓存对象
         this.editor.cacheObject = object.parent ? object.parent : object;
-
+        console.log(this.editor.cacheObject);
         if (!this.editor.dragabel) {
           console.log('点击', object);
           object.parent.dispatchEvent({ type: 'click:model' });

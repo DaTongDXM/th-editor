@@ -1,16 +1,14 @@
-import React, { useContext, useReducer, useState } from 'react';
+import React, { useContext, useReducer, useState, useEffect } from 'react';
 import { useImmerReducer } from 'use-immer';
 import Editor from '@/three/Editor';
-import { Input, InputNumber, Switch } from 'antd';
+import { Input, InputNumber, Switch, Button } from 'antd';
 import { EditorContext } from '@/context/editorContext';
 import { Object3D } from 'three';
 import _ from 'lodash';
 import attributeReducer from '../reducer/attributeReducer';
 const Geometry: React.FC<any> = () => {
   const editor = useContext(EditorContext);
-  // const [cacheObject, setCacheObject] = useState(editor.cacheObject);
-  const obj = Object.assign({ ...editor.cacheObject!, immerable: true });
-  const [cacheObject, dispatch] = useImmerReducer(attributeReducer, obj);
+  const [cacheObject, dispatch] = useReducer(attributeReducer, editor.cacheObject!);
 
   // 转换角度
   const parseRota = (value: string | undefined) => {
@@ -23,6 +21,7 @@ const Geometry: React.FC<any> = () => {
       type: action,
       value: value,
     });
+
     editor.events.dispatchEvent({
       type: 'th:model:change',
       action,
@@ -31,30 +30,36 @@ const Geometry: React.FC<any> = () => {
   };
 
   const handleResetData = () => {
-    // setCacheObject({ ...editor.cacheObject } as Object3D);
     dispatch({
       type: 'init',
-      value: 0,
+      initState: editor.cacheObject,
     });
   };
   editor.events.addEventListener('render', _.debounce(handleResetData, 100));
-  // useEffect(() => {
-  //   console.log('变');
-  //   setCacheObject(editor.cacheObject);
-  // }, [editor.cacheObject]);
+  useEffect(() => {
+    handleResetData();
+  }, [editor.cacheObject?.id]);
   return (
-    <div className='attribute-continer'>
+    <div className='bottom-continer attribute'>
       <div className='row'>
-        类型:<div className='value'>{editor.cacheObject?.type}</div>
+        <label className='label'>类型:</label>
+        <div className='value'>{editor.cacheObject?.type}</div>
       </div>
       <div className='row'>
-        名称:
+        <label className='label'>识别码:</label>
+        <div className='value uuid'>{editor.cacheObject?.uuid}</div>
+        <Button type='link' size='small'>
+          复制
+        </Button>
+      </div>
+      <div className='row'>
+        <label className='label'>名称:</label>
         <div className='value'>
           <Input value={editor.cacheObject?.name} />
         </div>
       </div>
       <div className='row'>
-        位置:
+        <label className='label'>位置:</label>
         <div className='value'>
           X:
           <InputNumber
@@ -86,7 +91,7 @@ const Geometry: React.FC<any> = () => {
         </div>
       </div>
       <div className='row'>
-        旋转:
+        <label className='label'>旋转:</label>
         <div className='value'>
           X:
           <InputNumber
@@ -130,7 +135,7 @@ const Geometry: React.FC<any> = () => {
         </div>
       </div>
       <div className='row'>
-        缩放:
+        <label className='label'>缩放:</label>
         <div className='value'>
           X:
           <InputNumber
@@ -162,12 +167,15 @@ const Geometry: React.FC<any> = () => {
         </div>
       </div>
       <div className='row'>
-        可见:
+        <label className='label'>可见:</label>
         <div className='value'>
           <Switch
             checkedChildren='可见'
             unCheckedChildren='不可见'
             defaultChecked={editor.cacheObject?.visible === true}
+            onChange={(value) => {
+              handleChange(value, editor.baseAttr.VISIBLE);
+            }}
           />
         </div>
       </div>

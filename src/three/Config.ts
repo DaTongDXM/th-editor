@@ -19,5 +19,5 @@ export enum BaseAttr {
   SY = 'sy',
   // 缩放z
   SZ = 'sz',
-  VISIABLE = 'visiable',
+  VISIBLE = 'visible',
 }

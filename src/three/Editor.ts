@@ -2,7 +2,7 @@
  * @Author: wuxudong wuxudong@zbnsec.com
  * @Date: 2023-08-23 19:28:49
  * @LastEditors: wuxudong 953909305@qq.com
- * @LastEditTime: 2023-12-21 20:59:07
+ * @LastEditTime: 2023-12-24 17:20:34
  * @Description:renderer init work by three.js
  */
 import {
@@ -47,7 +47,7 @@ export enum BaseAttr {
   SY = 'sy',
   // 缩放z
   SZ = 'sz',
-  VISIABLE = 'visiable',
+  VISIBLE = 'visible',
   INIT = 'init',
 }
 export default class Editor {
@@ -114,6 +114,7 @@ export default class Editor {
     var mesh = new Mesh(plane, material);
     mesh.rotation.x = -Math.PI / 2;
     mesh.position.y = -8;
+    mesh.visible = false;
     this.grid = mesh;
     this.scene.add(mesh);
     this.initSkybox();

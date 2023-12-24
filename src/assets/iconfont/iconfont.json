@@ -6,6 +6,20 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "1727451",
+      "name": "219上传、导出",
+      "font_class": "shangchuandaochu",
+      "unicode": "e8c6",
+      "unicode_decimal": 59590
+    },
+    {
+      "icon_id": "19450311",
+      "name": "CodeSandbox",
+      "font_class": "CodeSandbox",
+      "unicode": "eac2",
+      "unicode_decimal": 60098
+    },
+    {
       "icon_id": "6616997",
       "name": "关闭",
       "font_class": "guanbi",

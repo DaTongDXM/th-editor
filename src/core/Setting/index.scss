@@ -38,19 +38,51 @@
         .ant-tabs-tab-btn {
           font-size: 12px;
         }
-        .attribute-continer {
+        .ant-input {
+          height: 24px;
+          color: var(--th-color-input-text);
+          background-color: var(--th-color-input-bg);
+        }
+        .bottom-continer {
+          height: 290px;
           padding: 8px;
           display: flex;
           flex-direction: column;
-
+          overflow-y: scroll;
           .row {
             margin-bottom: 16px;
             display: flex;
             align-items: center;
+            label {
+              width: 20%;
+            }
+            .value {
+              width: 80%;
+
+              display: flex;
+              &.one {
+                .ant-input-number {
+                  margin-left: 0px;
+                }
+              }
+              &.uuid {
+                overflow: hidden;
+                white-space: nowrap;
+                width: 60%;
+              }
+            }
+          }
+          &.geometry {
+            .label {
+              width: 30%;
+            }
+          }
+          &.material {
+            .label {
+              width: 30%;
+            }
             .value {
               width: 70%;
-              padding-left: 32px;
-              display: flex;
             }
           }
         }

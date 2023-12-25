@@ -2,7 +2,7 @@
  * @Author: wuxudong wuxudong@zbnsec.com
  * @Date: 2023-08-23 19:28:49
  * @LastEditors: wuxudong 953909305@qq.com
- * @LastEditTime: 2023-12-24 17:20:34
+ * @LastEditTime: 2023-12-25 17:32:04
  * @Description:renderer init work by three.js
  */
 import {
@@ -26,6 +26,7 @@ import { Mitter } from '@/utils/mitt';
 import SkyBox from './skyBox';
 import Events from './Events';
 import Controls from './Controls';
+import Camera from './Camera';
 export enum BaseAttr {
   // 位置x
   PX = 'px',
@@ -85,9 +86,10 @@ export default class Editor {
     this.height = container.offsetHeight;
     this.container = container;
     this.mitter = mitter;
-
+    this.camera = new Camera().perspectiveCamera;
     this.init();
     this.events = new Events();
+
     this.registerEvent();
   }
 
@@ -119,7 +121,6 @@ export default class Editor {
     this.scene.add(mesh);
     this.initSkybox();
     this.initLight();
-    this.initCamera();
   }
   /**
    * @description: 创建灯光
@@ -134,21 +135,7 @@ export default class Editor {
     directionalLight.name = '平行光';
     this.scene.add(directionalLight);
   }
-  /**
-   * @description: 创建相机
-   * @return {*}
-   */
-  private initCamera() {
-    this.camera = new PerspectiveCamera(
-      45,
-      this.container.offsetWidth / this.container.offsetHeight,
-      1,
-      2000,
-    );
-    this.camera.updateProjectionMatrix();
-    this.camera.position.set(0, 100, 200);
-    this.camera.lookAt(0, 400, 0);
-  }
+
   /**
    * @description: 创建渲染器
    * @return {*}

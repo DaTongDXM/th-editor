@@ -3,7 +3,7 @@
  * @LastEditors: wuxudong 953909305@qq.com
  * @Description:事件类
  */
-import { Camera, EventDispatcher, Raycaster, Scene, Vector2 } from 'three';
+import { Camera, EventDispatcher, Object3D, Raycaster, Scene, Vector2 } from 'three';
 
 import { DragControls } from 'three/examples/jsm/controls/DragControls';
 import Editor from './Editor';
@@ -151,6 +151,9 @@ export default class Events extends EventDispatcher {
           break;
       }
       this.editor.render();
+    });
+    this.addEventListener('th:model:focur', (obj: any) => {
+      this.editor.cacheObject = obj;
     });
   }
 

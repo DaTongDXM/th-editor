@@ -59,7 +59,7 @@ export default class Editor {
   public dragControls!: DragControls;
   public scene!: Scene;
   public mitter!: Mitter;
-  public camera!: any;
+  public camera!: PerspectiveCamera;
   public grid!: any;
   public controls!: Controls;
   public renderer!: WebGLRenderer;

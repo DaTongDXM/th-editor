@@ -3,7 +3,7 @@
  * @LastEditors: wuxudong 953909305@qq.com
  * @Description:事件类
  */
-import { Camera, EventDispatcher, Object3D, Raycaster, Scene, Vector2 } from 'three';
+import { Camera, EventDispatcher, PerspectiveCamera, Raycaster, Scene, Vector2 } from 'three';
 
 import { DragControls } from 'three/examples/jsm/controls/DragControls';
 import Editor from './Editor';
@@ -16,7 +16,7 @@ export default class Events extends EventDispatcher {
   private raycaster!: Raycaster;
   private mouse: Vector2 = new Vector2();
   private scene: Scene;
-  private camera: Camera;
+  private camera: PerspectiveCamera;
   private grid: Scene;
   private dragControls: DragControls;
   private control: Control;
@@ -152,8 +152,20 @@ export default class Events extends EventDispatcher {
       }
       this.editor.render();
     });
-    this.addEventListener('th:model:focur', (obj: any) => {
-      this.editor.cacheObject = obj;
+    this.addEventListener('th:model:focus', (option: any) => {
+      const obj = this.scene.getObjectById(option.id);
+      if (obj) {
+        this.editor.cacheObject = obj;
+        this.camera.lookAt(obj.position);
+        this.camera.updateProjectionMatrix();
+        this.control.orbitControl.update();
+        // this.control.orbitControl.target.x = obj.position.x;
+        // this.control.orbitControl.target.y = obj.position.y;
+
+        // this.control.orbitControl.target.z = obj.position.z;
+
+        this.editor.render();
+      }
     });
   }
 

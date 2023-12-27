@@ -88,12 +88,24 @@ const Scene: React.FC<{ editor: Editor }> = ({ editor }) => {
       editor.cacheObject,
     );
   }, [editor.cacheObject]);
+  const handleSelect = (keys: any, e: any) => {
+    editor.events.dispatchEvent({
+      type: 'th:model:focus',
+      id: e.node.key,
+    });
+  };
   return (
     <>
       <div className='scene-continer'>
         <div className='model-list'>
           <Search />
-          <Tree blockNode showLine defaultExpandAll treeData={treeData}></Tree>
+          <Tree
+            blockNode
+            showLine
+            defaultExpandAll
+            treeData={treeData}
+            onSelect={handleSelect}
+          ></Tree>
         </div>
         <Tabs
           className='model-attr'

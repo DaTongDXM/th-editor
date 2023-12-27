@@ -1,4 +1,4 @@
-import { PerspectiveCamera } from 'three';
+import { PerspectiveCamera, Vector3 } from 'three';
 import Editor from './Editor';
 export default class Camera {
   public perspectiveCamera: PerspectiveCamera;
@@ -19,5 +19,8 @@ export default class Camera {
       2000,
     );
     return perspectiveCamera;
+  }
+  public update() {
+    this.perspectiveCamera.updateProjectionMatrix();
   }
 }

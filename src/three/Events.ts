@@ -156,19 +156,21 @@ export default class Events extends EventDispatcher {
       const obj = this.scene.getObjectById(option.id);
       if (obj) {
         this.editor.cacheObject = obj;
-        this.camera.lookAt(obj.position);
-        this.camera.updateProjectionMatrix();
-        this.control.orbitControl.update();
-        // this.control.orbitControl.target.x = obj.position.x;
-        // this.control.orbitControl.target.y = obj.position.y;
-
-        // this.control.orbitControl.target.z = obj.position.z;
-
-        this.editor.render();
+        // 触发点击事件，添加transform控制器
+        this.dispatchEvent({ type: this.TH_CLICK });
+        // 更新orbitControl，使模型处于可视区
+        this.control.orbitControl.target.copy(obj.position);
+        this.animate();
       }
     });
   }
+  private animate(){
+    requestAnimationFrame(this.animate);
+    this.control.orbitControl.update();
+     this.editor.render();
+    
 
+  }
   /**
    * @description: 获取一个射线投射器
    * @param {MouseEvent} e

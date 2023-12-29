@@ -209,10 +209,10 @@ class BaseModel {
     });
     const group = new Group();
     const lineLoop = new LineLoop(geometry, lineMaterial);
-    lineLoop.name = group.uuid;
+    lineLoop.name = lineLoop.type;
     group.add(lineLoop);
     const mesh = new Mesh(geometry, meshMaterial);
-    mesh.name = group.uuid;
+    mesh.name = mesh.type;
     group.add(mesh);
     const groupPosition = position.clone();
     groupPosition.setY(18);

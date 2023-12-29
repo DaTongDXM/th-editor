@@ -8,7 +8,9 @@ const Geometry: React.FC<any> = () => {
     type: 'th:model:change',
     obj: { a: 123 },
   });
-
+  const handleOnChangeComplete = (value: any) => {
+    console.log(value);
+  };
   return (
     <div className='bottom-continer material'>
       <div className='row'>
@@ -31,7 +33,7 @@ const Geometry: React.FC<any> = () => {
       <div className='row'>
         <label className='label'>颜色:</label>
         <div className='value one'>
-          <ColorPicker />
+          <ColorPicker onChangeComplete={handleOnChangeComplete} />
         </div>
       </div>
       <div className='row'>

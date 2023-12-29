@@ -2,7 +2,7 @@
  * @Author: wuxudong wuxudong@zbnsec.com
  * @Date: 2023-08-23 19:28:49
  * @LastEditors: wuxudong 953909305@qq.com
- * @LastEditTime: 2023-12-25 17:32:04
+ * @LastEditTime: 2023-12-29 18:57:42
  * @Description:renderer init work by three.js
  */
 import {
@@ -69,7 +69,7 @@ export default class Editor {
   public height: number;
   public events: Events;
 
-  public cacheObject: Object3D | null = null;
+  public cacheObject: Object3D | Mesh | null ;
   public dragabel = true;
 
   public baseAttr = BaseAttr;
@@ -87,6 +87,7 @@ export default class Editor {
     this.container = container;
     this.mitter = mitter;
     this.camera = new Camera().perspectiveCamera;
+    this.cacheObject=null;
     this.init();
     this.events = new Events();
 

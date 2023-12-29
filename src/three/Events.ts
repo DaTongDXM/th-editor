@@ -3,7 +3,16 @@
  * @LastEditors: wuxudong 953909305@qq.com
  * @Description:事件类
  */
-import { Camera, EventDispatcher, PerspectiveCamera, Raycaster, Scene, Vector2 } from 'three';
+import {
+  Camera,
+  EventDispatcher,
+  Material,
+  Mesh,
+  PerspectiveCamera,
+  Raycaster,
+  Scene,
+  Vector2,
+} from 'three';
 
 import { DragControls } from 'three/examples/jsm/controls/DragControls';
 import Editor from './Editor';
@@ -155,6 +164,8 @@ export default class Events extends EventDispatcher {
     this.addEventListener('th:model:focus', (option: any) => {
       const obj = this.scene.getObjectById(option.id);
       if (obj) {
+        console.log(obj instanceof Mesh);
+        // console.log(obj.material);
         this.editor.cacheObject = obj;
         // 触发点击事件，添加transform控制器
         this.dispatchEvent({ type: this.TH_CLICK });
@@ -164,12 +175,10 @@ export default class Events extends EventDispatcher {
       }
     });
   }
-  private animate(){
-    requestAnimationFrame(this.animate);
+  private animate() {
+    // requestAnimationFrame(this.animate);
     this.control.orbitControl.update();
-     this.editor.render();
-    
-
+    this.editor.render();
   }
   /**
    * @description: 获取一个射线投射器

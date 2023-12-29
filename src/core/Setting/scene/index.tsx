@@ -3,7 +3,7 @@ import Editor from '@/three/Editor';
 
 import { Input, Tree, Tabs } from 'antd';
 import type { TabsProps } from 'antd';
-import { Object3D } from 'three';
+import { Object3D, Material as IMaterial, Mesh } from 'three';
 import type { DataNode } from 'antd/es/tree';
 import Attribute from './components/attribute';
 import Geometry from './components/geometry';
@@ -23,7 +23,7 @@ const Scene: React.FC<{ editor: Editor }> = ({ editor }) => {
         });
       } else {
         res.push({
-          title: item.name,
+          title: `${item.name}(${item.type})`,
           key: item.id,
         });
       }
@@ -71,12 +71,14 @@ const Scene: React.FC<{ editor: Editor }> = ({ editor }) => {
     {
       key: 'geometry',
       label: '几何组件',
-      children: editor.cacheObject && <Geometry />,
+      // @ts-ignore
+      children: editor.cacheObject && editor.cacheObject.geometry && <Geometry />,
     },
     {
       key: 'material',
       label: '材质组件',
-      children: editor.cacheObject && <Material />,
+      // @ts-ignore
+      children: editor.cacheObject && editor.cacheObject.material && <Material />,
     },
   ];
   const handleTabClick = (key: string) => {
@@ -87,7 +89,7 @@ const Scene: React.FC<{ editor: Editor }> = ({ editor }) => {
       'editor.cacheObjecteditor.cacheObjecteditor.cacheObjecteditor.cacheObject',
       editor.cacheObject,
     );
-  }, [editor.cacheObject]);
+  }, [editor.cacheObject?.id]);
   const handleSelect = (keys: any, e: any) => {
     editor.events.dispatchEvent({
       type: 'th:model:focus',

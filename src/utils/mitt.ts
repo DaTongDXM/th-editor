@@ -2,7 +2,7 @@
  * @Author: wuxudong 953909305@qq.com
  * @Date: 2023-10-12 14:44:06
  * @LastEditors: wuxudong 953909305@qq.com
- * @LastEditTime: 2023-12-14 17:40:19
+ * @LastEditTime: 2024-01-02 17:02:15
  * @Description: 事件处理类
  */
 import mitt, { Emitter } from 'mitt';
@@ -47,13 +47,22 @@ class Mitter {
     console.log(111);
     mitter.emit(this.TH_MODEL_ADD, obj);
   }
-  /**
-   * @description: 模型添加回调
-   * @param {function} callback
-   * @return {*}
-   */
   public onThModelAdd(callback: (obj: Object3D) => void) {
     mitter.on(this.TH_MODEL_ADD, callback);
+  }
+
+  /**
+   * @description: 模型修改事件
+   * @return {*}
+   */
+  public readonly TH_MODEL_CHANGE = 'th:model:change';
+
+  public emitThModelChange(obj: Object3D) {
+    console.log(111);
+    mitter.emit(this.TH_MODEL_CHANGE, obj);
+  }
+  public onThModelChange(callback: (obj: Object3D) => void) {
+    mitter.on(this.TH_MODEL_CHANGE, callback);
   }
 
   /**

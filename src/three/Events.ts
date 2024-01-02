@@ -8,6 +8,7 @@ import {
   EventDispatcher,
   Material,
   Mesh,
+  Object3D,
   PerspectiveCamera,
   Raycaster,
   Scene,
@@ -37,6 +38,7 @@ export default class Events extends EventDispatcher {
    */
   public readonly TH_SKYBOX_LOAD = 'th:skybox:loaded';
   public readonly TH_CLICK = 'th:click';
+  public readonly TH_MODEL_CHANGE = 'TH_MODEL_CHANGE';
   /**
    * @description: 帧时
    * @return {*}
@@ -102,7 +104,8 @@ export default class Events extends EventDispatcher {
   }
 
   private register() {
-    this.addEventListener('th:model:change', (obj: any) => {
+    // 模型改变事件
+    this.addEventListener(this.TH_MODEL_CHANGE, (obj: any) => {
       const { action, value } = obj;
       console.log(obj, action, value);
       if (!action) return;
@@ -159,6 +162,7 @@ export default class Events extends EventDispatcher {
         default:
           break;
       }
+      this.editor.mitter.emitThModelChange(this.editor.cacheObject as Object3D);
       this.editor.render();
     });
     this.addEventListener('th:model:focus', (option: any) => {

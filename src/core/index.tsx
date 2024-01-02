@@ -2,7 +2,7 @@
  * @Author: wuxudong wuxudong@zbnsec.com
  * @Date: 2022-11-15 01:13:46
  * @LastEditors: wuxudong 953909305@qq.com
- * @LastEditTime: 2023-12-19 17:56:17
+ * @LastEditTime: 2024-01-02 17:12:11
  * @Description:The editor container contains the canvas , toolbar and attribute
  */
 import React, { useEffect, useState, useImperativeHandle, useRef, useContext } from 'react';
@@ -20,7 +20,10 @@ import Setting from './Setting';
 import _ from 'lodash';
 import { EditorContext } from '@/context/editorContext';
 const EditorCore = React.forwardRef(
-  ({ onClick, onDelete, onAdd, id = '', modelOption, onGroupAdd }: EditorCoreProps, ref: any) => {
+  (
+    { onClick, onDelete, onAdd, onChange, id = '', modelOption, onGroupAdd }: EditorCoreProps,
+    ref: any,
+  ) => {
     const [loading, setLoading] = useState(true);
 
     // let editor: Editor;
@@ -66,6 +69,9 @@ const EditorCore = React.forwardRef(
       });
       newEditor.mitter.onThModelAdd((obj: Object3D) => {
         onAdd(obj);
+      });
+      newEditor.mitter.onThModelChange((obj: Object3D) => {
+        onChange(obj);
       });
     }
     const handleKeyDown = (event: any) => {

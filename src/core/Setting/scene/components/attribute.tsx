@@ -23,7 +23,7 @@ const Geometry: React.FC<any> = () => {
     });
 
     editor.events.dispatchEvent({
-      type: 'th:model:change',
+      type: editor.events.TH_MODEL_CHANGE,
       action,
       value,
     });

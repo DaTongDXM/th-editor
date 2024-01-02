@@ -22,6 +22,8 @@ declare module 'ThEditor' {
     onDelete: (obj: Object3D | null) => void;
     // 添加事件
     onAdd: (obj: Object3D) => void;
+    // 修改事件
+    onChange: (obj: Object3D) => void;
     [key: string]: any;
   }
 

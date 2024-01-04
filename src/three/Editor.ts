@@ -2,7 +2,7 @@
  * @Author: wuxudong wuxudong@zbnsec.com
  * @Date: 2023-08-23 19:28:49
  * @LastEditors: wuxudong 953909305@qq.com
- * @LastEditTime: 2023-12-29 18:57:42
+ * @LastEditTime: 2024-01-04 16:02:05
  * @Description:renderer init work by three.js
  */
 import {
@@ -27,30 +27,7 @@ import SkyBox from './skyBox';
 import Events from './Events';
 import Controls from './Controls';
 import Camera from './Camera';
-export enum BaseAttr {
-  // 位置x
-  PX = 'px',
-  // 位置y
-  PY = 'py',
-  // 位置z
-  PZ = 'pz',
-
-  // 旋转x
-  RX = 'rx',
-  // 旋转y
-  RY = 'ry',
-  // 旋转z
-  RZ = 'rz',
-
-  // 缩放x
-  SX = 'sx',
-  // 缩放y
-  SY = 'sy',
-  // 缩放z
-  SZ = 'sz',
-  VISIBLE = 'visible',
-  INIT = 'init',
-}
+import { BaseAttr } from './Config';
 export default class Editor {
   public static editor: Editor;
   /** id */

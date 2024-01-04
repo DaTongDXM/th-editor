@@ -1,3 +1,4 @@
+//基础属性
 export enum BaseAttr {
   // 位置x
   PX = 'px',
@@ -20,4 +21,8 @@ export enum BaseAttr {
   // 缩放z
   SZ = 'sz',
   VISIBLE = 'visible',
+  INIT = 'init',
 }
+
+// 材质属性
+export enum MaterialAttr {}

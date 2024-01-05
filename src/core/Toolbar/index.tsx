@@ -120,7 +120,7 @@ const ToolBar: React.FC<{ editor: Editor; keyCode: string }> = ({ editor, keyCod
     } catch (e) {
       output = JSON.stringify(output);
     }
-    saveString(output, 'scene.json');
+    saveString(output, editor.name);
   }
   function saveString(text: string, filename: string) {
     save(new Blob([text], { type: 'text/plain' }), filename);

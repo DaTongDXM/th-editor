@@ -2,7 +2,7 @@
  * @Author: wuxudong wuxudong@zbnsec.com
  * @Date: 2023-08-23 19:28:49
  * @LastEditors: wuxudong 953909305@qq.com
- * @LastEditTime: 2024-01-04 16:02:05
+ * @LastEditTime: 2024-01-05 15:06:33
  * @Description:renderer init work by three.js
  */
 import {
@@ -32,6 +32,7 @@ export default class Editor {
   public static editor: Editor;
   /** id */
   public id: string;
+  public name: string;
   public container: HTMLElement;
   public dragControls!: DragControls;
   public scene!: Scene;
@@ -46,7 +47,7 @@ export default class Editor {
   public height: number;
   public events: Events;
 
-  public cacheObject: Object3D | Mesh | null ;
+  public cacheObject: Object3D | Mesh | null;
   public dragabel = true;
 
   public baseAttr = BaseAttr;
@@ -54,17 +55,20 @@ export default class Editor {
   /**
    *
    * @param id renderer id
+   * @param name 名称
    * @param container canvas container
+   * @param mitter 统一的事件对象
    */
-  constructor(id: string, container: HTMLElement, mitter: Mitter) {
+  constructor(id: string, name: string, container: HTMLElement, mitter: Mitter) {
     Editor.editor = this;
     this.id = id;
+    this.name = name;
     this.width = container.offsetWidth;
     this.height = container.offsetHeight;
     this.container = container;
     this.mitter = mitter;
     this.camera = new Camera().perspectiveCamera;
-    this.cacheObject=null;
+    this.cacheObject = null;
     this.init();
     this.events = new Events();
 

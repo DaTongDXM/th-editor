@@ -2,7 +2,7 @@
  * @Author: wuxudong wuxudong@zbnsec.com
  * @Date: 2022-11-15 01:13:46
  * @LastEditors: wuxudong 953909305@qq.com
- * @LastEditTime: 2024-01-02 17:12:11
+ * @LastEditTime: 2024-01-05 15:06:39
  * @Description:The editor container contains the canvas , toolbar and attribute
  */
 import React, { useEffect, useState, useImperativeHandle, useRef, useContext } from 'react';
@@ -21,7 +21,16 @@ import _ from 'lodash';
 import { EditorContext } from '@/context/editorContext';
 const EditorCore = React.forwardRef(
   (
-    { onClick, onDelete, onAdd, onChange, id = '', modelOption, onGroupAdd }: EditorCoreProps,
+    {
+      id = '',
+      name = '',
+      modelOption,
+      onClick,
+      onDelete,
+      onAdd,
+      onChange,
+      onGroupAdd,
+    }: EditorCoreProps,
     ref: any,
   ) => {
     const [loading, setLoading] = useState(true);
@@ -33,7 +42,7 @@ const EditorCore = React.forwardRef(
 
     useEffect(() => {
       if (!editor) {
-        const newEditor = new Editor('123', document.getElementById(containerId.current)!, mitter);
+        const newEditor = new Editor(id, name,document.getElementById(containerId.current)!, mitter);
         setEditor(newEditor);
         handleRegister(newEditor);
       }

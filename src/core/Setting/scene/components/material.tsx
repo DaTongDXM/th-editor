@@ -1,6 +1,7 @@
 import React, { useContext, useState } from 'react';
 import { EditorContext } from '@/context/editorContext';
 import { Input, InputNumber, ColorPicker, Upload, Button } from 'antd';
+import { Color } from 'antd/es/color-picker';
 const Geometry: React.FC<any> = () => {
   const editor = useContext(EditorContext);
   const [geometry, setGeometry] = useState(editor.cacheObject);
@@ -33,7 +34,14 @@ const Geometry: React.FC<any> = () => {
       <div className='row'>
         <label className='label'>颜色:</label>
         <div className='value one'>
-          <ColorPicker onChangeComplete={handleOnChangeComplete} />
+          <ColorPicker
+            onChangeComplete={(value: Color) => {
+              console.log(value.toHexString());
+              //@ts-ignore
+              editor.cacheObject.material.color.set(value.toHexString());
+              editor.render();
+            }}
+          />
         </div>
       </div>
       <div className='row'>

@@ -2,6 +2,8 @@ import React, { useContext, useState } from 'react';
 import { EditorContext } from '@/context/editorContext';
 import { Input, InputNumber, ColorPicker, Upload, Button } from 'antd';
 import { Color } from 'antd/es/color-picker';
+import type { UploadFile, UploadProps } from 'antd/es/upload/interface';
+import { TextureLoader } from 'three';
 const Geometry: React.FC<any> = () => {
   const editor = useContext(EditorContext);
   const [geometry, setGeometry] = useState(editor.cacheObject);
@@ -11,6 +13,39 @@ const Geometry: React.FC<any> = () => {
   });
   const handleOnChangeComplete = (value: any) => {
     console.log(value);
+  };
+  // 贴图
+  const [fileList, setFileList] = useState<UploadFile[]>([]);
+  const uploadProps: UploadProps = {
+    onRemove: (file) => {
+      const index = fileList.indexOf(file);
+      const newFileList = fileList.slice();
+      newFileList.splice(index, 1);
+      setFileList(newFileList);
+    },
+    beforeUpload: (file: UploadFile) => {
+      const { type, size } = file;
+      if (type && !['image/png', 'image/jpeg'].includes(type)) {
+        return Upload.LIST_IGNORE;
+      }
+      console.log(readAsDataURL(file));
+      setFileList([...fileList, file]);
+      return false;
+    },
+    fileList,
+  };
+  const readAsDataURL = (file: any) => {
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      console.log(reader.result);
+      if (reader.result) {
+        const myMap = new TextureLoader().load(reader.result.toString());
+        //@ts-ignore
+        editor.cacheObject.material.map = myMap;
+        editor.render();
+      }
+    };
+    reader.readAsDataURL(file);
   };
   return (
     <div className='bottom-continer material'>
@@ -47,7 +82,14 @@ const Geometry: React.FC<any> = () => {
       <div className='row'>
         <label className='label'>自发光:</label>
         <div className='value one'>
-          <ColorPicker />
+          <ColorPicker
+            onChangeComplete={(value: Color) => {
+              console.log(value.toHexString());
+              //@ts-ignore
+              editor.cacheObject.material.emissive.set(value.toHexString());
+              editor.render();
+            }}
+          />
         </div>
       </div>
       <div className='row'>
@@ -59,7 +101,7 @@ const Geometry: React.FC<any> = () => {
       <div className='row'>
         <label className='label'>贴图:</label>
         <div className='value one'>
-          <Upload>
+          <Upload {...uploadProps}>
             <Button size='small'>
               <i className='iconfont th-shangchuandaochu'></i>
             </Button>

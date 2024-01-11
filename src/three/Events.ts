@@ -169,7 +169,7 @@ export default class Events extends EventDispatcher {
       const obj = this.scene.getObjectById(option.id);
       if (obj) {
         console.log(obj instanceof Mesh);
-        // console.log(obj.material);
+        this.editor.mitter.emitThModelClick(obj)
         this.editor.cacheObject = obj;
         // 触发点击事件，添加transform控制器
         this.dispatchEvent({ type: this.TH_CLICK });

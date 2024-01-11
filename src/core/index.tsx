@@ -2,7 +2,7 @@
  * @Author: wuxudong wuxudong@zbnsec.com
  * @Date: 2022-11-15 01:13:46
  * @LastEditors: wuxudong 953909305@qq.com
- * @LastEditTime: 2024-01-05 15:06:39
+ * @LastEditTime: 2024-01-11 19:10:44
  * @Description:The editor container contains the canvas , toolbar and attribute
  */
 import React, { useEffect, useState, useImperativeHandle, useRef, useContext } from 'react';
@@ -42,7 +42,13 @@ const EditorCore = React.forwardRef(
 
     useEffect(() => {
       if (!editor) {
-        const newEditor = new Editor(id, name,document.getElementById(containerId.current)!, mitter);
+        const newEditor = new Editor(
+          id,
+          name,
+          document.getElementById(containerId.current)!,
+          mitter,
+        );
+        
         setEditor(newEditor);
         handleRegister(newEditor);
       }
@@ -63,8 +69,14 @@ const EditorCore = React.forwardRef(
     function handleRegister(newEditor: Editor) {
       if (!newEditor) return;
       newEditor.mitter.on(mitter.TH_CLICK, (e: any) => {
-        onClick(e);
-        newEditor.cacheObject = e;
+        onClick(e, 11111);
+        // newEditor.cacheObject = e;
+      });
+      newEditor.mitter.onThModelClick((e: any) => {
+
+        let obj = { ...newEditor, cacheObject: e } as Editor;
+        // setEditor(obj);
+        console.log(obj);
       });
       newEditor.mitter.onThMsgWaring((msg: string) => {
         message.warning({

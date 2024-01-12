@@ -39,7 +39,13 @@ const Geometry: React.FC<any> = () => {
     reader.onloadend = () => {
       console.log(reader.result);
       if (reader.result) {
-        const myMap = new TextureLoader().load(reader.result.toString());
+        const myMap = new TextureLoader().load(reader.result.toString(), function (texture) {
+          //@ts-ignore
+          editor.cacheObject.emissiveTexture = texture;
+          // 更新材质以应用新贴图
+          //@ts-ignore
+          editor.cacheObject.needsUpdate = true;
+        });
         //@ts-ignore
         editor.cacheObject.material.map = myMap;
         editor.render();
@@ -111,9 +117,11 @@ const Geometry: React.FC<any> = () => {
       <div className='row'>
         <label className='label'>自发光贴图:</label>
         <div className='value one'>
-          <Button size='small'>
-            <i className='iconfont th-shangchuandaochu'></i>
-          </Button>
+          <Upload {...uploadProps}>
+            <Button size='small'>
+              <i className='iconfont th-shangchuandaochu'></i>
+            </Button>
+          </Upload>
         </div>
       </div>
     </div>

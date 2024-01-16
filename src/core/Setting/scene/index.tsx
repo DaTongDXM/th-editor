@@ -98,7 +98,7 @@ const Scene: React.FC<{ editor: Editor }> = ({ editor }) => {
   };
   return (
     <>
-      <div className='scene-continer'>
+      <div className='scene-container'>
         <div className='model-list'>
           <Search />
           <Tree

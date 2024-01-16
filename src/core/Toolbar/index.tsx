@@ -136,6 +136,6 @@ const ToolBar: React.FC<{ editor: Editor; keyCode: string }> = ({ editor, keyCod
     link.dispatchEvent(new MouseEvent('click'));
   }
 
-  return <div className='toolbar-continer'>{listIcons}</div>;
+  return <div className='toolbar-container'>{listIcons}</div>;
 };
 export default ToolBar;

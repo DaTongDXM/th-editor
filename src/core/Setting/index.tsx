@@ -17,7 +17,7 @@ import Editor from '@/three/Editor';
 
 const Setting: React.FC<{ show?: boolean; editor: Editor }> = ({ show, editor }) => {
   const [showPanel, setShowPanel] = useState(show);
-  const bodyClassName = `setting-continer ${showPanel ? 'show' : 'un-show'}`;
+  const bodyClassName = `setting-container ${showPanel ? 'show' : 'un-show'}`;
   let iconClassName = `iconfont ${!showPanel ? 'th-cebianlanshouqi' : 'th-cebianlanzhankai'}`;
   const [activePanel, setActivePanel] = useState('scene');
 
@@ -38,7 +38,7 @@ const Setting: React.FC<{ show?: boolean; editor: Editor }> = ({ show, editor })
   };
   return (
     <div className={bodyClassName}>
-      <div className='setting-continer-menu'>
+      <div className='setting-container-menu'>
         <div
           onClick={(e: any) => {
             setShowPanel(!showPanel);
@@ -49,7 +49,7 @@ const Setting: React.FC<{ show?: boolean; editor: Editor }> = ({ show, editor })
           <i className={iconClassName}></i>
         </div>
       </div>
-      <div className='setting-continer-body'>
+      <div className='setting-container-body'>
         <Tabs items={items} onTabClick={handleTabClick}></Tabs>
         {activePanel === 'scene' ? <Scene editor={editor} /> : <Project />}
       </div>

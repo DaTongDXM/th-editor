@@ -1,4 +1,4 @@
-.setting-continer {
+.setting-container {
   height: calc(100% - 8px);
   color: var(--th-color-font-light);
   position: absolute;
@@ -20,7 +20,7 @@
     height: 100%;
     background-color: var(--th-color-menu-bg);
     border-radius: var(--border-radius-small);
-    .scene-continer {
+    .scene-container {
       padding: 8px;
       .model-list {
         padding: 8px;
@@ -43,7 +43,7 @@
           color: var(--th-color-input-text);
           background-color: var(--th-color-input-bg);
         }
-        .bottom-continer {
+        .bottom-container {
           height: 290px;
           padding: 8px;
           display: flex;

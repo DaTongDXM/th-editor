@@ -10,7 +10,7 @@ const Geometry: React.FC<any> = () => {
   });
 
   return (
-    <div className='bottom-continer geometry'>
+    <div className='bottom-container geometry'>
       <div className='row'>
         <label className='label'>类型:</label>
         <div className='value'></div>

@@ -15,11 +15,11 @@ import ModelPanel from './modelPanel';
 const Model: React.FC<ModelMnueProps> = (props: ModelMnueProps) => {
   const { show, modelOption, onGroupAdd } = props;
   const [showPanel, setShowPanel] = useState(show);
-  const bodyClassName = `model-continer ${showPanel ? 'show' : 'un-show'}`;
+  const bodyClassName = `model-container ${showPanel ? 'show' : 'un-show'}`;
   let iconClassName = `iconfont ${showPanel ? 'th-cebianlanshouqi' : 'th-cebianlanzhankai'}`;
   return (
     <div className={bodyClassName}>
-      <div className='model-continer-body'>
+      <div className='model-container-body'>
         <ModelPanel
           modelOption={modelOption}
           onGroupAdd={(name: string) => {
@@ -27,7 +27,7 @@ const Model: React.FC<ModelMnueProps> = (props: ModelMnueProps) => {
           }}
         />
       </div>
-      <div className='model-continer-menu'>
+      <div className='model-container-menu'>
         {' '}
         <div
           onClick={(e: any) => {

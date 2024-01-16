@@ -40,7 +40,7 @@ const Geometry: React.FC<any> = () => {
     handleResetData();
   }, [editor.cacheObject?.id]);
   return (
-    <div className='bottom-continer attribute'>
+    <div className='bottom-container attribute'>
       <div className='row'>
         <label className='label'>类型:</label>
         <div className='value'>{editor.cacheObject?.type}</div>

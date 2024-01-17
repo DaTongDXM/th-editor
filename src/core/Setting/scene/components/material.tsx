@@ -54,7 +54,7 @@ const Geometry: React.FC<any> = () => {
     reader.readAsDataURL(file);
   };
   return (
-    <div className='bottom-container material'>
+    <div className='info-container material'>
       <div className='row'>
         <label className='label'>类型:</label>
         <div className='value'></div>

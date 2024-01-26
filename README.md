@@ -7,8 +7,13 @@
 
 # th-editor
 ---
-![GitHub Logo](/docs/img/logo.png)
+![GitHub Logo](/docs/img/录屏.gif)
 
+## th-editor是干什么的？
+*  th-editor是一个基于three.js和react的web编辑器组件
+*  提供内置模型拖拽，自定义上传模型拖拽(待开发)向场景添加模型
+*  提供不同的属性变化控制器及场景数据导出，场景运行(待开发)
+*  提供右侧属性面对场景/模型做数据更新
 ## Download th-editor using npm
 
 ## Usage

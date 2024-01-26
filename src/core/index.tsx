@@ -2,7 +2,7 @@
  * @Author: wuxudong wuxudong@zbnsec.com
  * @Date: 2022-11-15 01:13:46
  * @LastEditors: wuxudong 953909305@qq.com
- * @LastEditTime: 2024-01-11 19:10:44
+ * @LastEditTime: 2024-01-26 13:36:54
  * @Description:The editor container contains the canvas , toolbar and attribute
  */
 import React, { useEffect, useState, useImperativeHandle, useRef, useContext } from 'react';
@@ -143,7 +143,7 @@ const EditorCore = React.forwardRef(
             />
 
             {editor && <BottomBar editor={editor} />}
-            {editor && <Setting editor={editor} show />}
+            {editor && <Setting editor={editor}  />}
           </EditorContext.Provider>
         )}
       </div>

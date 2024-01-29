@@ -7,8 +7,10 @@
 
 # th-editor
 ---
-![GitHub Logo](/docs/img/录屏.gif)
-
+<!-- ![GitHub Logo](/docs/img/录屏.gif) -->
+<video width="320" height="240" controls>
+    <source src="/docs/img/th-editor.mp4" type="video/mp4">
+</video>
 ## th-editor是干什么的？
 *  th-editor是一个基于three.js和react的web编辑器组件
 *  提供内置模型拖拽，自定义上传模型拖拽(待开发)向场景添加模型

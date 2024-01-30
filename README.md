@@ -7,10 +7,11 @@
 
 # th-editor
 ---
-<!-- ![GitHub Logo](/docs/img/录屏.gif) -->
-<video width="320" height="240" controls>
-    <source src="/docs/img/th-editor.mp4" type="video/mp4">
-</video>
+
+
+<video id="main-video" x-webkit-airplay="allow" controls="" poster="http://f7.baidu.com/it/u=3512268727,229097286&amp;fm=222&amp;app=106&amp;f=JPEG" src="https://bjhnewmda2.bdstatic.com/4d6d6552496135465743534732633566/7541466455756974/7d7656b7e3e86f6c2a2ef2745512288370ef5d573d28a552a8c4560d29dd0c72a7dab052898e06ca1ecee7e023187d24a2b1e838e590e9d84720e97f2bb035077e2bad7bbd16e8be4fc00428ecb04352.mp4?auth_key=1706601209-0-0-2dfc998027a09f2147b06ed9acc721c4">
+                    </video>
+
 ## th-editor是干什么的？
 *  th-editor是一个基于three.js和react的web编辑器组件
 *  提供内置模型拖拽，自定义上传模型拖拽(待开发)向场景添加模型

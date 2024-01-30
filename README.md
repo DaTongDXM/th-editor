@@ -1,7 +1,7 @@
-[![Video](/docs/img/th-editor.png)](https://baijiahao.baidu.com/builder/preview/s?id=1789493480948748686)
+[![Video](/docs/img/th-editor.png)](https://haokan.baidu.com/v?pd=wisenatural&vid=3000970618697972577)
 
 <h1 align="center">th-editor</h1>
-<p align="center">th-editor是一个基于three.js和react开发的web编辑器组件</p>
+<p align="center">th-editor是一个基于three.js和react开发的web场景编辑器组件</p>
 
 ## ✨特性
 * ✅ 使用React开发
@@ -10,8 +10,9 @@
 * ✔️通过工具条或者快捷键切换变换控制器
 * ✔️场景数据导出，场景运行(待开发)
 * 🛠 提供右侧属性面板设置场景/模型做数据
-## Download th-editor using npm
 
+## Download th-editor using npm
+🚀 开发中，待发布
 ## Usage
 ``` javascript
 import React, { useRef, useEffect } from 'react';

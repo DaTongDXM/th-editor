@@ -1,9 +1,6 @@
 /*
- * @Author: wuxudong wuxudong@zbnsec.com
  * @Date: 2022-11-15 01:13:46
- * @LastEditors: wuxudong 953909305@qq.com
- * @LastEditTime: 2023-12-20 09:51:03
- * @Description:
+ * @Description:demo代码使用IndexedDB存储数据
  */
 import React, { useRef, useEffect } from 'react';
 

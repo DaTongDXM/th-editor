@@ -12,6 +12,8 @@ declare module 'ThEditor' {
     configProvider: ConfigProvider;
     // 编辑器场景id
     id?: string;
+    //加载动画
+    loading:boolean;
     // 编辑器场景名称
     name?: string;
     // 自定义面板配置项

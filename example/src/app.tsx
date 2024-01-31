@@ -2,7 +2,7 @@
  * @Date: 2022-11-15 01:13:46
  * @Description:demo代码使用IndexedDB存储数据
  */
-import React, { useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 
 import { createRoot } from 'react-dom/client';
 import ThEditor from '../../src/index';
@@ -15,6 +15,7 @@ const DB_NAME = 'editor';
 let db: IDBDatabase;
 let db_group: IDBObjectStore;
 const AppCompent = () => {
+  const [loading, setLoading] = useState(true);
   const configProvider = {
     theme: {
       token: {
@@ -75,6 +76,9 @@ const AppCompent = () => {
       });
     };
   };
+  setTimeout(() => {
+    setLoading(false);
+  }, 1000);
   return (
     <>
       <div
@@ -87,6 +91,7 @@ const AppCompent = () => {
           configProvider={configProvider}
           id={123}
           ref={thEditorRef}
+          loading={loading}
           modelOption={modelOption}
           onClick={(e: Event) => {
             console.log(e);

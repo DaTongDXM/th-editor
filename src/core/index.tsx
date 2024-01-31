@@ -2,7 +2,7 @@
  * @Author: wuxudong wuxudong@zbnsec.com
  * @Date: 2022-11-15 01:13:46
  * @LastEditors: wuxudong 953909305@qq.com
- * @LastEditTime: 2024-01-26 14:13:22
+ * @LastEditTime: 2024-01-31 15:06:52
  * @Description:The editor container contains the canvas , toolbar and attribute
  */
 import React, { useEffect, useState, useImperativeHandle, useRef, useContext } from 'react';
@@ -23,6 +23,7 @@ const EditorCore = React.forwardRef(
   (
     {
       id = '',
+      loading = true,
       name = '',
       modelOption,
       onClick,
@@ -33,11 +34,13 @@ const EditorCore = React.forwardRef(
     }: EditorCoreProps,
     ref: any,
   ) => {
-    const [loading, setLoading] = useState(true);
+    // const [loading, setLoading] = useState(true);
 
-    // let editor: Editor;
+    // 编辑器实例
     let [editor, setEditor] = useState<Editor | null>(null);
+    // 快捷键缓存
     let [keyCode, setKeyCode] = useState('q');
+    // 编辑器id
     let containerId = useRef(`editor-container${id}`);
 
     useEffect(() => {
@@ -48,32 +51,32 @@ const EditorCore = React.forwardRef(
           document.getElementById(containerId.current)!,
           mitter,
         );
-        
+
         setEditor(newEditor);
         handleRegister(newEditor);
       }
-    }, []); // 依赖数组为空，表示只在组件挂载时执行一次
+    }, []);
+    /**
+     * @description: 暴露给父组件的实例值
+     */
     useImperativeHandle(ref, () => ({
       setAttrbute() {
         console.log(123);
       },
     }));
-    setTimeout(() => {
-      setLoading(false);
-    }, 1000);
+
     /**
      * @description: 初始化监听
      * @param {Editor} newEditor 编辑器
      * @return {*}
      */
-    function handleRegister(newEditor: Editor) {
+    const handleRegister = (newEditor: Editor) => {
       if (!newEditor) return;
       newEditor.mitter.on(mitter.TH_CLICK, (e: any) => {
         onClick(e, 11111);
         // newEditor.cacheObject = e;
       });
       newEditor.mitter.onThModelClick((e: any) => {
-
         let obj = { ...newEditor, cacheObject: e } as Editor;
         // setEditor(obj);
         console.log(obj);
@@ -94,7 +97,7 @@ const EditorCore = React.forwardRef(
       newEditor.mitter.onThModelChange((obj: Object3D) => {
         if (onChange) onChange(obj);
       });
-    }
+    };
     const handleKeyDown = (event: any) => {
       if (!editor) return;
       setKeyCode(event.key.toLowerCase());
@@ -143,7 +146,7 @@ const EditorCore = React.forwardRef(
             />
 
             {editor && <BottomBar editor={editor} />}
-            {editor && <Setting editor={editor}  />}
+            {editor && <Setting editor={editor} />}
           </EditorContext.Provider>
         )}
       </div>
